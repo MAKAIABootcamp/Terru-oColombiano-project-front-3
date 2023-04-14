@@ -2,7 +2,7 @@ import React from 'react'
 
 const Foro = () => {
   return (
-    <div>Foro</div>
+    <div>Esto es el foro</div>
   )
 }
 
