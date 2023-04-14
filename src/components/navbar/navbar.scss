@@ -1,0 +1,126 @@
+ header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     position: fixed;
+     width: 100%;
+     padding-inline: 20px;
+     top: 0;
+     background-color: rgb(0, 0, 0);
+     height: 50px;
+     opacity: 0.7;
+
+
+     & nav {
+         & ul {
+             display: flex;
+             align-items: center;
+             height: 30px;
+             gap: 20px;
+
+
+             .heart {
+                 color: white;
+
+                 &:hover {
+                     color: red;
+                 }
+             }
+         }
+     }
+
+     & figure {
+         display: flex;
+         gap: 10px;
+         cursor: pointer;
+
+         & img {
+             height: 40px;
+
+             &:hover {
+                 scale: 1.1;
+                 transition: scale 0.5s;
+             }
+         }
+     }
+
+
+ }
+
+ .navlink {
+     display: flex;
+     align-items: center;
+     font-size: 16px;
+     color: white;
+     gap: 10px;
+     cursor: pointer;
+     text-decoration: none;
+
+
+     &:hover {
+         scale: 1.1;
+         transition: scale 0.5s;
+     }
+
+ }
+ .active {
+    background-color: #c08b61;
+    border-radius: 8px;
+    padding: 5px;
+ }
+
+ .hidden {
+     display: none;
+ }
+
+ .closeMenu {
+     display: none;
+ }
+
+ @media (max-width : 790px) {
+     .hidden {
+         display: block;
+         margin-right: 5%;
+         height: 30px;
+     }
+
+     header {
+         opacity: 0.8;
+
+
+         & nav {
+             background-color: rgb(0, 0, 0);
+             padding: 0;
+             display: none;
+             position: fixed;
+             top: 0;
+             right: 0;
+
+
+             & ul {
+                 padding-left: 20%;
+                 justify-content: start;
+                 align-items: start;
+                 flex-direction: column;
+                 height: 100vh;
+                 width: 50vw;
+                 gap: 20;
+
+                 & img {
+                     align-self: end;
+                     margin-top: 10px;
+                 }
+             }
+
+             & small {
+                 height: 40px;
+             }
+         }
+
+         .open {
+             display: block;
+
+
+         }
+     }
+ }
