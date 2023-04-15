@@ -10,6 +10,7 @@ import Navbar from "../components/navbar/Navbar";
 import Favorites from "../components/places/favorites/Favorites";
 import Foro from "../components/foro/Foro";
 import NewPlace from "../components/newPlace/NewPlace";
+import UpdateUser from "../components/profile/logout/UpdateUser";
 
 const Router = () => {
   const [logged, setLogged] = useState(undefined);
@@ -47,6 +48,7 @@ const Router = () => {
           <Route path="foro" element={<Foro />} />
           <Route path="newPlace" element={<NewPlace />} />
         </Route>
+        <Route path='/update-user' element={<UpdateUser/>} />
       </Routes>
     </BrowserRouter>
   );
