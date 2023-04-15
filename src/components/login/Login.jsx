@@ -52,7 +52,8 @@ const Login = () => {
         <figure>
           <img src={google} alt="Facebook" />
           <img src={fb} alt="Google" />
-          <img src={phone} alt="Phone" />
+          
+          <img src={phone} alt="Phone" onClick={() => navigate ('/loginWithPhone/phone')} />
         </figure>
       </div>
     </article>

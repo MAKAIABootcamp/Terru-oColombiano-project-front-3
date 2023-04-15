@@ -10,6 +10,9 @@ import Navbar from "../components/navbar/Navbar";
 import Favorites from "../components/places/favorites/Favorites";
 import Foro from "../components/foro/Foro";
 import NewPlace from "../components/newPlace/NewPlace";
+import LoginWithPhone from "../components/loginWithPhone/LoginWithPhone";
+import Verification from "../components/loginWithPhone/Verification";
+import Phone from "../components/loginWithPhone/Phone";
 
 const Router = () => {
   const [logged, setLogged] = useState(undefined);
@@ -41,6 +44,10 @@ const Router = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="loginWithPhone" element={<LoginWithPhone />} >
+          <Route path="phone" element={<Phone />} />
+          <Route path="verification" element ={<Verification />} />
+        </Route>
         <Route path="/" element={<Navbar />}>
           <Route path="user" element={<UserInfo />} />
           <Route path="favorites" element={<Favorites />} />

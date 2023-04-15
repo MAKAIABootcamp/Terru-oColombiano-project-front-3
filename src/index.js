@@ -1,8 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import Router from "./router/Router";
-import './styles.scss'
-import "react-responsive-carousel/lib/styles/carousel.min.css"
+import "./styles.scss";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Provider } from "react-redux";
+import store from "./redux/store/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Router />);
+root.render(
+  <Provider store={store}>
+    <Router />
+  </Provider>
+);
