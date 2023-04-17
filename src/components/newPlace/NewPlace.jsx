@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fileUpLoad } from '../../services/fileUpLoad'
 import { createPostAsync } from '../../redux/actions/userActions'
 import { ToastContainer, toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const NewPlace = () => {
     const [transports, setTransports] = useState([])
@@ -12,7 +13,7 @@ const NewPlace = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
     const { user } = useSelector(store => store.users)
     const dispatch = useDispatch()
-    console.log(user);
+    const navigate = useNavigate()
 
 
 
@@ -82,7 +83,8 @@ const NewPlace = () => {
             theme: "light",
             });
 
-            reset()
+            
+            
      
     }
     return (

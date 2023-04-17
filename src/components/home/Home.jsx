@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './home.scss'
 import search from '../../assets/searchNav.svg'
 import star from '../../assets/star.svg'
@@ -6,20 +6,34 @@ import location from '../../assets/locationGray.svg'
 import cancel from '../../assets/cancel.png'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../navbar/Navbar'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { getPlacesAsync } from '../../redux/actions/placesActions'
 
 
 const Home = () => {
   const [input, setInput] = useState('')
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const valueInput = ({ value }) => {
-    console.log(value);
     setInput(value)
 
   }
-  const { user} = useSelector(store => store.users)
+  const { user } = useSelector(store => store.users)
+  const { places } = useSelector(store => store.places);
+
+  console.log(places);
   console.log(user.birthday);
+
+  useEffect(() => {
+    dispatch(getPlacesAsync())
+
+  }, [])
+
+  const arrayFiltered = places[0]?.filter(place => place.name.toLowerCase().includes(input.toLowerCase()))
+
+  console.log(arrayFiltered);
+
   return (
     <article className='home'>
       <div className='home__header'>
@@ -52,16 +66,15 @@ const Home = () => {
       <div className='home__main'>
         <h1>Todos los rincones</h1>
         <div>
-          <figure style={{backgroundImage: `linear-gradient(0deg, rgba(0,0,0,1)2%, rgba(32,32,32,0) 38%), url(https://images.pexels.com/photos/11130921/pexels-photo-11130921.jpeg?auto=compress&cs=tinysrgb&w=600)`}}>
-            {/* <img src="https://images.pexels.com/photos/11130921/pexels-photo-11130921.jpeg?auto=compress&cs=tinysrgb&w=600" alt="caballo" className='home__main__photo' /> */}
+          {input ? arrayFiltered.map((e, index) =>
+            <figure key={index}>
+            <img src={e.imgPlace2} alt="caballo" className='home__main__photo' />
             <figcaption>
-              <h3>Nombre del lugar</h3>
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius aliquid possimus fugiat molestias rem sapiente omnis? Rem, repellat dolore? Fuga, quis nobis dolorum dolores nesciunt blanditiis aliquid. Totam, fugiat sed.</p>
-              <span> <img src={location} alt="location" /> Ubicacion del lugar</span>
+              <h3>{e.name}</h3>
+              <p>{e.description}</p>
+              <span> <img src={location} alt="location" />{` ${e.location} - ${e.department}`}</span>
               <section>
-                <small>Turismo</small>
-                <small>Actividades acuaticas</small>
-                <small>Mirador</small>
+                {e.category.map((act, index) => <small key={index}>{act}</small>)}
               </section>
               <section>
                 <img src="https://cdn.icon-icons.com/icons2/158/PNG/96/car_22307.png" alt="carro" />
@@ -75,8 +88,37 @@ const Home = () => {
                 <img src={star} alt="star" />
               </section>
             </figcaption>
-          </figure>
-          <figure>
+          </figure>):<>
+          {places[0] ? places[0].map((place, index) => 
+            <figure key={index}>
+              <img src={place.imgPlace2} alt="caballo" className='home__main__photo' />
+              <figcaption>
+                <h3>{place.name}</h3>
+                <p>{place.description}</p>
+                <span> <img src={location} alt="location" />{` ${place.location} - ${place.department}`}</span>
+                <section>
+                  {place.category.map((act, index) => <small key={index}>{act}</small>)}
+                </section>
+                <section>
+                  <img src="https://cdn.icon-icons.com/icons2/158/PNG/96/car_22307.png" alt="carro" />
+                  <img src="https://cdn.icon-icons.com/icons2/577/PNG/96/TouringMotorcycle_Green_icon-icons.com_54907.png" alt="moto" />
+                  <img src="https://cdn.icon-icons.com/icons2/1363/PNG/96/travel-holiday-vacation-306_89077.png" alt="bus" />
+                </section>
+                <section>
+                  <img src={star} alt="star" />
+                  <img src={star} alt="star" />
+                  <img src={star} alt="star" />
+                  <img src={star} alt="star" />
+                </section>
+              </figcaption>
+            </figure>
+
+          ) : <></>}</>}
+          {input && !arrayFiltered.length ? <h1>No hay nada</h1> : <></>}
+          
+
+
+          {/* <figure>
             <img src="https://images.pexels.com/photos/11130921/pexels-photo-11130921.jpeg?auto=compress&cs=tinysrgb&w=600" alt="caballo" className='home__main__photo' />
             <figcaption>
               <h3>Nombre del lugar</h3>
@@ -99,31 +141,7 @@ const Home = () => {
                 <img src={star} alt="star" />
               </section>
             </figcaption>
-          </figure>
-          <figure>
-            <img src="https://images.pexels.com/photos/11130921/pexels-photo-11130921.jpeg?auto=compress&cs=tinysrgb&w=600" alt="caballo" className='home__main__photo' />
-            <figcaption>
-              <h3>Nombre del lugar</h3>
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius aliquid possimus fugiat molestias rem sapiente omnis? Rem, repellat dolore? Fuga, quis nobis dolorum dolores nesciunt blanditiis aliquid. Totam, fugiat sed.</p>
-              <span> <img src={location} alt="location" /> Ubicacion del lugar</span>
-              <section>
-                <small>Turismo</small>
-                <small>Actividades acuaticas</small>
-                <small>Mirador</small>
-              </section>
-              <section>
-                <img src="https://cdn.icon-icons.com/icons2/158/PNG/96/car_22307.png" alt="carro" />
-                <img src="https://cdn.icon-icons.com/icons2/577/PNG/96/TouringMotorcycle_Green_icon-icons.com_54907.png" alt="moto" />
-                <img src="https://cdn.icon-icons.com/icons2/1363/PNG/96/travel-holiday-vacation-306_89077.png" alt="bus" />
-              </section>
-              <section>
-                <img src={star} alt="star" />
-                <img src={star} alt="star" />
-                <img src={star} alt="star" />
-                <img src={star} alt="star" />
-              </section>
-            </figcaption>
-          </figure>
+          </figure> */}
 
         </div>
 
