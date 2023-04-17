@@ -44,11 +44,11 @@ const Router = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<Navbar />}>
           <Route path="user" element={<UserInfo />} />
+          <Route path='/update-user' element={<UpdateUser />} />
           <Route path="favorites" element={<Favorites />} />
           <Route path="foro" element={<Foro />} />
           <Route path="newPlace" element={<NewPlace />} />
         </Route>
-        <Route path='/update-user' element={<UpdateUser/>} />
       </Routes>
     </BrowserRouter>
   );
