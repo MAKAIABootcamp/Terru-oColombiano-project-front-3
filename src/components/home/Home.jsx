@@ -6,6 +6,7 @@ import location from '../../assets/locationGray.svg'
 import cancel from '../../assets/cancel.png'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../navbar/Navbar'
+import { useSelector } from 'react-redux'
 
 
 const Home = () => {
@@ -17,6 +18,8 @@ const Home = () => {
     setInput(value)
 
   }
+  const { user} = useSelector(store => store.users)
+  console.log(user.birthday);
   return (
     <article className='home'>
       <div className='home__header'>

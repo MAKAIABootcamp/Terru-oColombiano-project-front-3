@@ -144,7 +144,7 @@
     }
 }
 
-@media (max-width:690px) {
+@media (max-width:890px) {
 
     .home {
         &__header {
@@ -172,6 +172,9 @@
             & figure {
                 flex-direction: column;
 
+            }
+            & div {
+                grid-template-columns: auto;
             }
         }
 

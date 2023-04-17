@@ -27,19 +27,30 @@ const Verification = () => {
       })
 
     } else if (error.status === false) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Verificación exitosa',
-        text: ''
-      }).then(() => {
-        if (auth.currentUser.displayName && auth.currentUser.photoURL) {
-          navigate('/')
 
-        } else {
-          navigate('/register')
-        }
+      if (auth.currentUser.displayName && auth.currentUser.photoURL) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Verificación exitosa',
+          text: `Que bueno tenerte de nuevo ${auth.currentUser.displayName}`
+        })
+        navigate('/')
 
-      })
+      } else {
+        Swal.fire({
+          title: 'Verificación exitosa',
+          icon: 'success',
+          text: 'Por favor completa los siguientes campos para conocerte un poco más.'
+
+        })
+        setTimeout(() => {
+          navigate('/loginWithPhone/updateInfo')
+
+
+        }, 1000)
+      }
+
+
     }
 
   }, [error])

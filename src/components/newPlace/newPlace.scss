@@ -54,8 +54,8 @@
                     cursor: pointer;
 
                     &:hover {
-                        background-color: #c08b61;
-                        color: white;
+                        scale: 1.1;
+                        transition: scale 0.5s;
                     }
                 }
             }
@@ -79,6 +79,11 @@
             font-weight: 100;
         }
     }
+}
+.selected {
+    background-color: #c08b61;
+    color: white;
+
 }
 
 @media (max-width:600px) {

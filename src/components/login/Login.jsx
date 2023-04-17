@@ -7,14 +7,18 @@ import fb from '../../assets/facebook.png'
 import google from '../../assets/google.png'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { loginWithEmail } from '../../redux/actions/userActions'
+import { useDispatch } from 'react-redux'
 
 const Login = () => {
   const { handleSubmit, register, reset, formState: { errors } } = useForm()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const onSubmit = (data) => {
     console.log(data);
-    reset()
+    dispatch(loginWithEmail(data))
+
     navigate('/')
   }
   return (

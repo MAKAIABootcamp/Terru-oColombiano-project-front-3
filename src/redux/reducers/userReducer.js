@@ -37,6 +37,15 @@ export const userReducer = (state = initialState, action) => {
         },
       };
 
+      case userTypes.ADD_POST:
+        return {
+          ...state,
+          user : {
+            ...state.user,
+            posts : action.payload
+          }
+        }
+
     case userTypes.LOGOUT:
       return state;
 
