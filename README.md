@@ -23,7 +23,7 @@ Este proyecto  consiste en una página web para ayudar a los usuarios como Nacio
 
 El proyecto Terruño Colombiano da como solución ayudar y crear conexiones con otros usuarios para dar a conocer y descubrir cómo Lugares,Cultura,Arquitectura y esencia de nuestros pueblos.
 
-# Implementación de base de fuego:
+# Implementación de Firebase:
 
 * Proveedores de autenticación (Correo electrónico y Contraseña, Google y Facebook)
 * Base de datos en la nube de Firestore (utilizada para almacenar el contenido de los lugares  y el registro de cada usuario que usa la aplicación)
