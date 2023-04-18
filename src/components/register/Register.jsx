@@ -6,6 +6,7 @@ import iFacebook from '../../assets/google.png'
 import granos from '../../assets/cafe.svg'
 import logo from '../../assets/terruño.svg'
 import { useForm } from 'react-hook-form'
+
 const Register = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm()
