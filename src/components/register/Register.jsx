@@ -88,7 +88,7 @@ const Register = () => {
 
               <div className='login_register'>
                 <button type='submit' className='login_register__btns' >Register</button>
-                <button className='login_register__btns' ><Link className='color' style={{ textDecoration: "none" }}>Iniciar seción</Link></button>
+                <button className='login_register__btns' ><Link className='color' style={{ textDecoration: "none" }}>Iniciar sesión</Link></button>
               </div>
 
               <h4>O</h4>
