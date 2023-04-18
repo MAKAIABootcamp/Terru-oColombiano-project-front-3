@@ -1,10 +1,14 @@
 .form-container {
 
+    background-image: url(https://images.pexels.com/photos/13411909/pexels-photo-13411909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    
 
     .from {
 
@@ -47,8 +51,9 @@
                 width: 75%;
                 overflow-x: auto;
             }
+
             @media (max-width: 630px) {
-              
+
                 width: 95%;
             }
 
@@ -65,6 +70,7 @@
                     border: none;
                     padding: 15px;
                     background: #727272b3;
+                    color: white;
 
                     &::placeholder {
                         color: rgb(187, 187, 187);

@@ -3,8 +3,12 @@ import './updateUser.scss'
 import { Link } from 'react-router-dom'
 import generalKenobi from '../../../assets/obi-wan-kenobi-2678395.webp'
 import { BsPencilSquare } from 'react-icons/bs'
+import { useForm } from 'react-hook-form'
 
 const UpdateUser = () => {
+
+  const { resgister, handleSubmit, formState: { errors } } = useForm()
+
   return (
     <>
       <main className='form-container'>

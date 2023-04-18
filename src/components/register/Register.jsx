@@ -6,6 +6,7 @@ import iFacebook from '../../assets/google.png'
 import granos from '../../assets/cafe.svg'
 import logo from '../../assets/terruño.svg'
 import { useForm } from 'react-hook-form'
+
 const Register = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm()
@@ -18,7 +19,7 @@ const Register = () => {
     <>
       <section className='reg-container' >
 
-        <div className='form-container' >
+        <div className='form-container-div' >
 
           <div className='logos'>
             <figure className='granos'>
@@ -30,7 +31,7 @@ const Register = () => {
 
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className='form'>
+          <form onSubmit={handleSubmit(onSubmit)} className='form' >
             <label className='input-container colum-1 ' >
               <h4>Nombre completo</h4>
 
