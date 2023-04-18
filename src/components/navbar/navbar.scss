@@ -18,6 +18,28 @@
              height: 30px;
              gap: 20px;
 
+             & button {
+                 background-color: transparent;
+                 border: none;
+                 display: flex;
+                 align-items: center;
+                 font-size: 16px;
+                 color: white;
+                 gap: 10px;
+                 cursor: pointer;
+                 text-decoration: none;
+                 font-weight: bold;
+                 background-color: red;
+                 padding: 5px;
+                 border-radius: 8px;
+
+
+                 &:hover {
+                     scale: 1.1;
+                     transition: scale 0.5s;
+                 }
+             }
+
 
              .heart {
                  color: white;
@@ -63,10 +85,11 @@
      }
 
  }
+
  .active {
-    background-color: #c08b61;
-    border-radius: 8px;
-    padding: 5px;
+     background-color: #c08b61;
+     border-radius: 8px;
+     padding: 5px;
  }
 
  .hidden {
@@ -77,10 +100,9 @@
      display: none;
  }
 
- @media (max-width : 790px) {
+ @media (max-width : 890px) {
      .hidden {
          display: block;
-         margin-right: 5%;
          height: 30px;
      }
 
@@ -110,6 +132,7 @@
                      align-self: end;
                      margin-top: 10px;
                  }
+
              }
 
              & small {

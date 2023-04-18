@@ -7,6 +7,10 @@
     justify-content: center;
     align-items: center;
     padding: 10px;
+    background-image: url(https://images2.alphacoders.com/107/1070004.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 
     & form {
         display: flex;
@@ -16,6 +20,7 @@
         margin-bottom: 20px;
         padding: 10px;
         border-radius: 8px;
+        background-color: white;
 
         & label {
             display: flex;
@@ -49,8 +54,8 @@
                     cursor: pointer;
 
                     &:hover {
-                        background-color: #c08b61;
-                        color: white;
+                        scale: 1.1;
+                        transition: scale 0.5s;
                     }
                 }
             }
@@ -74,6 +79,11 @@
             font-weight: 100;
         }
     }
+}
+.selected {
+    background-color: #c08b61;
+    color: white;
+
 }
 
 @media (max-width:600px) {
