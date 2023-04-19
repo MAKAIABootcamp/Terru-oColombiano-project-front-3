@@ -125,6 +125,7 @@
                     width: 250px;
                     height: 250px;
                     border-radius: 160px;
+                    object-fit: cover;
 
                     @media (max-width: 650px) {
                         width: 200px;
@@ -169,10 +170,12 @@
                     border: none;
                     height: 40px;
                     width: 200px;
-                    padding: 10px 20px 10px 35px;
                     background-color: #56526bb3;
                     font-weight: 500;
                     font-size: 15px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
 
                     @media (max-width: 500px) {
                         padding: 5px 5px 5px 5px;
@@ -188,10 +191,12 @@
                     border: none;
                     height: 40px;
                     width: 200px;
-                    padding: 10px 20px 10px 35px;
                     background-color: #7a2c2cb3;
                     font-weight: 500;
                     font-size: 15px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
 
                     @media (max-width: 500px) {
                         padding: 8px 10px 10px 35px;

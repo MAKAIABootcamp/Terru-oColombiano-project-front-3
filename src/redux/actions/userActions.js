@@ -7,6 +7,9 @@ import { userTypes } from "../types/userTypes";
 const collectionName = "users";
 const usersCollection = collection(dataBase, collectionName);
 
+const placesCollectionName = "places"
+const  placesCollection = collection(dataBase, placesCollectionName)
+
 export const loginUser = (user, error) => {
   return {
     type: userTypes.LOGIN_USER,
@@ -65,6 +68,7 @@ export const createPostAsync = (post) => {
     let posts = [...array, post]
       const userRef = doc(dataBase, collectionName, id);
       await updateDoc(userRef, { posts: posts });
+      const placesDoc = await addDoc(placesCollection, post);
       dispatch(createPost(posts));
     } catch (error) {
       console.log(error);
@@ -134,6 +138,7 @@ export const createUserAsync = (user) => {
         birthday: user.birthday,
         password : user.password,
         description : user.description,
+        phone : user.phone,
         type: "user",
         posts: [],
         favorites: [],
@@ -172,7 +177,6 @@ export const loginWithEmail = (user) => {
       const password = user.password;
       const userAuth = await signInWithEmailAndPassword(auth, email, password);
       const userCollection = await getUsers(userAuth.user.uid);
-      console.log(userCollection);
       dispatch(
         loginUser(
           {

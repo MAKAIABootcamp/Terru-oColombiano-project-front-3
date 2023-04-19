@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { BsFillHeartFill } from 'react-icons/bs'
 import { AiOutlineUser } from 'react-icons/ai'
 import { HiOutlineUserGroup } from 'react-icons/hi'
-import { IoMdAddCircleOutline } from 'react-icons/io'
 import { AiOutlineHome } from 'react-icons/ai'
 import { CiLogout } from 'react-icons/ci'
+import { BsChevronDown } from 'react-icons/bs'
+import { MdWorkspacesFilled } from 'react-icons/md'
 import logo from '../../assets/cafe.svg'
 import name from '../../assets/terruño.svg'
 import hamburguer from '../../assets/icon-hamburger.svg'
@@ -76,7 +77,7 @@ const Navbar = () => {
                     <ul>
                         <img src={iconClose} alt="cerrar" className={close} onClick={() => openMenu("close")} />
                         <NavLink to='/' className='navlink'><AiOutlineHome /> Inicio</NavLink>
-                        <NavLink to='newPlace' className='navlink'><IoMdAddCircleOutline /> Agregar</NavLink>
+                        <NavLink to='newPlace/addPlace' className='navlink'><MdWorkspacesFilled /> Mis lugares </NavLink>
                         <NavLink to='foro' className='navlink'><HiOutlineUserGroup /> Foro</NavLink>
                         <NavLink to='favorites' className='navlink'><BsFillHeartFill className='heart' /> Favoritos</NavLink>
                         <NavLink to='user' className='navlink'><AiOutlineUser /> Cuenta</NavLink>

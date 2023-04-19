@@ -8,12 +8,14 @@ import google from '../../assets/google.png'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { loginWithEmail } from '../../redux/actions/userActions'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Login = () => {
   const { handleSubmit, register, reset, formState: { errors } } = useForm()
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const { user } = useSelector(store => store.users)
+  console.log(user);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -39,7 +41,7 @@ const Login = () => {
             {errors.email ? <span>{errors.email.message}</span> : <></>}
             <label>
               Contraseña
-              <input type="text" placeholder='Ingrese su contraseña' {...register('password', {
+              <input type="password" placeholder='Ingrese su contraseña' {...register('password', {
                 required: 'Este campo es requerido'
               })} />
             </label>
@@ -56,8 +58,8 @@ const Login = () => {
         <figure>
           <img src={google} alt="Facebook" />
           <img src={fb} alt="Google" />
-          
-          <img src={phone} alt="Phone" onClick={() => navigate ('/loginWithPhone/phone')} />
+
+          <img src={phone} alt="Phone" onClick={() => navigate('/loginWithPhone/phone')} />
         </figure>
       </div>
     </article>
