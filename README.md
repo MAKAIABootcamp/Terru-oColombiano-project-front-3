@@ -5,7 +5,7 @@
 
 # Descripción:
 
-Terruño Colombiano es un proyecto que consiste en una página web que tiene el objetivo de crear conexiones,difundir, publicar y descubrir la esencia de Colombia en cada rincón de nuestro terruño.
+Terruño Colombiano es un proyecto que consiste en una Red Social que tiene el objetivo de crear conexiones,difundir, publicar y descubrir la esencia de Colombia en cada rincón de nuestro terruño.
 
  * Inicie sesión con autenticación de correo electrónico y contraseña (Implementado con Firebase)
 * Inicie sesión con la autenticación de Google y Facebook (Implementado con Firebase)
@@ -18,7 +18,7 @@ Terruño Colombiano es un proyecto que consiste en una página web que tiene el 
 
 # Usuarios  Identificados:
 
-Este proyecto  consiste en una página web para ayudar a los usuarios como Nacionales,Extranjeros y Guías turísticos a conocer y descubrir lugares o rincones de nuestro terruño.
+Este proyecto  consiste en una Red social para ayudar a los usuarios como Nacionales,Extranjeros y Guías turísticos a conocer y descubrir lugares o rincones de nuestro terruño.
 
 # Como Nuestra Idea Soluciona El Problema:
 
