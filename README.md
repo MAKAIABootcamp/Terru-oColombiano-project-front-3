@@ -13,6 +13,7 @@ Terruño Colombiano es un proyecto que consiste en una página web que tiene el 
 * El usuario puede editar los datos del perfil (Nombre,Correo,Contraseña,Teléfono,Dirección y Descripción)
 * El usuario podrá navegar por (Inicio,Agregar,Foro,Favoritos y Cuenta)
 * El usuario podrá agregar un lugar, comentar o si le gusta un sitio podrá ponerlo en favoritos 
+* El usuario podra ver la descripcion de cada lugar como (Nombre,Descripción,Dirección,Horarios,Clima,Actividades) 
 
 
 # Usuarios  Identificados:
