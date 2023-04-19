@@ -14,7 +14,9 @@ const PrivateRouter = ({children}) => {
     useEffect(() => {
       
       onAuthStateChanged(auth, (user) => {
+        console.log(user);
         if (user) {
+          console.log(user);
           getUsers(user.uid)
             .then((response) => {
               dispatch(loginUser(response, { status: false, message: "" }));

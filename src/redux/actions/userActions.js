@@ -138,6 +138,7 @@ export const createUserAsync = (user) => {
         birthday: user.birthday,
         password : user.password,
         description : user.description,
+        phone : user.phone,
         type: "user",
         posts: [],
         favorites: [],
@@ -176,7 +177,6 @@ export const loginWithEmail = (user) => {
       const password = user.password;
       const userAuth = await signInWithEmailAndPassword(auth, email, password);
       const userCollection = await getUsers(userAuth.user.uid);
-      console.log(userCollection);
       dispatch(
         loginUser(
           {

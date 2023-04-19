@@ -1,29 +1,50 @@
 import React, { useEffect, useState } from 'react'
 import './home.scss'
 import search from '../../assets/searchNav.svg'
-import star from '../../assets/star.svg'
 import location from '../../assets/locationGray.svg'
 import cancel from '../../assets/cancel.png'
-import { useNavigate } from 'react-router-dom'
 import Navbar from '../navbar/Navbar'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPlacesAsync } from '../../redux/actions/placesActions'
+import { BsFillCarFrontFill } from 'react-icons/bs'
+import { RiMotorbikeFill } from 'react-icons/ri'
+import { BiTime } from 'react-icons/bi'
+import { BiWalk } from 'react-icons/bi'
+import { FaBus } from 'react-icons/fa'
+import { IoMdBicycle } from 'react-icons/io'
+import { RiShipLine } from 'react-icons/ri'
+import { Rate } from 'antd'
+import { BsFillHeartFill } from 'react-icons/bs'
+
+
+
+
+
+
+
 
 
 const Home = () => {
   const [input, setInput] = useState('')
-  const navigate = useNavigate()
+  const [favorite, setFavorite] = useState(false)
+  const [isFavorite, setIsFavorite] = useState('')
   const dispatch = useDispatch()
+
 
   const valueInput = ({ value }) => {
     setInput(value)
 
   }
-  const { user } = useSelector(store => store.users)
   const { places } = useSelector(store => store.places);
 
-  console.log(places);
-  console.log(user.birthday);
+  const addFavorite = () => {
+      setIsFavorite('favorite')
+    }
+
+    
+  
+
+
 
   useEffect(() => {
     dispatch(getPlacesAsync())
@@ -31,8 +52,8 @@ const Home = () => {
   }, [])
 
   const arrayFiltered = places[0]?.filter(place => place.name.toLowerCase().includes(input.toLowerCase()))
+  
 
-  console.log(arrayFiltered);
 
   return (
     <article className='home'>
@@ -64,7 +85,7 @@ const Home = () => {
         </section>
       </div>
       <div className='home__main'>
-        <h1>Todos los rincones</h1>
+        <h1>Destinos populares</h1>
         <div>
           {input ? arrayFiltered.map((e, index) =>
             <figure key={index}>
@@ -72,21 +93,44 @@ const Home = () => {
               <figcaption>
                 <h3>{e.name}</h3>
                 <p>{e.description}</p>
+                <small><BiTime /> {e.schedules}</small>
                 <span> <img src={location} alt="location" />{` ${e.location} - ${e.department}`}</span>
                 <section>
                   {e.category.map((act, index) => <small key={index}>{act}</small>)}
                 </section>
                 <section>
-                  <img src="https://cdn.icon-icons.com/icons2/158/PNG/96/car_22307.png" alt="carro" />
-                  <img src="https://cdn.icon-icons.com/icons2/577/PNG/96/TouringMotorcycle_Green_icon-icons.com_54907.png" alt="moto" />
-                  <img src="https://cdn.icon-icons.com/icons2/1363/PNG/96/travel-holiday-vacation-306_89077.png" alt="bus" />
+                  {e.icons.map((icon) => {
+                    if (icon === 'car') {
+                      return <BsFillCarFrontFill />
+
+                    }
+                    if (icon === 'moto') {
+                      return <RiMotorbikeFill />
+
+                    }
+                    if (icon === 'walking') {
+                      return <BiWalk />
+
+                    }
+                    if (icon === 'bici') {
+                      return <IoMdBicycle />
+
+                    }
+                    if (icon === 'bus') {
+                      return <FaBus />
+
+                    }
+                    if (icon === 'ship') {
+                      return <RiShipLine />
+
+                    }
+
+                  }
+
+                  )}
                 </section>
-                <section>
-                  <img src={star} alt="star" />
-                  <img src={star} alt="star" />
-                  <img src={star} alt="star" />
-                  <img src={star} alt="star" />
-                </section>
+                <Rate disabled defaultValue={e.rate} />
+                <BsFillHeartFill className='heart' />
               </figcaption>
             </figure>) : <>
             {places[0] ? places[0].map((place, index) =>
@@ -95,32 +139,62 @@ const Home = () => {
                 <figcaption>
                   <h3>{place.name}</h3>
                   <p>{place.description}</p>
+                  <small><BiTime /> {place.schedules}</small>
                   <span> <img src={location} alt="location" />{` ${place.location} - ${place.department}`}</span>
                   <section>
                     {place.category.map((act, index) => <small key={index}>{act}</small>)}
                   </section>
                   <section>
-                    <img src="https://cdn.icon-icons.com/icons2/158/PNG/96/car_22307.png" alt="carro" />
-                    <img src="https://cdn.icon-icons.com/icons2/577/PNG/96/TouringMotorcycle_Green_icon-icons.com_54907.png" alt="moto" />
-                    <img src="https://cdn.icon-icons.com/icons2/1363/PNG/96/travel-holiday-vacation-306_89077.png" alt="bus" />
+                    {place.icons.map((icon) => {
+                      if (icon === 'car') {
+                        return <BsFillCarFrontFill />
+
+                      }
+                      if (icon === 'moto') {
+                        return <RiMotorbikeFill />
+
+                      }
+                      if (icon === 'walking') {
+                        return <BiWalk />
+
+                      }
+                      if (icon === 'bici') {
+                        return <IoMdBicycle />
+
+                      }
+                      if (icon === 'bus') {
+                        return <FaBus />
+
+                      }
+                      if (icon === 'ship') {
+                        return <RiShipLine />
+
+                      }
+
+                    }
+
+                    )}
+
+
                   </section>
-                  <section>
-                    <img src={star} alt="star" />
-                    <img src={star} alt="star" />
-                    <img src={star} alt="star" />
-                    <img src={star} alt="star" />
-                  </section>
+                  <Rate disabled defaultValue={place.rate} />
+                  <BsFillHeartFill onClick={() => addFavorite()} className={`heart ${isFavorite}`} />
+
                 </figcaption>
               </figure>
 
             ) : <></>}</>}
-          {input && !arrayFiltered.length ? <h1>No hay nada</h1> : <></>}
+          {input && !arrayFiltered.length ? <div className='error404'>
+            <h1>Lugar no encontrado</h1>
+            <p>Por favor ingresa una nueva busqueda.</p>
+          </div> : <></>}
 
         </div>
 
 
 
       </div>
+
     </article>
   )
 }
