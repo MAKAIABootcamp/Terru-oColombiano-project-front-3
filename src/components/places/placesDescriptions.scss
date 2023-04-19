@@ -67,15 +67,7 @@
                     border-radius: 5px;
                 }
 
-                // .radius-1 {
-
-                //     border-radius: 0px 15px 15px 0px;
-                // }
-
-                // .radius-2 {
-                //     border-radius: 15px 0px 0px 15px;
-
-                // }
+                
             }
         }
 
@@ -90,7 +82,7 @@
 
             @media(max-width: 550px) {
                 flex-direction: column-reverse;
-                margin-top: 250px;
+                margin-top: 170px;
             }
         }
     }
