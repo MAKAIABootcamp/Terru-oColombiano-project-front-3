@@ -35,6 +35,10 @@ const Home = () => {
     setInput(value)
 
   }
+
+
+  const { user } = useSelector(store => store.users)
+
   const { places } = useSelector(store => store.places);
 
   const addFavorite = () => {
@@ -53,6 +57,7 @@ const Home = () => {
 
   const arrayFiltered = places[0]?.filter(place => place.name.toLowerCase().includes(input.toLowerCase()))
   
+
 
 
   return (
