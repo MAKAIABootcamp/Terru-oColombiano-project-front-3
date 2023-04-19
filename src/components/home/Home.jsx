@@ -19,7 +19,7 @@ const Home = () => {
 
   }
   const { user} = useSelector(store => store.users)
-  console.log(user.birthday);
+  //console.log(user.birthday);
   return (
     <article className='home'>
       <div className='home__header'>

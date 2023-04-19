@@ -73,7 +73,10 @@ const Register = () => {
             <label className='input-container colum-2 ' >
               <h4>Foto de perfil</h4>
 
-              <input className='input' type="text" placeholder='pon tu foto de perfil' {...register('photo', { required: 'La foto de perfil es requerido' })} />
+              <div className='input div-file'>
+                <p > Selecciona tu foto de perfil</p>
+                <input type="file" className='file-input'  {...register('photo', { required: 'La foto de perfil es requerido' })} />
+              </div>
 
             </label>
             {errors.photo ? <span className='red'>{errors.photo.message}</span> : <></>}
