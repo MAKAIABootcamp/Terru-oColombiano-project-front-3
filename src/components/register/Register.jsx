@@ -6,13 +6,32 @@ import iFacebook from '../../assets/google.png'
 import granos from '../../assets/cafe.svg'
 import logo from '../../assets/terruño.svg'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { createUserAsync } from '../../redux/actions/userActions'
+import { fileUpLoad } from '../../services/fileUpLoad'
 
 const Register = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm()
+  const dispatch = useDispatch()
 
-  const onSubmit = () => {
-    console.log('yesssssssss')
+  const onSubmit = async (data) => {
+    console.log(data)
+    const photo = data.photo[0] ? await fileUpLoad(data.photo[0]) : '';
+
+    const user = {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        photo: photo,
+        location: data.location,
+        birthday: data.birthday,
+        description : data.description,
+        phone : data.phone
+
+
+    }
+    dispatch(createUserAsync(user))
   }
 
   return (
@@ -51,8 +70,11 @@ const Register = () => {
             <label className='input-container colum-1' >
               <h4>Direccion</h4>
 
-              <input className='input' type="text" placeholder='ingresa tu direccion' />
+              <input className='input' type="text" placeholder='ingresa tu direccion' {...register('location', {
+                required : 'La dirección es requerida'
+              })} />
             </label>
+            {errors.location ? <span className='red'>{errors.location.message}</span> : <></>}
 
             <label className='input-container colum-2 ' >
               <h4>Contraseña</h4>
@@ -69,13 +91,21 @@ const Register = () => {
 
             </label>
             {errors.phone ? <span className='red'>{errors.phone.message}</span> : <></>}
+            <label className='input-container colum-1' >
+              <h4>Fecha de nacimiento</h4>
+
+              <input className='input' type="date" placeholder='Ingresa tu fecha de nacimiento' {...register('birthday', { required: 'El numero telefonico es requerido' })} />
+
+            </label>
+            {errors.phone ? <span className='red'>{errors.phone.message}</span> : <></>}
 
             <label className='input-container colum-2 ' >
               <h4>Foto de perfil</h4>
 
+
               <div className='input div-file'>
                 <p > Selecciona tu foto de perfil</p>
-                <input type="file" className='file-input'  {...register('photo', { required: 'La foto de perfil es requerido' })} />
+                <input type="file" className='file-input'  {...register('photo', { required: 'La foto de perfil es requerida' })} />
               </div>
 
             </label>
@@ -84,8 +114,11 @@ const Register = () => {
             <label className='input-container colum-1' >
               <h4>Descripcion</h4>
 
-              <textarea className='textarea' placeholder='escribe una peque descripcion sobre ti' />
+              <textarea className='textarea' placeholder='escribe una peque descripcion sobre ti' {...register('description', {
+                required : 'La descripción es requerida.'
+              })} />
             </label>
+            {errors.description ? <span className='red'>{errors.description.message}</span> : <></>}
 
             <section className='form__btns-container'>
 
