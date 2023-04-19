@@ -15,6 +15,7 @@ import LoginWithPhone from "../components/loginWithPhone/LoginWithPhone";
 import Verification from "../components/loginWithPhone/Verification";
 import Phone from "../components/loginWithPhone/Phone";
 import UpdateInfo from "../components/login/UpdateInfo";
+import PlaceDescription from '../components/places/PlaceDescription'
 import { auth } from "../firebase/firebaseConfig";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/actions/userActions";
@@ -71,6 +72,7 @@ const Router = () => {
           <Route path="favorites" element={<Favorites />} />
           <Route path="foro" element={<Foro />} />
           <Route path="newPlace" element={<NewPlace />} />
+          <Route path="description" element={<PlaceDescription/>} />
         </Route>
       </Routes>
     </BrowserRouter>
