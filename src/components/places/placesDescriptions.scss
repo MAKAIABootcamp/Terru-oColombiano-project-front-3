@@ -11,6 +11,7 @@
         box-shadow: 0px 0px 20px 5px black;
         border-radius: 15px;
         padding: 15px;
+        height: 100%;
 
         .card-section {
 
@@ -18,9 +19,8 @@
             height: 65vh;
             width: 90vw;
             margin-top: 25px;
+
             
-            // background-color: black;
-            // color: white;
             
 
             .name-title {
@@ -33,14 +33,26 @@
                 gap: 40px;
                 width: 200%;
 
+                @media(max-width: 760px ) {
+                    width: 100%;
+                    gap: 15px;
+                }
+
                 & h2 {
                     font-size: 250%;
+
+                    @media(max-width: 760px ) {
+                        font-size: 25px;
+                    }
 
                 }
 
                 & p {
-
                     font-size: 120%;
+
+                    @media(max-width: 760px ) {
+                        font-size: 15px;
+                    }
                 }
             }
 
@@ -64,6 +76,21 @@
                 //     border-radius: 15px 0px 0px 15px;
 
                 // }
+            }
+        }
+
+        .position-1 {
+
+            @media(max-width: 550px) {
+                flex-direction: column;
+            }
+        }
+
+        .position-2 {
+
+            @media(max-width: 550px) {
+                flex-direction: column-reverse;
+                margin-top: 250px;
             }
         }
     }

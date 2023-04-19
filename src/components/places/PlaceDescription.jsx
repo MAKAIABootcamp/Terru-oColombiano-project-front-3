@@ -11,7 +11,7 @@ const PlaceDescription = () => {
     <>
       <main className='description-main'>
         <article className='description-box'>
-          <section className='card-section'>
+          <section className='card-section position-1'>
             <div className='name-title'>
               <h2>Paramo de Sumapaz</h2>
               <p>
@@ -20,13 +20,13 @@ const PlaceDescription = () => {
             </div>
 
             <figure className='figure-container'>
-              <img className='figure-container__img radius-1' src={frailejonse} alt="" />
+              <img className='figure-container__img ' src={frailejonse} alt="" />
             </figure>
           </section>
 
-          <section className='card-section'>
+          <section className='card-section position-2'>
             <figure className='figure-container'>
-              <img className='figure-container__img radius-2' src={sendero} alt="" />
+              <img className='figure-container__img ' src={sendero} alt="" />
             </figure>
             <div className='name-title'>
               <h2>Actividaes</h2>
@@ -37,7 +37,7 @@ const PlaceDescription = () => {
 
           </section>
 
-          <section className='card-section'>
+          <section className='card-section position-1'>
             <div className='name-title'>
               <h2>Formas de llegar</h2>
               <p>
@@ -48,7 +48,7 @@ const PlaceDescription = () => {
             </div>
 
             <figure className='figure-container'>
-              <img className='figure-container__img radius-1' src={sumapaz} alt="" />
+              <img className='figure-container__img ' src={sumapaz} alt="" />
             </figure>
           </section>
         </article>
