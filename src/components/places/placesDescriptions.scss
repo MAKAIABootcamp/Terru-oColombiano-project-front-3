@@ -4,67 +4,78 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 35px;
+    margin-top: 50px;
 
     .description-box {
-        
-        box-shadow: 0px 0px 20px 5px black;
+
+        // box-shadow: 0px 0px 20px 5px black;
+        margin-top: 20px;
         border-radius: 15px;
         padding: 15px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        gap: 20px;
 
         .card-section {
 
             display: flex;
-            height: 65vh;
-            width: 90vw;
-            margin-top: 25px;
+            width: 100%;
+            gap: 10px;
+            border: 1px solid gray;
+            border-radius: 8px;
             
-            // background-color: black;
-            // color: white;
-            
+
 
             .name-title {
 
                 display: flex;
                 flex-direction: column;
-                align-items: center;
-                justify-content: center;
                 padding: 25px;
                 gap: 40px;
-                width: 200%;
+           
 
-                & h2 {
-                    font-size: 250%;
-
-                }
-
-                & p {
-
-                    font-size: 120%;
-                }
+             
             }
 
             .figure-container {
 
                 height: 100%;
                 width: 100%;
+                padding: 10px;
 
                 &__img {
-                    height: 100%;
-                    width: 100%;
+                    height: 300px;
+                    object-fit: cover;
                     border-radius: 5px;
+                    background-color: rebeccapurple;
                 }
 
-                // .radius-1 {
-
-                //     border-radius: 0px 15px 15px 0px;
-                // }
-
-                // .radius-2 {
-                //     border-radius: 15px 0px 0px 15px;
-
-                // }
             }
         }
     }
+}
+@media (max-width:890px){
+    .card-section {
+        flex-direction: column;
+        gap: 0px;
+
+        .name-title {
+            height: 50%;
+
+            & p {
+                font-size: 14px;
+            }
+        }
+        .figure-container {
+            height: 50%;
+
+            & img {
+                height: 200px;
+                width: 100%;
+            }
+        }
+    }
+
 }
