@@ -3,8 +3,15 @@ import './updateUser.scss'
 import { Link } from 'react-router-dom'
 import generalKenobi from '../../../assets/obi-wan-kenobi-2678395.webp'
 import { BsPencilSquare } from 'react-icons/bs'
+import { useForm } from 'react-hook-form'
+import { useSelector } from 'react-redux'
 
 const UpdateUser = () => {
+
+  const { resgister, handleSubmit, formState: { errors } } = useForm()
+
+  const {user} = useSelector(store => store.users)
+
   return (
     <>
       <main className='form-container'>
@@ -14,11 +21,11 @@ const UpdateUser = () => {
 
             <label className='inputs-container__label'>
               <h3>Cambiar el nombre de usuario</h3>
-              <input className='inputs' type="text" placeholder='Ingresa nuevo nembre de usuario' />
+              <input className='inputs' type="text" placeholder='Ingresa nuevo nombre de usuario' />
             </label>
 
             <label className='inputs-container__label'>
-              <h3>Cambiar correo electronico</h3>
+              <h3>Cambiar correo electrónico</h3>
               <input className='inputs' type="text" placeholder='Ingresa nuevo correo electronico' />
             </label>
 
@@ -46,10 +53,10 @@ const UpdateUser = () => {
           <section className='photo-btns'>
             <label >
 
-              <h3>cambiar foto de perfil</h3>
+              <h3>Cambiar foto de perfil</h3>
 
                 <figure className='profile-photo'>
-                  <img src={generalKenobi} alt="hello there" />
+                  <img src={user.photo} alt="hello there" />
                   <BsPencilSquare/>
                 <input className='inputs-photo' type="file" placeholder='foto de perfil' />
                 </figure>

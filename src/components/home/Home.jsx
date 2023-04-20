@@ -1,29 +1,77 @@
 import React, { useEffect, useState } from 'react'
 import './home.scss'
 import search from '../../assets/searchNav.svg'
-import star from '../../assets/star.svg'
 import location from '../../assets/locationGray.svg'
 import cancel from '../../assets/cancel.png'
-import { useNavigate } from 'react-router-dom'
 import Navbar from '../navbar/Navbar'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPlacesAsync } from '../../redux/actions/placesActions'
+import { BsFillCarFrontFill } from 'react-icons/bs'
+import { RiMotorbikeFill } from 'react-icons/ri'
+import { BiTime } from 'react-icons/bi'
+import { BiWalk } from 'react-icons/bi'
+import { FaBus } from 'react-icons/fa'
+import { IoMdBicycle } from 'react-icons/io'
+import { RiShipLine } from 'react-icons/ri'
+import { Rate } from 'antd'
+import { BsFillHeartFill } from 'react-icons/bs'
+import { addFavoriteAsync } from '../../redux/actions/userActions'
+import Swal from 'sweetalert2'
+import { ToastContainer, toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 
 const Home = () => {
   const [input, setInput] = useState('')
-  const navigate = useNavigate()
+  const [favorite, setFavorite] = useState(false)
+  const [isFavorite, setIsFavorite] = useState('')
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+
 
   const valueInput = ({ value }) => {
     setInput(value)
 
   }
-  const { user } = useSelector(store => store.users)
-  const { places } = useSelector(store => store.places);
 
+
+  const { user } = useSelector(store => store.users)
+
+  const { places } = useSelector(store => store.places);
   console.log(places);
-  console.log(user.birthday);
+  console.log(user);
+
+  const addFavorite = (data) => {
+    setIsFavorite('favorite')
+    const isFavorite = user.favorites.filter(fav => fav.id === data.id)
+
+    if (!isFavorite.length) {
+      dispatch(addFavoriteAsync(data))
+      toast('✔ Se ha agregado correctamente!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+
+    } else {
+      Swal.fire({
+        icon: 'info',
+        title: 'Este lugar ya está en favoritos',
+
+      })
+    }
+
+  }
+
+
+
+
+
 
   useEffect(() => {
     dispatch(getPlacesAsync())
@@ -32,7 +80,8 @@ const Home = () => {
 
   const arrayFiltered = places[0]?.filter(place => place.name.toLowerCase().includes(input.toLowerCase()))
 
-  console.log(arrayFiltered);
+
+
 
   return (
     <article className='home'>
@@ -64,90 +113,117 @@ const Home = () => {
         </section>
       </div>
       <div className='home__main'>
-        <h1>Todos los rincones</h1>
+        <h1>Destinos populares</h1>
         <div>
           {input ? arrayFiltered.map((e, index) =>
-            <figure key={index}>
-            <img src={e.imgPlace2} alt="caballo" className='home__main__photo' />
-            <figcaption>
-              <h3>{e.name}</h3>
-              <p>{e.description}</p>
-              <span> <img src={location} alt="location" />{` ${e.location} - ${e.department}`}</span>
-              <section>
-                {e.category.map((act, index) => <small key={index}>{act}</small>)}
-              </section>
-              <section>
-                <img src="https://cdn.icon-icons.com/icons2/158/PNG/96/car_22307.png" alt="carro" />
-                <img src="https://cdn.icon-icons.com/icons2/577/PNG/96/TouringMotorcycle_Green_icon-icons.com_54907.png" alt="moto" />
-                <img src="https://cdn.icon-icons.com/icons2/1363/PNG/96/travel-holiday-vacation-306_89077.png" alt="bus" />
-              </section>
-              <section>
-                <img src={star} alt="star" />
-                <img src={star} alt="star" />
-                <img src={star} alt="star" />
-                <img src={star} alt="star" />
-              </section>
-            </figcaption>
-          </figure>):<>
-          {places[0] ? places[0].map((place, index) => 
-            <figure key={index}>
-              <img src={place.imgPlace2} alt="caballo" className='home__main__photo' />
+            <figure key={index} onClick={() => navigate(`/description/${e.id}`)}>
+              <img src={e.imgPlace2} alt="caballo" className='home__main__photo' />
               <figcaption>
-                <h3>{place.name}</h3>
-                <p>{place.description}</p>
-                <span> <img src={location} alt="location" />{` ${place.location} - ${place.department}`}</span>
+                <h3>{e.name}</h3>
+                <p>{e.description}</p>
+                <small><BiTime /> {e.schedules}</small>
+                <span> <img src={location} alt="location" />{` ${e.location} - ${e.department}`}</span>
                 <section>
-                  {place.category.map((act, index) => <small key={index}>{act}</small>)}
+                  {e.category.map((act, index) => <small key={index}>{act}</small>)}
                 </section>
                 <section>
-                  <img src="https://cdn.icon-icons.com/icons2/158/PNG/96/car_22307.png" alt="carro" />
-                  <img src="https://cdn.icon-icons.com/icons2/577/PNG/96/TouringMotorcycle_Green_icon-icons.com_54907.png" alt="moto" />
-                  <img src="https://cdn.icon-icons.com/icons2/1363/PNG/96/travel-holiday-vacation-306_89077.png" alt="bus" />
+                  {e.icons.map((icon) => {
+                    if (icon === 'car') {
+                      return <BsFillCarFrontFill />
+
+                    }
+                    if (icon === 'moto') {
+                      return <RiMotorbikeFill />
+
+                    }
+                    if (icon === 'walking') {
+                      return <BiWalk />
+
+                    }
+                    if (icon === 'bici') {
+                      return <IoMdBicycle />
+
+                    }
+                    if (icon === 'bus') {
+                      return <FaBus />
+
+                    }
+                    if (icon === 'ship') {
+                      return <RiShipLine />
+
+                    }
+
+                  }
+
+                  )}
                 </section>
-                <section>
-                  <img src={star} alt="star" />
-                  <img src={star} alt="star" />
-                  <img src={star} alt="star" />
-                  <img src={star} alt="star" />
-                </section>
+                <Rate disabled defaultValue={e.rate} />
+                <BsFillHeartFill className='heart' />
               </figcaption>
-            </figure>
+            </figure>) : <>
+            {places[0] ? places[0].map((place, index) =>
+              <figure key={index} onClick={() => navigate(`/description/${place.id}`)}>
+                <img src={place.imgPlace2} alt="caballo" className='home__main__photo' />
+                <figcaption>
+                  <h3>{place.name}</h3>
+                  <p>{place.description}</p>
+                  <small><BiTime /> {place.schedules}</small>
+                  <span> <img src={location} alt="location" />{` ${place.location} - ${place.department}`}</span>
+                  <section>
+                    {place.category.map((act, index) => <small key={index}>{act}</small>)}
+                  </section>
+                  <section>
+                    {place.icons.map((icon) => {
+                      if (icon === 'car') {
+                        return <BsFillCarFrontFill />
 
-          ) : <></>}</>}
-          {input && !arrayFiltered.length ? <h1>No hay nada</h1> : <></>}
-          
+                      }
+                      if (icon === 'moto') {
+                        return <RiMotorbikeFill />
+
+                      }
+                      if (icon === 'walking') {
+                        return <BiWalk />
+
+                      }
+                      if (icon === 'bici') {
+                        return <IoMdBicycle />
+
+                      }
+                      if (icon === 'bus') {
+                        return <FaBus />
+
+                      }
+                      if (icon === 'ship') {
+                        return <RiShipLine />
+
+                      }
+
+                    }
+
+                    )}
 
 
-          {/* <figure>
-            <img src="https://images.pexels.com/photos/11130921/pexels-photo-11130921.jpeg?auto=compress&cs=tinysrgb&w=600" alt="caballo" className='home__main__photo' />
-            <figcaption>
-              <h3>Nombre del lugar</h3>
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius aliquid possimus fugiat molestias rem sapiente omnis? Rem, repellat dolore? Fuga, quis nobis dolorum dolores nesciunt blanditiis aliquid. Totam, fugiat sed.</p>
-              <span> <img src={location} alt="location" /> Ubicacion del lugar</span>
-              <section>
-                <small>Turismo</small>
-                <small>Actividades acuaticas</small>
-                <small>Mirador</small>
-              </section>
-              <section>
-                <img src="https://cdn.icon-icons.com/icons2/158/PNG/96/car_22307.png" alt="carro" />
-                <img src="https://cdn.icon-icons.com/icons2/577/PNG/96/TouringMotorcycle_Green_icon-icons.com_54907.png" alt="moto" />
-                <img src="https://cdn.icon-icons.com/icons2/1363/PNG/96/travel-holiday-vacation-306_89077.png" alt="bus" />
-              </section>
-              <section>
-                <img src={star} alt="star" />
-                <img src={star} alt="star" />
-                <img src={star} alt="star" />
-                <img src={star} alt="star" />
-              </section>
-            </figcaption>
-          </figure> */}
+                  </section>
+                  <Rate disabled defaultValue={place.rate} />
+                  <BsFillHeartFill onClick={() => addFavorite(place)} className={`heart ${isFavorite}`} />
+
+                </figcaption>
+              </figure>
+
+            ) : <></>}</>}
+          {input && !arrayFiltered.length ? <div className='error404'>
+            <h1>Lugar no encontrado</h1>
+            <p>Por favor ingresa una nueva busqueda.</p>
+          </div> : <></>}
 
         </div>
 
 
 
       </div>
+      <ToastContainer />
+
     </article>
   )
 }
