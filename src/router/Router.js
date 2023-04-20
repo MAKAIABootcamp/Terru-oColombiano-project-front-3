@@ -20,9 +20,11 @@ import { auth } from "../firebase/firebaseConfig";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/actions/userActions";
 import PrivateRouter from "./PrivateRouter";
+
+import Welcome from "../components/welcome/Welcome";
+
 import AddPlace from "../components/newPlace/AddPlace";
 import MyPlaces from "../components/newPlace/MyPlaces";
-
 
 const Router = () => {
   const dispatch = useDispatch();
@@ -53,6 +55,7 @@ const Router = () => {
             </PrivateRouter>
           }
         />
+        <Route path="/welcome" element={<Welcome />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="loginWithPhone" element={<LoginWithPhone />}>
