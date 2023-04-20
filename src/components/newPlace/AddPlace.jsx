@@ -73,7 +73,10 @@ const AddPlace = () => {
             imgAct: imgAct,
             imgPlace2: imgPlace2,
             postedBy : user.name,
+            postedByImg : user.photo,
             rate : 0,
+            comments : [],
+
 
 
 
@@ -144,6 +147,10 @@ const AddPlace = () => {
                     <small className={activity.includes('Mirador') ? 'selected' : ''} onClick={() => addActivity('Mirador')}>Mirador</small>
                     <small className={activity.includes('Ciclismo') ? 'selected' : ''} onClick={() => addActivity('Ciclismo')}>Ciclismo</small>
                     <small className={activity.includes('Camping') ? 'selected' : ''} onClick={() => addActivity('Camping')}>Camping</small>
+                    <small className={activity.includes('Restaurantes') ? 'selected' : ''} onClick={() => addActivity('Restaurantes')}>Restaurantes</small>
+                    <small className={activity.includes('Senderismo') ? 'selected' : ''} onClick={() => addActivity('Senderismo')}>Senderismo</small>
+                    <small className={activity.includes('Cultura') ? 'selected' : ''} onClick={() => addActivity('Cultura')}>Cultura</small>
+                    <small className={activity.includes('Atracciones') ? 'selected' : ''} onClick={() => addActivity('Atracciones')}>Atracciones</small>
                 </section>
 
             </label>

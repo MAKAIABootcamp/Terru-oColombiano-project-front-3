@@ -1,14 +1,29 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateEmail, updatePassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  updateEmail,
+  updatePassword,
+  updateProfile,
+} from "firebase/auth";
 import { auth, dataBase } from "../../firebase/firebaseConfig";
 import { getUsers } from "../../services/getUsers";
-import { addDoc, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { userTypes } from "../types/userTypes";
 
 const collectionName = "users";
 const usersCollection = collection(dataBase, collectionName);
 
-const placesCollectionName = "places"
-const  placesCollection = collection(dataBase, placesCollectionName)
+const placesCollectionName = "places";
+const placesCollection = collection(dataBase, placesCollectionName);
 
 export const loginUser = (user, error) => {
   return {
@@ -65,7 +80,7 @@ export const createPostAsync = (post) => {
         array = user.data().posts;
       });
 
-    let posts = [...array, post]
+      let posts = [...array, post];
       const userRef = doc(dataBase, collectionName, id);
       await updateDoc(userRef, { posts: posts });
       const placesDoc = await addDoc(placesCollection, post);
@@ -73,6 +88,66 @@ export const createPostAsync = (post) => {
     } catch (error) {
       console.log(error);
       dispatch(createPost(array));
+    }
+  };
+};
+const addFavorite = (data) => {
+  return {
+    type: userTypes.ADD_FAVORITE,
+    payload: data,
+  };
+};
+export const addFavoriteAsync = (fav) => {
+  return async (dispatch) => {
+    const currentUser = auth.currentUser;
+    let id;
+    let array = [];
+
+    try {
+      const q = query(usersCollection, where("uid", "==", currentUser.uid));
+      const userDoc = await getDocs(q);
+      userDoc.forEach((user) => {
+        id = user.id;
+        array = user.data().favorites;
+      });
+
+      let favorites = [...array, fav];
+      const userRef = doc(dataBase, collectionName, id);
+      await updateDoc(userRef, { favorites: favorites });
+      dispatch(addFavorite(favorites));
+    } catch (error) {
+      console.log(error);
+      dispatch(addFavorite(array));
+    }
+  };
+};
+const deleteFavorite = (data) => {
+  return {
+    type: userTypes.DELETE_FAVORITE,
+    payload: data,
+  };
+};
+export const deleteFavoriteAsync = (item) => {
+  return async (dispatch) => {
+    const currentUser = auth.currentUser;
+    let id;
+    let array = [];
+
+    try {
+      const q = query(usersCollection, where("uid", "==", currentUser.uid));
+      const userDoc = await getDocs(q);
+      userDoc.forEach((user) => {
+        id = user.id;
+        array = user.data().favorites;
+      });
+
+      let favorites = array.filter((element) => element.id !== item.id);
+      const userRef = doc(dataBase, collectionName, id);
+      await updateDoc(userRef, { favorites: favorites });
+      dispatch(deleteFavorite(favorites));
+    } catch (error) {
+      console.log(error);
+      dispatch(deleteFavorite(array));
     }
   };
 };
@@ -98,7 +173,7 @@ export const updateProfileAsync = (user) => {
         photo: user.photo,
         location: user.location,
         birthday: user.birthday,
-        description : user.description,
+        description: user.description,
         type: "user",
         posts: [],
         favorites: [],
@@ -122,7 +197,6 @@ export const updateProfileAsync = (user) => {
 };
 export const createUserAsync = (user) => {
   return async (dispatch) => {
-
     try {
       const verificate = await createUserWithEmailAndPassword(
         auth,
@@ -136,9 +210,9 @@ export const createUserAsync = (user) => {
         photo: user.photo,
         location: user.location,
         birthday: user.birthday,
-        password : user.password,
-        description : user.description,
-        phone : user.phone,
+        password: user.password,
+        description: user.description,
+        phone: user.phone,
         type: "user",
         posts: [],
         favorites: [],
@@ -171,7 +245,6 @@ export const loginWithEmail = (user) => {
   console.log(user);
 
   return async (dispatch) => {
-
     try {
       const email = user.email;
       const password = user.password;
@@ -191,3 +264,4 @@ export const loginWithEmail = (user) => {
     }
   };
 };
+
