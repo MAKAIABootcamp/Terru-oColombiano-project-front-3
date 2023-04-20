@@ -16,6 +16,15 @@ export const placesRedcuer = (state = initialValue, action) => {
                 places: [...state.places, action.payload]
 
             }
+        case placesTypes.ADD_COMMENT:
+            return {
+                ...state,
+                places: {
+                    ...state.places,
+                    comments : action.payload
+                }
+
+            }
             
     
         default:

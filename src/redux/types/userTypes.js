@@ -4,6 +4,8 @@ export const userTypes = {
   LOGIN_USER: "LOGIN_USER",
   ADD_POST : "ADD_POST",
   LOGOUT: "LOGOUT",
+  ADD_FAVORITE : "ADD_FAVORITE",
+  DELETE_FAVORITE : "DELETE_FAVORITE"
 };
 
 export const loadingTypes =  {

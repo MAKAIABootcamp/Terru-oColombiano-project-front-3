@@ -77,6 +77,7 @@ const Router = () => {
             <Route path="addPlace" element = {<AddPlace />} />
             <Route path="myPlaces" element = {<MyPlaces />} />
           </Route>
+          <Route  path="description/:place" element = {<PlaceDescription />}/>
 
         </Route>
       </Routes>

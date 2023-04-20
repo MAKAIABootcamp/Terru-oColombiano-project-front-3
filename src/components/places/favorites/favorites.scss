@@ -1,3 +1,7 @@
+.details {
+    display: none;
+}
+
 .main-fav {
 
     height: 90vh;
@@ -12,7 +16,7 @@
         justify-content: center;
         column-gap: 60px;
         row-gap: 40px;
-    
+
 
         .main__article {
 
@@ -32,7 +36,7 @@
                     position: relative;
                     top: 40px;
                     left: 310px;
-                    
+
                     &:hover {
                         cursor: pointer;
                     }
@@ -45,14 +49,31 @@
                     color: white;
 
                     .img-link-fig {
-    
+
                         .img {
                             height: 250px;
                             width: 350px;
                             border-radius: 15px 15px 0px 0px
                         }
-    
-    
+
+                        &:hover {
+                            padding: 10px;
+                            cursor: pointer;
+                            .img {
+                                display: none;
+                            }
+
+                            .details {
+                                display: block;
+                                width: 350px;
+                                height: 250px;
+                                overflow-y: auto;
+                                font-size: 15px;
+
+                            }
+                        }
+
+
                     }
                 }
 

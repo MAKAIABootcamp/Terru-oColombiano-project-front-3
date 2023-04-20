@@ -11,6 +11,8 @@ const initialState = {
     type: "",
     uid: "",
     description: "",
+    posts : [],
+    favorites : []
   },
   error: {
     status: undefined,
@@ -43,6 +45,23 @@ export const userReducer = (state = initialState, action) => {
           user : {
             ...state.user,
             posts : action.payload
+          }
+        }
+      case userTypes.ADD_FAVORITE:
+        return {
+          ...state,
+          user : {
+            ...state.user,
+            favorites : action.payload
+          }
+        }
+      case userTypes.DELETE_FAVORITE:
+        const favs = state.favorites.filter(item => item.id !== action.payload.id)
+        return {
+          ...state,
+          user : {
+            ...state.user,
+            favorites : favs
           }
         }
 

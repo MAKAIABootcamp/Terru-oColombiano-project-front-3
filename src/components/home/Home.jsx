@@ -15,13 +15,10 @@ import { IoMdBicycle } from 'react-icons/io'
 import { RiShipLine } from 'react-icons/ri'
 import { Rate } from 'antd'
 import { BsFillHeartFill } from 'react-icons/bs'
-
-
-
-
-
-
-
+import { addFavoriteAsync } from '../../redux/actions/userActions'
+import Swal from 'sweetalert2'
+import { ToastContainer, toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 
 const Home = () => {
@@ -29,6 +26,7 @@ const Home = () => {
   const [favorite, setFavorite] = useState(false)
   const [isFavorite, setIsFavorite] = useState('')
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
 
   const valueInput = ({ value }) => {
@@ -40,13 +38,38 @@ const Home = () => {
   const { user } = useSelector(store => store.users)
 
   const { places } = useSelector(store => store.places);
+  console.log(places);
+  console.log(user);
 
-  const addFavorite = () => {
-      setIsFavorite('favorite')
+  const addFavorite = (data) => {
+    setIsFavorite('favorite')
+    const isFavorite = user.favorites.filter(fav => fav.id === data.id)
+
+    if (!isFavorite.length) {
+      dispatch(addFavoriteAsync(data))
+      toast('✔ Se ha agregado correctamente!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+
+    } else {
+      Swal.fire({
+        icon: 'info',
+        title: 'Este lugar ya está en favoritos',
+
+      })
     }
 
-    
-  
+  }
+
+
+
 
 
 
@@ -56,7 +79,7 @@ const Home = () => {
   }, [])
 
   const arrayFiltered = places[0]?.filter(place => place.name.toLowerCase().includes(input.toLowerCase()))
-  
+
 
 
 
@@ -93,7 +116,7 @@ const Home = () => {
         <h1>Destinos populares</h1>
         <div>
           {input ? arrayFiltered.map((e, index) =>
-            <figure key={index}>
+            <figure key={index} onClick={() => navigate(`/description/${e.id}`)}>
               <img src={e.imgPlace2} alt="caballo" className='home__main__photo' />
               <figcaption>
                 <h3>{e.name}</h3>
@@ -139,7 +162,7 @@ const Home = () => {
               </figcaption>
             </figure>) : <>
             {places[0] ? places[0].map((place, index) =>
-              <figure key={index}>
+              <figure key={index} onClick={() => navigate(`/description/${place.id}`)}>
                 <img src={place.imgPlace2} alt="caballo" className='home__main__photo' />
                 <figcaption>
                   <h3>{place.name}</h3>
@@ -183,7 +206,7 @@ const Home = () => {
 
                   </section>
                   <Rate disabled defaultValue={place.rate} />
-                  <BsFillHeartFill onClick={() => addFavorite()} className={`heart ${isFavorite}`} />
+                  <BsFillHeartFill onClick={() => addFavorite(place)} className={`heart ${isFavorite}`} />
 
                 </figcaption>
               </figure>
@@ -199,6 +222,7 @@ const Home = () => {
 
 
       </div>
+      <ToastContainer />
 
     </article>
   )
