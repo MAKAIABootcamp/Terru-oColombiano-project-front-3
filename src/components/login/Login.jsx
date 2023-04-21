@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { loginWithEmail } from '../../redux/actions/userActions'
 import { useDispatch, useSelector } from 'react-redux'
+import { motion } from 'framer-motion'
 
 const Login = () => {
   const { handleSubmit, register, reset, formState: { errors } } = useForm()
@@ -23,9 +24,13 @@ const Login = () => {
 
     navigate('/')
   }
+  
+  
   return (
     <article className='login'>
-      <div className='login__info'>
+      <motion.div className='login__info' initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              transition={{ duration: 1 }}>
         <figure>
           <img src={logo} alt="icon" />
           <img src={name} alt="terruño" />
@@ -61,7 +66,7 @@ const Login = () => {
 
           <img src={phone} alt="Phone" onClick={() => navigate('/loginWithPhone/phone')} />
         </figure>
-      </div>
+      </motion.div>
     </article>
   )
 }

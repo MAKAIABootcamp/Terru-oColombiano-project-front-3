@@ -1,3 +1,5 @@
+import { PlusOutlined } from '@ant-design/icons';
+import { Modal, Upload } from 'antd';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,12 +14,86 @@ import { IoMdBicycle } from 'react-icons/io'
 import { RiShipLine } from 'react-icons/ri'
 import UploadImages from '../uploadImages/UploadImages'
 import { toast } from 'react-toastify'
+import { motion } from 'framer-motion'
+
+const getBase64 = (file) =>
+    new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+    });
 
 
 const AddPlace = () => {
     const [transports, setTransports] = useState([])
+    const [urlImgs, setUrlImgs] = useState([])
     const [activity, setActivity] = useState([])
-    const [fileList, setFileList] = useState([])
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [previewImage, setPreviewImage] = useState('');
+    const [previewTitle, setPreviewTitle] = useState('');
+    const [fileList, setFileList] = useState([
+        // {
+        //   uid: '-1',
+        //   name: 'image.png',
+        //   status: 'done',
+        //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        // },
+        // {
+        //   uid: '-2',
+        //   name: 'image.png',
+        //   status: 'done',
+        //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        // },
+        // {
+        //   uid: '-3',
+        //   name: 'image.png',
+        //   status: 'done',
+        //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        // },
+        // {
+        //   uid: '-4',
+        //   name: 'image.png',
+        //   status: 'done',
+        //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        // },
+        // {
+        //   uid: '-xxx',
+        //   percent: 50,
+        //   name: 'image.png',
+        //   status: 'uploading',
+        //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        // },
+        // {
+        //   uid: '-5',
+        //   name: 'image.png',
+        //   status: 'error',
+        // },
+    ]);
+
+    const handleCancel = () => setPreviewOpen(false);
+    const handlePreview = async (file) => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+        setPreviewImage(file.url || file.preview);
+        setPreviewOpen(true);
+        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
+    };
+    const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+    const uploadButton = (
+        <div>
+            <PlusOutlined />
+            <div
+                style={{
+                    marginTop: 8,
+                }}
+            >
+                Upload
+            </div>
+        </div>
+    );
+
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
     const { user } = useSelector(store => store.users)
     const dispatch = useDispatch()
@@ -48,15 +124,26 @@ const AddPlace = () => {
 
 
     }
+    const appUrlImages = (url) => {
+        setUrlImgs([...urlImgs, url])
+
+    }
+
+
+
+
+
 
 
 
 
 
     const onSubmit = async (data) => {
-        const imgPlace = data.imgPlace[0] ? await fileUpLoad(data.imgPlace[0]) : '';
-        const imgAct = data.imgAct[0] ? await fileUpLoad(data.imgAct[0]) : '';
-        const imgPlace2 = data.imgPlace2[0] ? await fileUpLoad(data.imgPlace2[0]) : '';
+        // const imgPlace = data.imgPlace[0] ? await fileUpLoad(data.imgPlace[0]) : '';
+        // const imgAct = data.imgAct[0] ? await fileUpLoad(data.imgAct[0]) : '';
+        // const imgPlace2 = data.imgPlace2[0] ? await fileUpLoad(data.imgPlace2[0]) : '';
+
+
 
         const newPlace = {
             name: data.name,
@@ -69,13 +156,11 @@ const AddPlace = () => {
             weather: data.weather,
             tranport: data.transport,
             icons: transports,
-            imgPlace: imgPlace,
-            imgAct: imgAct,
-            imgPlace2: imgPlace2,
-            postedBy : user.name,
-            postedByImg : user.photo,
-            rate : 0,
-            comments : [],
+            images: [...fileList],
+            postedBy: user.name,
+            postedByImg: user.photo,
+            rate: 0,
+            comments: [],
 
 
 
@@ -93,15 +178,17 @@ const AddPlace = () => {
             draggable: true,
             progress: undefined,
             theme: "light",
-            });
+        });
 
-            
-            
-     
+
+
+
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <motion.form onSubmit={handleSubmit(onSubmit)} initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            transition={{ duration: 1 }}>
             <h1>Agregar nuevo lugar</h1>
 
             <label>
@@ -201,6 +288,33 @@ const AddPlace = () => {
             </label>
             <label>
                 Imágenes que nos permitan ver el lugar
+
+                <>
+                    {/* <Upload
+                        // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                        listType="picture-card"
+                        fileList={fileList}
+                        onPreview={handlePreview}
+                        onChange={handleChange}
+                        beforeUpload={(file) => {
+                            fileUpLoad(file);
+                            return false;
+                        }}
+                    >
+                        {fileList.length >= 8 ? null : uploadButton}
+                    </Upload>
+                    <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+                        <img
+                            alt="example"
+                            style={{
+                                width: '100%',
+                            }}
+                            src={previewImage}
+                        />
+                    </Modal> */}
+                </>
+                <UploadImages  />
+
                 {/* <input type="file" {...register('imgPlace', {
                     required: 'Este campo es requerido'
                 })} />
@@ -215,12 +329,11 @@ const AddPlace = () => {
                 {errors.imgPlace2 ? <span>{errors.imgPlace2.message}</span> : <></>} */}
             </label>
 
-            <UploadImages fileList={fileList} />
 
 
             <button type='submit'>Agregar lugar</button>
 
-        </form>
+        </motion.form>
     )
 }
 

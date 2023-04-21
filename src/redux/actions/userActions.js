@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updateEmail,
   updatePassword,
@@ -140,8 +141,10 @@ export const deleteFavoriteAsync = (item) => {
         id = user.id;
         array = user.data().favorites;
       });
+      console.log(array);
 
       let favorites = array.filter((element) => element.id !== item.id);
+      console.log(favorites);
       const userRef = doc(dataBase, collectionName, id);
       await updateDoc(userRef, { favorites: favorites });
       dispatch(deleteFavorite(favorites));
@@ -264,4 +267,40 @@ export const loginWithEmail = (user) => {
     }
   };
 };
+export const getFavorites = (user) => {
+  return {
+    type: userTypes.GET_FAVORITES,
+    payload: user.payload,
+  };
+};
+// export const getFavoritesAsync = () => {
 
+//   return async (dispatch) => {
+//     dispatch(getFavorites())
+    
+//   }
+// };
+
+// export const userLoginProvider = (provider) => {
+//   return async (dispatch) => {
+//     try {
+//       const { user } = await signInWithPopup(auth, provider);
+//       dispatch(
+//         userLogin({
+//           name: user.user.displayName,
+//           email: user.user.email,
+//           error: false,
+//         })
+//       );
+//     } catch (error) {
+//       dispatch(
+//         userLogin({
+//           name: "",
+//           email: "",
+//           error: true,
+//         })
+//       );
+//       console.log(error);
+//     }
+//   };
+// };

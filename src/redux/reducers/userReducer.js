@@ -27,7 +27,7 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload.user,
-        error: action.payload.error,
+        error : action.payload.error,
         isLogged: true,
       };
 
@@ -56,12 +56,21 @@ export const userReducer = (state = initialState, action) => {
           }
         }
       case userTypes.DELETE_FAVORITE:
-        const favs = state.favorites.filter(item => item.id !== action.payload.id)
+
         return {
           ...state,
           user : {
             ...state.user,
-            favorites : favs
+            favorites : state.user.favorites.filter(item => item.id !== action.payload.id)
+          }
+        }
+      case userTypes.GET_FAVORITES:
+
+        return {
+          ...state,
+          user : {
+            ...state.user,
+            favorites : action.payload
           }
         }
 

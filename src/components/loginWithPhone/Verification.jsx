@@ -28,7 +28,7 @@ const Verification = () => {
 
     } else if (error.status === false) {
 
-      if (auth.currentUser.displayName && auth.currentUser.photoURL) {
+      if (auth.currentUser?.displayName && auth.currentUser.photoURL) {
         Swal.fire({
           icon: 'success',
           title: 'Verificación exitosa',

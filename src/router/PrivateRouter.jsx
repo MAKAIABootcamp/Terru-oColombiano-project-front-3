@@ -29,7 +29,7 @@ const PrivateRouter = ({children}) => {
         } else {
           console.log("No estás loggeado");
           setLogged(false)
-          navigate('/login')
+          navigate('/welcome')
           
         }
       });

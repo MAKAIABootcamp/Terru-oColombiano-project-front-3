@@ -1,6 +1,6 @@
 import React from 'react'
 import './register.scss'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import iGogle from '../../assets/facebook.png'
 import iFacebook from '../../assets/google.png'
 import granos from '../../assets/cafe.svg'
@@ -14,6 +14,7 @@ const Register = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const onSubmit = async (data) => {
     console.log(data)
@@ -32,6 +33,8 @@ const Register = () => {
 
     }
     dispatch(createUserAsync(user))
+    navigate('/')
+
   }
 
   return (

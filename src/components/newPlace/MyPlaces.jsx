@@ -8,16 +8,21 @@ import { BiWalk } from 'react-icons/bi'
 import { FaBus } from 'react-icons/fa'
 import { IoMdBicycle } from 'react-icons/io'
 import { RiShipLine } from 'react-icons/ri'
+import { motion } from 'framer-motion';
+
+
 
 
 const MyPlaces = () => {
     const { user } = useSelector(store => store.users)
     console.log(user);
     return (
-        <article className='myPlaces'>
+        <article className='myPlaces' style={user.posts.length > 2 ? {height : '100%'}: {height : '100vh'}}>
             <div>
-                {user.posts ? user.posts.map(post =>
-                    <figure>
+                {user.posts.length ? user.posts.map(post =>
+                    <motion.figure initial={{ x: "100%" }}
+                        animate={{ x: 0 }}
+                        transition={{ duration: 1 }}>
                         <img src={post.imgPlace} alt="image" />
 
                         <figcaption>
@@ -64,8 +69,8 @@ const MyPlaces = () => {
 
 
 
-                    </figure>
-                ) : <></>}
+                    </motion.figure>
+                ) : <><h1>Aun no has publicado nada</h1></>}
             </div>
         </article>
     )

@@ -5,7 +5,8 @@ export const userTypes = {
   ADD_POST : "ADD_POST",
   LOGOUT: "LOGOUT",
   ADD_FAVORITE : "ADD_FAVORITE",
-  DELETE_FAVORITE : "DELETE_FAVORITE"
+  DELETE_FAVORITE : "DELETE_FAVORITE",
+  GET_FAVORITES : "GET_FAVORITES"
 };
 
 export const loadingTypes =  {
