@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateEmail, updatePassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut, updateEmail, updatePassword, updateProfile } from "firebase/auth";
 import { auth, dataBase } from "../../firebase/firebaseConfig";
 import { getUsers } from "../../services/getUsers";
 import { addDoc, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
@@ -189,5 +189,38 @@ export const loginWithEmail = (user) => {
       console.log(error);
       dispatch(loginUser({}, { status: true, message: error.message }));
     }
+  };
+};
+
+export const actionLoginGoogleOrFacebook = (provider) => {
+  let realized = false
+  return (dispatch) => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const { displayName, accessToken, photoURL, phoneNumber, email } =
+          result.user;
+        console.log(result.user);
+        dispatch(
+          loginUser({
+            email,
+            name: displayName,
+            accessToken,
+            photo: photoURL,
+            phoneNumber,
+            error: false,
+          })
+        );
+        
+        
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        console.log(error);
+        console.log(errorCode);
+        console.log(errorMessage);
+        dispatch(loginUser({ email, error: true, errorMessage }));
+      });
   };
 };

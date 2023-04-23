@@ -16,14 +16,6 @@ import { RiShipLine } from 'react-icons/ri'
 import { Rate } from 'antd'
 import { BsFillHeartFill } from 'react-icons/bs'
 
-
-
-
-
-
-
-
-
 const Home = () => {
   const [input, setInput] = useState('')
   const [favorite, setFavorite] = useState(false)
