@@ -5,38 +5,53 @@ import { useNavigate } from 'react-router-dom';
 import { getUsers } from '../services/getUsers';
 import { loginUser } from '../redux/actions/userActions';
 import { auth } from '../firebase/firebaseConfig';
+import Loader from '../components/loader/Loader';
 
-const PrivateRouter = ({children}) => {
-    const [logged, setLogged] = useState(undefined)
-    const dispatch = useDispatch();
-    const navigate = useNavigate()
-  
-    useEffect(() => {
-      
-      onAuthStateChanged(auth, (user) => {
-        console.log(user);
-        if (user) {
-          console.log(user);
-          getUsers(user.uid)
-            .then((response) => {
-              dispatch(loginUser(response, { status: false, message: "" }));
-              setLogged(true)
-            })
-            .catch((error) => {
-              dispatch(loginUser({}, { status: true, message: error.message }));
-              
-            });
-        } else {
-          console.log("No estás loggeado");
-          setLogged(false)
-          navigate('/login')
-          
-        }
-      });
-    }, []);
-    return (
-      <div>{logged ? children : <></>}</div>
-    )
+const PrivateRouter = ({ children }) => {
+  const [logged, setLogged] = useState(undefined);
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setLoading(true);
+      if (user) {
+        console.log('user1', user);
+        getUsers(user.uid)
+          .then((response) => {
+            console.log(response);
+            dispatch(loginUser(response, { status: false, message: "" }));
+            setLogged(true);
+            setLoading(false);
+            console.log('se private');
+            console.log(user);
+          })
+          .catch((error) => {
+            console.log(error);
+            dispatch(loginUser({}, { status: true, message: error.message }));
+            setLogged(false);
+            setLoading(false);
+          });
+      } else {
+        setLogged(false);
+        setLoading(false);
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
+  if (loading) {
+    return <Loader className = 'loader'  />;
   }
 
-export default PrivateRouter
+
+
+  return (
+    <div>{logged ? children : <></>}</div>
+  )
+};
+
+export default PrivateRouter;

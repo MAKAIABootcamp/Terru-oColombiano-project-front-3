@@ -1,20 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import close from '../../../assets/icon-close.svg'
 import { BsFillHeartFill } from 'react-icons/bs'
 import './favorites.scss'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteFavoriteAsync } from '../../../redux/actions/userActions'
+import { deleteFavoriteAsync, getFavorites } from '../../../redux/actions/userActions'
 import { ToastContainer, toast } from 'react-toastify'
+import { motion } from "framer-motion";
+
+
+
 
 const Favorites = () => {
+  const [favorites, setFavorites] = useState([])
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const { user } = useSelector(store => store.users)
 
   const deleteFav = (item) => {
 
     dispatch(deleteFavoriteAsync(item))
+    const updatedFavorites = favorites.filter(fav => fav.id !== item.id)
+    setFavorites(updatedFavorites)
     toast('✔ Se ha eliminado correctamente!', {
       position: "top-right",
       autoClose: 3000,
@@ -26,11 +34,22 @@ const Favorites = () => {
       theme: "light",
     });
 
+
   }
 
+  useEffect(() => {
+
+    const { payload } = dispatch(getFavorites(user.favorites))
+    setFavorites(payload)
+
+  }, [])
 
 
-  const navigate = useNavigate()
+
+
+
+
+
 
 
 
@@ -38,8 +57,10 @@ const Favorites = () => {
     <>
       <main className='main-fav' >
         <section className='cards-section'>
-          {user.favorites.length ? user.favorites.map((item, index) => (
-            <article className="main__article" key={index}>
+          {favorites.length ? favorites.map((item, index) => (
+            <motion.article className="main__article" key={index} initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              transition={{ duration: 1 }}>
               <section className='image-fig'>
                 <figure className='close-fig'>
                   <img src={close} alt="" onClick={() => deleteFav(item)} />
@@ -57,7 +78,7 @@ const Favorites = () => {
                   </div>
                 </div>
               </section>
-            </article>
+            </motion.article>
           )) : <><h1>Aun no tienes nada agregado a favoritos</h1></>}
 
         </section>

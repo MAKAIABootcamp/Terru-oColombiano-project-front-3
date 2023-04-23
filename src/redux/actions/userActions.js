@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updateEmail,
   updatePassword,
@@ -18,6 +19,7 @@ import {
   where,
 } from "firebase/firestore";
 import { userTypes } from "../types/userTypes";
+import { filterCollections } from "../../services/filterCollections";
 
 const collectionName = "users";
 const usersCollection = collection(dataBase, collectionName);
@@ -29,16 +31,6 @@ export const loginUser = (user, error) => {
   return {
     type: userTypes.LOGIN_USER,
     payload: { user, error },
-  };
-};
-export const loginUserAsync = (email, password) => {
-  return async (dispatch) => {
-    try {
-      const login = await signInWithEmailAndPassword(auth, email, password);
-      dispatch(loginUser());
-    } catch (error) {
-      console.log(error);
-    }
   };
 };
 
@@ -140,6 +132,7 @@ export const deleteFavoriteAsync = (item) => {
         id = user.id;
         array = user.data().favorites;
       });
+      console.log(array);
 
       let favorites = array.filter((element) => element.id !== item.id);
       const userRef = doc(dataBase, collectionName, id);
@@ -195,24 +188,30 @@ export const updateProfileAsync = (user) => {
     }
   };
 };
-export const createUserAsync = (user) => {
+export const createUserAsync = (data) => {
   return async (dispatch) => {
     try {
-      const verificate = await createUserWithEmailAndPassword(
+      const { user } = await createUserWithEmailAndPassword(
         auth,
-        user.email,
-        user.password
+        data.email,
+        data.password
       );
-      console.log(verificate);
+      console.log(user);
+
+      await updateProfile(auth.currentUser, {
+        displayName: data.name,
+        photoURL: data.photo,
+        phoneNumber: data.phone,
+      });
       const newUser = {
-        name: user.name,
-        email: user.email,
-        photo: user.photo,
-        location: user.location,
-        birthday: user.birthday,
-        password: user.password,
-        description: user.description,
-        phone: user.phone,
+        uid: user.auth.currentUser.uid,
+        name: data.name,
+        email: user.auth.currentUser.email,
+        photo: data.photo,
+        location: data.location,
+        birthday: data.birthday,
+        description: data.description,
+        phone: data.phone,
         type: "user",
         posts: [],
         favorites: [],
@@ -241,6 +240,46 @@ export const logOutAsync = () => {
     }
   };
 };
+// export const loginWithEmail = (user) => {
+//   return {
+//     type: userTypes.LOGIN_WITH_EMAIL,
+//     payload: user,
+//   };
+// };
+
+// export const loginWithEmailAsync = ({ email, password }) => {
+//   return async (dispatch) => {
+//     try {
+//       const { user } = await signInWithEmailAndPassword(auth, email, password);
+
+//       const userCollection = await filterCollections({
+//         key : "uid",
+//         value : user.uid,
+//         collectionName : "users"
+//       })
+
+//       dispatch(loginWithEmail({
+//         ...userCollection[0]
+//       }))
+//     } catch (error) {
+//       dispatch(loginWithEmail({
+//         name: "",
+//         email : "",
+//         phone : "",
+//         pgoto : "",
+//         birthday : "",
+//         type : "",
+//         description : "",
+//         posts : "",
+//         favorites : "",
+//         uid : "",
+//         location : ""
+
+//       }))
+//       console.log(error);
+//     }
+//   };
+// };
 export const loginWithEmail = (user) => {
   console.log(user);
 
@@ -249,7 +288,9 @@ export const loginWithEmail = (user) => {
       const email = user.email;
       const password = user.password;
       const userAuth = await signInWithEmailAndPassword(auth, email, password);
+      console.log(userAuth);
       const userCollection = await getUsers(userAuth.user.uid);
+      console.log(userCollection);
       dispatch(
         loginUser(
           {
@@ -264,4 +305,46 @@ export const loginWithEmail = (user) => {
     }
   };
 };
+export const getFavorites = (favorites) => {
+  return {
+    type: userTypes.GET_FAVORITES,
+    payload: favorites,
+  };
+};
+// export const getFavoritesAsync = () => {
 
+//   return async (dispatch) => {
+//     dispatch(getFavorites())
+
+//   }
+// };
+
+export const userLoginProvider = (provider) => {
+  return (dispatch) => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const { displayName, accessToken, photoURL, email, uid } = result.user;
+        console.log(result.user);
+        console.log(result.user.uid);
+        dispatch(
+          loginUser(
+            {
+              email: email,
+              name: displayName,
+              accessToken,
+              photo: photoURL,
+              uid : uid,
+              posts : [],
+              favorites : [],
+            },
+            { status: false, message: "" }
+          )
+        );
+        console.log('este en provider');
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(loginUser({}, { error: true, message: error.message }));
+      });
+  };
+};

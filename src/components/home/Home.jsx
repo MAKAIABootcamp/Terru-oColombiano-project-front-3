@@ -19,11 +19,17 @@ import { addFavoriteAsync } from '../../redux/actions/userActions'
 import Swal from 'sweetalert2'
 import { ToastContainer, toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { BsCloudSun } from 'react-icons/bs'
+import { CiSun } from 'react-icons/ci'
+import { WiDayRainMix } from 'react-icons/wi'
+import { BsSun } from 'react-icons/bs'
+import Loader from '../loader/Loader'
 
 
 const Home = () => {
   const [input, setInput] = useState('')
-  const [favorite, setFavorite] = useState(false)
+  const [favorites, setFavorites] = useState([])
   const [isFavorite, setIsFavorite] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -36,17 +42,16 @@ const Home = () => {
 
 
   const { user } = useSelector(store => store.users)
-
-  const { places } = useSelector(store => store.places);
-  console.log(places);
   console.log(user);
 
+  const { places } = useSelector(store => store.places);
+
   const addFavorite = (data) => {
-    setIsFavorite('favorite')
     const isFavorite = user.favorites.filter(fav => fav.id === data.id)
 
     if (!isFavorite.length) {
       dispatch(addFavoriteAsync(data))
+      setFavorites([...favorites, data.id])
       toast('✔ Se ha agregado correctamente!', {
         position: "top-right",
         autoClose: 3000,
@@ -56,7 +61,7 @@ const Home = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        });
+      });
 
     } else {
       Swal.fire({
@@ -68,23 +73,37 @@ const Home = () => {
 
   }
 
-
-
-
-
-
   useEffect(() => {
     dispatch(getPlacesAsync())
+    user?.favorites.forEach(e => {
+      setFavorites(favorites => [...favorites, e.id])
+    })
 
-  }, [])
-
-  const arrayFiltered = places[0]?.filter(place => place.name.toLowerCase().includes(input.toLowerCase()))
+  }, [dispatch])
 
 
+
+  const arrayFiltered = places[0]?.filter(place => place.location.toLowerCase().includes(input.toLowerCase()) || place.department.toLowerCase().includes(input.toLowerCase()))
+
+  const variants = {
+    hidden: {
+      opacity: 0,
+      x: "-100vw"
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 1
+      }
+    }
+  };
 
 
   return (
-    <article className='home'>
+    <article className='home' initial="hidden"
+      animate="visible"
+      variants={variants}>
       <div className='home__header'>
         <Navbar />
         <label>
@@ -96,8 +115,11 @@ const Home = () => {
         </label>
         <section className='home__header__btns'>
           <select>
-            <option value="">Categoría</option>
+            <option value="">Actividades</option>
             <option value="1">Deportes</option>
+            <option value="2">Camping</option>
+            <option value="3">Mirador</option>
+            <option value="4">Natación</option>
           </select>
           <select>
             <option value="">Ubicación</option>
@@ -108,51 +130,53 @@ const Home = () => {
             <option value="">Clima</option>
             <option value="1">Calido</option>
           </select>
-          <button>Mas votados</button>
+          <button>Más votados</button>
 
         </section>
       </div>
       <div className='home__main'>
         <h1>Destinos populares</h1>
+        {!places.length ? <Loader /> : <></>}
         <div>
           {input ? arrayFiltered.map((e, index) =>
-            <figure key={index} onClick={() => navigate(`/description/${e.id}`)}>
+            <motion.figure key={index} initial="hidden"
+              animate="visible"
+              variants={variants}>
               <img src={e.imgPlace2} alt="caballo" className='home__main__photo' />
-              <figcaption>
-                <h3>{e.name}</h3>
-                <p>{e.description}</p>
+              <figcaption >
+                <h3>{e.name}{e.weather === "1" ? <BsCloudSun className='icons' /> : e.weather === "2" ? <CiSun className='icons' /> : e.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
+                <p onClick={() => navigate(`/description/${e.id}`)}>{e.description}</p>
                 <small><BiTime /> {e.schedules}</small>
                 <span> <img src={location} alt="location" />{` ${e.location} - ${e.department}`}</span>
                 <section>
                   {e.category.map((act, index) => <small key={index}>{act}</small>)}
                 </section>
                 <section>
-                  {e.icons.map((icon) => {
+                  {e.icons.map((icon, index) => {
                     if (icon === 'car') {
-                      return <BsFillCarFrontFill />
+                      return <BsFillCarFrontFill key={index + 80} />
 
                     }
                     if (icon === 'moto') {
-                      return <RiMotorbikeFill />
+                      return <RiMotorbikeFill key={index + 25} />
 
                     }
                     if (icon === 'walking') {
-                      return <BiWalk />
+                      return <BiWalk key={index + 38} />
 
                     }
                     if (icon === 'bici') {
-                      return <IoMdBicycle />
+                      return <IoMdBicycle key={index + 18} />
 
                     }
                     if (icon === 'bus') {
-                      return <FaBus />
+                      return <FaBus key={index + 10} />
 
                     }
                     if (icon === 'ship') {
-                      return <RiShipLine />
+                      return <RiShipLine key={index + 41} />
 
                     }
-
                   }
 
                   )}
@@ -160,13 +184,15 @@ const Home = () => {
                 <Rate disabled defaultValue={e.rate} />
                 <BsFillHeartFill className='heart' />
               </figcaption>
-            </figure>) : <>
+            </motion.figure>) : <>
             {places[0] ? places[0].map((place, index) =>
-              <figure key={index} onClick={() => navigate(`/description/${place.id}`)}>
+              <motion.figure key={index} initial="hidden"
+                animate="visible"
+                variants={variants} >
                 <img src={place.imgPlace2} alt="caballo" className='home__main__photo' />
                 <figcaption>
-                  <h3>{place.name}</h3>
-                  <p>{place.description}</p>
+                  <h3>{place.name} {place.weather === "1" ? <BsCloudSun className='icons' /> : place.weather === "2" ? <CiSun className='icons' /> : place.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
+                  <p onClick={() => navigate(`/description/${place.id}`)}>{place.description}</p>
                   <small><BiTime /> {place.schedules}</small>
                   <span> <img src={location} alt="location" />{` ${place.location} - ${place.department}`}</span>
                   <section>
@@ -175,27 +201,27 @@ const Home = () => {
                   <section>
                     {place.icons.map((icon) => {
                       if (icon === 'car') {
-                        return <BsFillCarFrontFill />
+                        return <BsFillCarFrontFill key={index + 1} />
 
                       }
                       if (icon === 'moto') {
-                        return <RiMotorbikeFill />
+                        return <RiMotorbikeFill key={index + 2} />
 
                       }
                       if (icon === 'walking') {
-                        return <BiWalk />
+                        return <BiWalk key={index + 7} />
 
                       }
                       if (icon === 'bici') {
-                        return <IoMdBicycle />
+                        return <IoMdBicycle key={index + 9} />
 
                       }
                       if (icon === 'bus') {
-                        return <FaBus />
+                        return <FaBus key={index + 10} />
 
                       }
                       if (icon === 'ship') {
-                        return <RiShipLine />
+                        return <RiShipLine key={index + 11} />
 
                       }
 
@@ -206,10 +232,10 @@ const Home = () => {
 
                   </section>
                   <Rate disabled defaultValue={place.rate} />
-                  <BsFillHeartFill onClick={() => addFavorite(place)} className={`heart ${isFavorite}`} />
+                  <BsFillHeartFill onClick={() => addFavorite(place)} className={`heart ${favorites.includes(place.id)? 'favorite' : ''}`} />
 
                 </figcaption>
-              </figure>
+              </motion.figure>
 
             ) : <></>}</>}
           {input && !arrayFiltered.length ? <div className='error404'>

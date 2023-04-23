@@ -7,11 +7,12 @@
     justify-content: center;
     align-items: center;
     padding: 10px;
-    background-image: url(https://images2.alphacoders.com/107/1070004.jpg);
+    // background-image: url(https://images2.alphacoders.com/107/1070004.jpg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     gap: 20px;
+    
 
     & aside {
         display: flex;
@@ -46,6 +47,8 @@
         padding: 10px;
         border-radius: 8px;
         background-color: white;
+        border: 1px solid gray;
+        border-radius: 8px;
 
         & label {
             display: flex;
@@ -122,6 +125,7 @@
 
 .myPlaces {
     width: 100%;
+    height: 100%;
 
     & div {
         display: flex;
@@ -136,6 +140,7 @@
             height: 350px;
             width: 100%;
             padding: 10px;
+            box-shadow: 0 0 1px 1px;
 
             & img {
                 object-fit: cover;
@@ -168,6 +173,10 @@
             }
 
         }
+    }
+    & h1 {
+        text-align: center;
+        font-size: 30px;
     }
 }
 

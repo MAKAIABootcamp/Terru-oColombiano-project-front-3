@@ -41,9 +41,9 @@ const Navbar = () => {
     const logOut = () => {
         Swal.fire({
             icon: 'info',
-            title: 'Estás seguro que nos abandonarás?',
-            confirmButtonText: 'Sipiti',
-            cancelButtonText: 'Nopitis',
+            title: 'Estás seguro deseas cerrar sesión?',
+            confirmButtonText: 'Confirmar',
+            cancelButtonText: 'Cancelar',
             showCancelButton: true,
 
         }).then((response) => {
