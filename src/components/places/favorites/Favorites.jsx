@@ -21,6 +21,8 @@ const Favorites = () => {
   const deleteFav = (item) => {
 
     dispatch(deleteFavoriteAsync(item))
+    const updatedFavorites = favorites.filter(fav => fav.id !== item.id)
+    setFavorites(updatedFavorites)
     toast('✔ Se ha eliminado correctamente!', {
       position: "top-right",
       autoClose: 3000,
@@ -32,18 +34,15 @@ const Favorites = () => {
       theme: "light",
     });
 
-  }
-  const updateFavorites = () => {
-   const data =  getFavorites(user)
-   console.log(data);
-
 
   }
 
   useEffect(() => {
-    updateFavorites()
 
-  }, [user])
+    const { payload } = dispatch(getFavorites(user.favorites))
+    setFavorites(payload)
+
+  }, [])
 
 
 

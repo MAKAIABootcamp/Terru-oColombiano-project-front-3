@@ -9,13 +9,13 @@ import { FaBus } from 'react-icons/fa'
 import { IoMdBicycle } from 'react-icons/io'
 import { RiShipLine } from 'react-icons/ri'
 import { motion } from 'framer-motion';
+import Loader from '../loader/Loader';
 
 
 
 
 const MyPlaces = () => {
     const { user } = useSelector(store => store.users)
-    console.log(user);
     return (
         <article className='myPlaces' style={user.posts.length > 2 ? {height : '100%'}: {height : '100vh'}}>
             <div>

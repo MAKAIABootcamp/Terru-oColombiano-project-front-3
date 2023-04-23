@@ -11,7 +11,6 @@ import { loginUser } from '../../redux/actions/userActions'
 const UserInfo = () => {
     const {user} = useSelector(store => store.users)
     const dispatch = useDispatch()
-    console.log(user);
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
           if (user) {
@@ -58,7 +57,7 @@ const UserInfo = () => {
 
                         <label className='info-container-section__label'>
                             <h4>Numero de telefono</h4>
-                            <h3 className='h3s' type="text" >3154444555</h3>
+                            <h3 className='h3s' type="text" >{user.phone ? user.phone :'Aun no tienes número agregado'}</h3>
                         </label>
 
                         <label className='info-container-section__label'>

@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import './foro.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { createCommentAsync, getPlacesAsync } from '../../redux/actions/placesActions'
-import { FaRegCommentAlt } from 'react-icons/fa'
 import ModalMain from '../modal/ModalMain'
 import { motion } from 'framer-motion'
+import Loader from '../loader/Loader'
 
 
 const Foro = () => {
@@ -24,11 +24,11 @@ const Foro = () => {
 
   const { places } = useSelector(store => store.places)
   const { user } = useSelector(store => store.users)
-  console.log(places);
   return (
     <article className='foro'>
       <h1>Bienvenido al foro</h1>
       <div className='foro__container'>
+      {!places.length ? <Loader /> : <></>}
 
         {places.length ? places[0].map((post, index) =>
           <motion.section className='foro__container__main' key={index} variants={variants}

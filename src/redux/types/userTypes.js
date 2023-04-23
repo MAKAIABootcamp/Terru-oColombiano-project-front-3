@@ -6,7 +6,8 @@ export const userTypes = {
   LOGOUT: "LOGOUT",
   ADD_FAVORITE : "ADD_FAVORITE",
   DELETE_FAVORITE : "DELETE_FAVORITE",
-  GET_FAVORITES : "GET_FAVORITES"
+  GET_FAVORITES : "GET_FAVORITES",
+  LOGIN_WITH_EMAIL : "LOGIN_WITH_EMAIL"
 };
 
 export const loadingTypes =  {

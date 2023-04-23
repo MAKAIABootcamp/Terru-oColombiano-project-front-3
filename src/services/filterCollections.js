@@ -6,7 +6,7 @@ const initialData = {
   collectionName: "",
 };
 
-export const filterCollections = async (data) => {
+export const filterCollections = async (data = initialData) => {
   const collectionName = data.collectionName;
   const collections = collection(dataBase, collectionName);
   const dataArray = [];
@@ -17,6 +17,8 @@ export const filterCollections = async (data) => {
       : collections;
 
     const refDocs = await getDocs(q);
+
+    
 
     refDocs.forEach((doc) => {
       dataArray.push({

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import logo from '../../assets/cafe.svg'
-import name from '../../assets/terruño.svg'
 import { fileUpLoad } from '../../services/fileUpLoad'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'

@@ -12,8 +12,21 @@ const Verification = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { error } = useSelector(store => store.users)
 
+  const handleInput = (event) => {
+    const input = event.target;
+    const maxLength = parseInt(input.getAttribute("maxlength"));
+    const inputLength = input.value.length;
+  
+    if (inputLength >= maxLength) {
+      const nextInput = input.nextElementSibling;
+      if (nextInput !== null) {
+        nextInput.focus();
+      }
+    }
+  }
+
   const onSubmit = (data) => {
-    const code = Number(`${data.code1}${data.code2}${data.code3}${data.code4}${data.code5}${data.code6}`)
+    const code = Number(`${data.code1}${data.code2}${data.code3}${data.code4}${data.code5}${data.code6}`.toString())
     console.log(code);
     dispatch(verifyCodeAsync(code))
 
@@ -59,12 +72,12 @@ const Verification = () => {
       <h4>Verificación de código</h4>
       <p>Ingrese el código de 6 digitos que ha recibido.</p>
       <label>
-        <input type="text"{...register('code1', { required: true })} />
-        <input type="text"{...register('code2', { required: true })} />
-        <input type="text"{...register('code3', { required: true })} />
-        <input type="text"{...register('code4', { required: true })} />
-        <input type="text"{...register('code5', { required: true })} />
-        <input type="text"{...register('code6', { required: true })} />
+        <input type="text" {...register('code1', { required: true })} maxLength="1" onChange={handleInput} />
+        <input type="text" {...register('code2', { required: true })} maxLength="1" onChange={handleInput} />
+        <input type="text" {...register('code3', { required: true })} maxLength="1" onChange={handleInput} />
+        <input type="text" {...register('code4', { required: true })} maxLength="1" onChange={handleInput} />
+        <input type="text" {...register('code5', { required: true })} maxLength="1" onChange={handleInput} />
+        <input type="text" {...register('code6', { required: true })} maxLength="1" onChange={handleInput} />
       </label>
       <button type='submit' className='button'>Verificar</button>
     </form>
