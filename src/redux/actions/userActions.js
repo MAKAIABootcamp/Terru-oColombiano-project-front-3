@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -6,6 +7,9 @@ import {
   updatePassword,
   updateProfile,
 } from "firebase/auth";
+=======
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut, updateEmail, updatePassword, updateProfile } from "firebase/auth";
+>>>>>>> e77efd81dcd9d241238f58d04f36d6c96989ab41
 import { auth, dataBase } from "../../firebase/firebaseConfig";
 import { getUsers } from "../../services/getUsers";
 import {
@@ -265,3 +269,38 @@ export const loginWithEmail = (user) => {
   };
 };
 
+<<<<<<< HEAD
+=======
+export const actionLoginGoogleOrFacebook = (provider) => {
+  let realized = false
+  return (dispatch) => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const { displayName, accessToken, photoURL, phoneNumber, email } =
+          result.user;
+        console.log(result.user);
+        dispatch(
+          loginUser({
+            email,
+            name: displayName,
+            accessToken,
+            photo: photoURL,
+            phoneNumber,
+            error: false,
+          })
+        );
+        
+        
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        console.log(error);
+        console.log(errorCode);
+        console.log(errorMessage);
+        dispatch(loginUser({ email, error: true, errorMessage }));
+      });
+  };
+};
+>>>>>>> e77efd81dcd9d241238f58d04f36d6c96989ab41

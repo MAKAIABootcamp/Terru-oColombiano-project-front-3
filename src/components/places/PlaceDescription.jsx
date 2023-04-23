@@ -29,7 +29,7 @@ const PlaceDescription = () => {
     <>
       <main className='description-main'>
         <article className='description-box'>
-          <section className='card-section'>
+          <section className='card-section position-1'>
             <div className='name-title'>
               <h2>{placeDetails?.name}</h2>
               <p>
@@ -38,13 +38,21 @@ const PlaceDescription = () => {
             </div>
 
             <figure className='figure-container'>
+<<<<<<< HEAD
               <img className='figure-container__img radius-1' src={placeDetails?.imgPlace} alt="" />
+=======
+              <img className='figure-container__img ' src={frailejonse} alt="" />
+>>>>>>> e77efd81dcd9d241238f58d04f36d6c96989ab41
             </figure>
           </section>
 
-          <section className='card-section'>
+          <section className='card-section position-2'>
             <figure className='figure-container'>
+<<<<<<< HEAD
               <img className='figure-container__img radius-2' src={placeDetails?.imgAct} alt="" />
+=======
+              <img className='figure-container__img ' src={sendero} alt="" />
+>>>>>>> e77efd81dcd9d241238f58d04f36d6c96989ab41
             </figure>
             <div className='name-title'>
               <h2>Actividaes</h2>
@@ -55,7 +63,7 @@ const PlaceDescription = () => {
 
           </section>
 
-          <section className='card-section'>
+          <section className='card-section position-1'>
             <div className='name-title'>
               <h2>Formas de llegar</h2>
               <p>
@@ -64,7 +72,11 @@ const PlaceDescription = () => {
             </div>
 
             <figure className='figure-container'>
+<<<<<<< HEAD
               <img className='figure-container__img radius-1' src={placeDetails?.imgPlace2} alt="" />
+=======
+              <img className='figure-container__img ' src={sumapaz} alt="" />
+>>>>>>> e77efd81dcd9d241238f58d04f36d6c96989ab41
             </figure>
           </section>
         </article>

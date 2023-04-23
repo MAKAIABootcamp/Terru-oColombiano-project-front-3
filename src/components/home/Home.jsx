@@ -15,11 +15,14 @@ import { IoMdBicycle } from 'react-icons/io'
 import { RiShipLine } from 'react-icons/ri'
 import { Rate } from 'antd'
 import { BsFillHeartFill } from 'react-icons/bs'
+<<<<<<< HEAD
 import { addFavoriteAsync } from '../../redux/actions/userActions'
 import Swal from 'sweetalert2'
 import { ToastContainer, toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 
+=======
+>>>>>>> e77efd81dcd9d241238f58d04f36d6c96989ab41
 
 const Home = () => {
   const [input, setInput] = useState('')

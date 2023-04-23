@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './login.scss'
 import logo from '../../assets/cafe.svg'
 import name from '../../assets/terruño.svg'
 import phone from '../../assets/celular.png'
-import fb from '../../assets/facebook.png'
-import google from '../../assets/google.png'
+// import fb from '../../assets/facebook.png'
+// import google from '../../assets/google.png'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { loginWithEmail } from '../../redux/actions/userActions'
+import { actionLoginGoogleOrFacebook, loginWithEmail } from '../../redux/actions/userActions'
 import { useDispatch, useSelector } from 'react-redux'
+import { loginProvider } from '../../services/gfProvider'
+import { auth } from '../../firebase/firebaseConfig'
 
 const Login = () => {
   const { handleSubmit, register, reset, formState: { errors } } = useForm()
@@ -23,6 +25,25 @@ const Login = () => {
 
     navigate('/')
   }
+
+  const handleLoginGoogleOrFacebook = (provider) => {
+    dispatch(actionLoginGoogleOrFacebook(provider));
+  };
+
+   useEffect(() => {
+     if (auth.currentUser) {
+       navigate('/')
+       console.log(auth.currentUser)
+     } 
+    //  else if (auth.currentUser.displayName) {
+    //    navigate('/loginWithPhone/updateInfo')
+    //  } 
+     else {
+    console.log('xd')
+  }
+   })
+  
+
   return (
     <article className='login'>
       <div className='login__info'>
@@ -56,9 +77,17 @@ const Login = () => {
         <button onClick={() => navigate('/register')}>Regitrarse</button>
         <small>O</small>
         <figure>
-          <img src={google} alt="Facebook" />
-          <img src={fb} alt="Google" />
-
+        {loginProvider.map((provider, index) => (
+          <img
+            key={index}
+            src={provider.image}
+            alt={provider.name}
+            style={{ width: "40px", cursor: "pointer" }}
+            onClick={() => {
+              handleLoginGoogleOrFacebook(provider.provider);
+            }}
+          />
+        ))}
           <img src={phone} alt="Phone" onClick={() => navigate('/loginWithPhone/phone')} />
         </figure>
       </div>
