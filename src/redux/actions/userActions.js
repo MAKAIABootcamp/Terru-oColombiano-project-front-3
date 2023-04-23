@@ -269,8 +269,6 @@ export const loginWithEmail = (user) => {
   };
 };
 
-<<<<<<< HEAD
-=======
 export const actionLoginGoogleOrFacebook = (provider) => {
   let realized = false
   return (dispatch) => {
@@ -303,4 +301,3 @@ export const actionLoginGoogleOrFacebook = (provider) => {
       });
   };
 };
->>>>>>> e77efd81dcd9d241238f58d04f36d6c96989ab41
