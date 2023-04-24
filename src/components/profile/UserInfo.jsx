@@ -9,23 +9,7 @@ import { getUsers } from '../../services/getUsers'
 import { loginUser } from '../../redux/actions/userActions'
 
 const UserInfo = () => {
-    const {user} = useSelector(store => store.users)
-    const dispatch = useDispatch()
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            getUsers(user.uid)
-              .then((response) => {
-                dispatch(loginUser(response, { status: false, message: "" }));
-              })
-              .catch((error) => {
-                dispatch(loginUser({}, { status: true, message: error.message }));
-              });
-          } else {
-            console.log("No tas");
-          }
-        });
-      }, []);
+    const { user } = useSelector(store => store.users)
     return (
         <>
             <section className='logout-section'>
@@ -39,7 +23,7 @@ const UserInfo = () => {
                             <Link to='/update-user' className='btns'>
                                 Actualizar perfil
                             </Link>
-            
+
                         </div>
                     </section>
 
@@ -57,7 +41,7 @@ const UserInfo = () => {
 
                         <label className='info-container-section__label'>
                             <h4>Numero de telefono</h4>
-                            <h3 className='h3s' type="text" >{user.phone ? user.phone :'Aun no tienes número agregado'}</h3>
+                            <h3 className='h3s' type="text" >{user?.phone ? user.phone : 'Aun no tienes número agregado'}</h3>
                         </label>
 
                         <label className='info-container-section__label'>
