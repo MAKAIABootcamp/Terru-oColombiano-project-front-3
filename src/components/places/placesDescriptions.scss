@@ -1,0 +1,149 @@
+.description-main {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 50px;
+
+
+
+    .description-box {
+        border-radius: 15px;
+        padding: 15px;
+        height: 100%;
+
+        .card-section {
+            margin-top: 20px;
+            display: flex;
+            width: 100%;
+            gap: 10px;
+            border: 1px solid gray;
+            border-radius: 8px;
+            height: 65vh;
+            width: 90vw;
+            margin-top: 25px;
+
+            .name-title {
+
+                display: flex;
+                flex-direction: column;
+                padding: 25px;
+                gap: 40px;
+                @media(max-width: 760px ) {
+                    width: 100%;
+                    gap: 15px;
+                }
+
+                & h2 {
+                    font-size: 250%;
+
+                    @media(max-width: 760px ) {
+                        font-size: 25px;
+                    }
+
+                }
+
+                & p {
+                    font-size: 120%;
+
+                    @media(max-width: 760px ) {
+                        font-size: 15px;
+                    }
+                }
+            }
+
+            .figure-container {
+
+                height: 100%;
+                width: 100%;
+                padding: 10px;
+
+                &__img {
+                    height: 300px;
+                    object-fit: cover;
+                    border-radius: 5px;
+                }
+
+                
+            }
+        }
+
+        .position-1 {
+
+            @media(max-width: 550px) {
+                flex-direction: column;
+            }
+        }
+
+        .position-2 {
+
+            @media(max-width: 550px) {
+                flex-direction: column-reverse;
+                margin-top: 170px;
+            }
+        }
+    }
+}
+
+.back {
+    position: fixed;
+    top: 50px;
+    left: 20px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 20px;
+    z-index: 1;
+    &:hover {
+        scale: 1.01;
+        transition: 0.5s;
+    }
+}
+.imgCarousel{
+    background-color: rebeccapurple;
+    position: fixed;
+
+    & figure {
+        display: flex;
+        padding: 20px;
+
+        & img {
+            width: 40%;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        & p {
+            padding: 20px;
+        }
+    }
+}
+
+@media (max-width:890px) {
+    .card-section {
+        flex-direction: column;
+        gap: 0px;
+
+        .name-title {
+            height: 50%;
+
+            & p {
+                font-size: 14px;
+            }
+        }
+
+        .figure-container {
+            height: 50%;
+
+            & img {
+                height: 200px;
+                width: 100%;
+            }
+        }
+    }
+
+}

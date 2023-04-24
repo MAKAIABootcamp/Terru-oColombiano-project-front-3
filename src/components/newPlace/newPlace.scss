@@ -7,6 +7,36 @@
     justify-content: center;
     align-items: center;
     padding: 10px;
+    // background-image: url(https://images2.alphacoders.com/107/1070004.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    gap: 20px;
+    
+
+    & aside {
+        display: flex;
+        gap: 10px;
+
+        & button {
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: #c08b61;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-size: 15px;
+
+            &:hover {
+                background-color: #775d4a;
+            }
+        }
+    }
 
     & form {
         display: flex;
@@ -15,6 +45,9 @@
         gap: 20px;
         margin-bottom: 20px;
         padding: 10px;
+        border-radius: 8px;
+        background-color: white;
+        border: 1px solid gray;
         border-radius: 8px;
 
         & label {
@@ -29,7 +62,7 @@
                 border: 1px solid gray;
                 padding: 5px;
                 border-radius: 8px;
-        
+
             }
 
             & textarea,
@@ -38,23 +71,30 @@
                 outline: none;
                 padding: 10px;
             }
+
             & section {
                 display: flex;
                 flex-wrap: wrap;
                 gap: 20px;
+
                 & small {
                     border-radius: 8px;
                     border: 1px solid gray;
                     padding: 10px;
                     cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    justify-content: center;
 
                     &:hover {
-                        background-color: #c08b61;
-                        color: white;
+                        scale: 1.1;
+                        transition: scale 0.5s;
                     }
                 }
             }
         }
+
         & button {
             height: 40px;
             border-radius: 8px;
@@ -68,11 +108,75 @@
                 background-color: #775d4a;
             }
         }
+
         & span {
             color: red;
             font-size: 14px;
             font-weight: 100;
         }
+    }
+}
+
+.selected {
+    background-color: #c08b61;
+    color: white;
+
+}
+
+.myPlaces {
+    width: 100%;
+    height: 100%;
+
+    & div {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 5%;
+
+        & figure {
+            background-color: white;
+            display: flex;
+            border-radius: 12px;
+            height: 350px;
+            width: 100%;
+            padding: 10px;
+            box-shadow: 0 0 1px 1px;
+
+            & img {
+                object-fit: cover;
+                width: 40%;
+                border-radius: 10px;
+            }
+
+            & figcaption {
+                padding: 20px;
+                width: 60%;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                height: 100%;
+
+                & p {
+                    overflow-y: auto;
+                    height: 200px;
+                    font-size: 14px;
+                }
+
+                & section {
+                    display: flex;
+                    gap: 20px;
+                    flex-wrap: wrap;
+
+
+
+                }
+            }
+
+        }
+    }
+    & h1 {
+        text-align: center;
+        font-size: 30px;
     }
 }
 
@@ -83,6 +187,33 @@
             width: 90%;
         }
 
+    }
+
+    .myPlaces {
+        & div figure {
+            flex-direction: column;
+            height: 550px;
+
+            & img {
+                width: 100%;
+                height: 40%;
+            }
+            & figcaption {
+                width: 100%;
+                padding: 10px;
+                height: 100%;
+                gap: 10px;
+
+                & p {
+                    height: 120px;
+                    
+                }
+                & section {
+                    gap: 10px;
+                }
+
+            }
+        }
     }
 
 }

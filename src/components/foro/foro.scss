@@ -1,0 +1,156 @@
+.foro {
+    padding: 55px 10px;
+    width: 100%;
+
+    &__container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        margin-top: 20px;
+
+        &__main {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 80%;
+            border: 1px solid gray;
+            border-radius: 8px;
+            padding: 10px;
+
+            & div {
+                display: flex;
+                gap: 10px;
+
+                & img {
+                    height: 50px;
+                    width: 50px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+
+                & section {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+
+            & figure {
+                display: flex;
+                width: 100%;
+                border-radius: 8px;
+
+
+                & img {
+                    width: 40%;
+                    border-radius: 8px;
+                }
+
+                & figcaption {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 0px 20px;
+                    position: relative;
+
+                    & small {
+                        position: absolute;
+                        bottom: 0;
+                        display: flex;
+                        gap: 5px;
+                        align-items: center;
+
+                    }
+
+                }
+            }
+            &:hover {
+                cursor: pointer;
+                // scale: 0.95;
+                // transition: scale .5s;
+            }
+        }
+
+
+    }
+}
+.btnModal{
+    border: none;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.mainModal {
+    position: relative;
+
+    & figure {
+      
+        & img {
+            width: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+       
+    }
+    & p {
+        margin-bottom: 10px;
+    }
+    & section {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 10px;
+
+        & button {
+            border-radius: 5px;
+            height: 40px;
+            padding: 10px;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            
+
+        }
+       
+
+    }
+    &__comments, &__add {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        & figure {
+            display: flex;
+            gap: 10px;
+
+            & img {
+                width: 40px;
+                object-fit: cover;
+                height: 40px;
+            }
+            & figcaption {
+                display: flex;
+                flex-direction: column;
+
+               
+            }
+            & input {
+                border: none;
+                height: 40px;
+                outline: none;
+            }
+        }
+
+    }
+    &__add {
+        position: absolute;
+
+    }
+    &__comments {
+        overflow-y: auto;
+        height: 200px;
+    }
+}

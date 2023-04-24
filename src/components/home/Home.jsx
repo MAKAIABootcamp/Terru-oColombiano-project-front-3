@@ -1,24 +1,98 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './home.scss'
 import search from '../../assets/searchNav.svg'
-import star from '../../assets/star.svg'
 import location from '../../assets/locationGray.svg'
 import cancel from '../../assets/cancel.png'
-import { useNavigate } from 'react-router-dom'
 import Navbar from '../navbar/Navbar'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { getPlacesAsync } from '../../redux/actions/placesActions'
+import { BsFillCarFrontFill } from 'react-icons/bs'
+import { RiMotorbikeFill } from 'react-icons/ri'
+import { BiTime } from 'react-icons/bi'
+import { BiWalk } from 'react-icons/bi'
+import { FaBus } from 'react-icons/fa'
+import { IoMdBicycle } from 'react-icons/io'
+import { RiShipLine } from 'react-icons/ri'
+import { Rate } from 'antd'
+import { BsFillHeartFill } from 'react-icons/bs'
 
 const Home = () => {
   const [input, setInput] = useState('')
+  const [favorites, setFavorites] = useState([])
+  const [isFavorite, setIsFavorite] = useState('')
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
+
   const valueInput = ({ value }) => {
-    console.log(value);
     setInput(value)
 
   }
+
+
+  const { user } = useSelector(store => store.users)
+  console.log(user);
+
+  const { places } = useSelector(store => store.places);
+
+  const addFavorite = (data) => {
+    const isFavorite = user.favorites.filter(fav => fav.id === data.id)
+
+    if (!isFavorite.length) {
+      dispatch(addFavoriteAsync(data))
+      setFavorites([...favorites, data.id])
+      toast('✔ Se ha agregado correctamente!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
+    } else {
+      Swal.fire({
+        icon: 'info',
+        title: 'Este lugar ya está en favoritos',
+
+      })
+    }
+
+  }
+
+  useEffect(() => {
+    dispatch(getPlacesAsync())
+    user?.favorites.forEach(e => {
+      setFavorites(favorites => [...favorites, e.id])
+    })
+
+  }, [dispatch])
+
+
+
+  const arrayFiltered = places[0]?.filter(place => place.location.toLowerCase().includes(input.toLowerCase()) || place.department.toLowerCase().includes(input.toLowerCase()))
+
+  const variants = {
+    hidden: {
+      opacity: 0,
+      x: "-100vw"
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 1
+      }
+    }
+  };
+
+
   return (
-    <article className='home'>
+    <article className='home' initial="hidden"
+      animate="visible"
+      variants={variants}>
       <div className='home__header'>
         <Navbar />
         <label>
@@ -30,8 +104,11 @@ const Home = () => {
         </label>
         <section className='home__header__btns'>
           <select>
-            <option value="">Categoría</option>
+            <option value="">Actividades</option>
             <option value="1">Deportes</option>
+            <option value="2">Camping</option>
+            <option value="3">Mirador</option>
+            <option value="4">Natación</option>
           </select>
           <select>
             <option value="">Ubicación</option>
@@ -42,87 +119,126 @@ const Home = () => {
             <option value="">Clima</option>
             <option value="1">Calido</option>
           </select>
-          <button>Mas votados</button>
+          <button>Más votados</button>
 
         </section>
       </div>
       <div className='home__main'>
-        <h1>Todos los rincones</h1>
+        <h1>Destinos populares</h1>
+        {!places.length ? <Loader /> : <></>}
+        <div>
+          {input ? arrayFiltered.map((e, index) =>
+            <motion.figure key={index} initial="hidden"
+              animate="visible"
+              variants={variants}>
+              <img src={e.imgPlace2} alt="caballo" className='home__main__photo' />
+              <figcaption >
+                <h3>{e.name}{e.weather === "1" ? <BsCloudSun className='icons' /> : e.weather === "2" ? <CiSun className='icons' /> : e.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
+                <p onClick={() => navigate(`/description/${e.id}`)}>{e.description}</p>
+                <small><BiTime /> {e.schedules}</small>
+                <span> <img src={location} alt="location" />{` ${e.location} - ${e.department}`}</span>
+                <section>
+                  {e.category.map((act, index) => <small key={index}>{act}</small>)}
+                </section>
+                <section>
+                  {e.icons.map((icon, index) => {
+                    if (icon === 'car') {
+                      return <BsFillCarFrontFill key={index + 80} />
 
-        <figure>
-          <img src="https://images.pexels.com/photos/11130921/pexels-photo-11130921.jpeg?auto=compress&cs=tinysrgb&w=600" alt="caballo" className='home__main__photo' />
-          <figcaption>
-            <h3>Nombre del lugar</h3>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius aliquid possimus fugiat molestias rem sapiente omnis? Rem, repellat dolore? Fuga, quis nobis dolorum dolores nesciunt blanditiis aliquid. Totam, fugiat sed.</p>
-            <span> <img src={location} alt="location" /> Ubicacion del lugar</span>
-            <section>
-              <small>Turismo</small>
-              <small>Actividades acuaticas</small>
-              <small>Mirador</small>
-            </section>
-            <section>
-              <img src="https://cdn.icon-icons.com/icons2/158/PNG/96/car_22307.png" alt="carro" />
-              <img src="https://cdn.icon-icons.com/icons2/577/PNG/96/TouringMotorcycle_Green_icon-icons.com_54907.png" alt="moto" />
-              <img src="https://cdn.icon-icons.com/icons2/1363/PNG/96/travel-holiday-vacation-306_89077.png" alt="bus" />
-            </section>
-            <section>
-              <img src={star} alt="star" />
-              <img src={star} alt="star" />
-              <img src={star} alt="star" />
-              <img src={star} alt="star" />
-            </section>
-          </figcaption>
-        </figure>
-        <figure>
-          <img src="https://images.pexels.com/photos/11130921/pexels-photo-11130921.jpeg?auto=compress&cs=tinysrgb&w=600" alt="caballo" className='home__main__photo' />
-          <figcaption>
-            <h3>Nombre del lugar</h3>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius aliquid possimus fugiat molestias rem sapiente omnis? Rem, repellat dolore? Fuga, quis nobis dolorum dolores nesciunt blanditiis aliquid. Totam, fugiat sed.</p>
-            <span> <img src={location} alt="location" /> Ubicacion del lugar</span>
-            <section>
-              <small>Turismo</small>
-              <small>Actividades acuaticas</small>
-              <small>Mirador</small>
-            </section>
-            <section>
-              <img src="https://cdn.icon-icons.com/icons2/158/PNG/96/car_22307.png" alt="carro" />
-              <img src="https://cdn.icon-icons.com/icons2/577/PNG/96/TouringMotorcycle_Green_icon-icons.com_54907.png" alt="moto" />
-              <img src="https://cdn.icon-icons.com/icons2/1363/PNG/96/travel-holiday-vacation-306_89077.png" alt="bus" />
-            </section>
-            <section>
-              <img src={star} alt="star" />
-              <img src={star} alt="star" />
-              <img src={star} alt="star" />
-              <img src={star} alt="star" />
-            </section>
-          </figcaption>
-        </figure>
-        <figure>
-          <img src="https://images.pexels.com/photos/11130921/pexels-photo-11130921.jpeg?auto=compress&cs=tinysrgb&w=600" alt="caballo" className='home__main__photo' />
-          <figcaption>
-            <h3>Nombre del lugar</h3>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius aliquid possimus fugiat molestias rem sapiente omnis? Rem, repellat dolore? Fuga, quis nobis dolorum dolores nesciunt blanditiis aliquid. Totam, fugiat sed.</p>
-            <span> <img src={location} alt="location" /> Ubicacion del lugar</span>
-            <section>
-              <small>Turismo</small>
-              <small>Actividades acuaticas</small>
-              <small>Mirador</small>
-            </section>
-            <section>
-              <img src="https://cdn.icon-icons.com/icons2/158/PNG/96/car_22307.png" alt="carro" />
-              <img src="https://cdn.icon-icons.com/icons2/577/PNG/96/TouringMotorcycle_Green_icon-icons.com_54907.png" alt="moto" />
-              <img src="https://cdn.icon-icons.com/icons2/1363/PNG/96/travel-holiday-vacation-306_89077.png" alt="bus" />
-            </section>
-            <section>
-              <img src={star} alt="star" />
-              <img src={star} alt="star" />
-              <img src={star} alt="star" />
-              <img src={star} alt="star" />
-            </section>
-          </figcaption>
-        </figure>
+                    }
+                    if (icon === 'moto') {
+                      return <RiMotorbikeFill key={index + 25} />
+
+                    }
+                    if (icon === 'walking') {
+                      return <BiWalk key={index + 38} />
+
+                    }
+                    if (icon === 'bici') {
+                      return <IoMdBicycle key={index + 18} />
+
+                    }
+                    if (icon === 'bus') {
+                      return <FaBus key={index + 10} />
+
+                    }
+                    if (icon === 'ship') {
+                      return <RiShipLine key={index + 41} />
+
+                    }
+                  }
+
+                  )}
+                </section>
+                <Rate disabled defaultValue={e.rate} />
+                <BsFillHeartFill className='heart' />
+              </figcaption>
+            </motion.figure>) : <>
+            {places[0] ? places[0].map((place, index) =>
+              <motion.figure key={index} initial="hidden"
+                animate="visible"
+                variants={variants} >
+                <img src={place.imgPlace2} alt="caballo" className='home__main__photo' />
+                <figcaption>
+                  <h3>{place.name} {place.weather === "1" ? <BsCloudSun className='icons' /> : place.weather === "2" ? <CiSun className='icons' /> : place.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
+                  <p onClick={() => navigate(`/description/${place.id}`)}>{place.description}</p>
+                  <small><BiTime /> {place.schedules}</small>
+                  <span> <img src={location} alt="location" />{` ${place.location} - ${place.department}`}</span>
+                  <section>
+                    {place.category.map((act, index) => <small key={index}>{act}</small>)}
+                  </section>
+                  <section>
+                    {place.icons.map((icon) => {
+                      if (icon === 'car') {
+                        return <BsFillCarFrontFill key={index + 1} />
+
+                      }
+                      if (icon === 'moto') {
+                        return <RiMotorbikeFill key={index + 2} />
+
+                      }
+                      if (icon === 'walking') {
+                        return <BiWalk key={index + 7} />
+
+                      }
+                      if (icon === 'bici') {
+                        return <IoMdBicycle key={index + 9} />
+
+                      }
+                      if (icon === 'bus') {
+                        return <FaBus key={index + 10} />
+
+                      }
+                      if (icon === 'ship') {
+                        return <RiShipLine key={index + 11} />
+
+                      }
+
+                    }
+
+                    )}
+
+
+                  </section>
+                  <Rate disabled defaultValue={place.rate} />
+                  <BsFillHeartFill onClick={() => addFavorite(place)} className={`heart ${favorites.includes(place.id)? 'favorite' : ''}`} />
+
+                </figcaption>
+              </motion.figure>
+
+            ) : <></>}</>}
+          {input && !arrayFiltered.length ? <div className='error404'>
+            <h1>Lugar no encontrado</h1>
+            <p>Por favor ingresa una nueva busqueda.</p>
+          </div> : <></>}
+
+        </div>
+
+
 
       </div>
+      <ToastContainer />
+
     </article>
   )
 }
