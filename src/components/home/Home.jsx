@@ -31,7 +31,6 @@ const Home = () => {
 
 
   const { user } = useSelector(store => store.users)
-  console.log(user);
 
   const { places } = useSelector(store => store.places);
 
