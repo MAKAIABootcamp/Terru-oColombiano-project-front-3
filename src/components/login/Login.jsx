@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './login.scss'
 import logo from '../../assets/cafe.svg'
 import name from '../../assets/terruño.svg'

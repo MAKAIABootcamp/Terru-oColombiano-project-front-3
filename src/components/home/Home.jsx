@@ -15,17 +15,6 @@ import { IoMdBicycle } from 'react-icons/io'
 import { RiShipLine } from 'react-icons/ri'
 import { Rate } from 'antd'
 import { BsFillHeartFill } from 'react-icons/bs'
-import { addFavoriteAsync } from '../../redux/actions/userActions'
-import Swal from 'sweetalert2'
-import { ToastContainer, toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { BsCloudSun } from 'react-icons/bs'
-import { CiSun } from 'react-icons/ci'
-import { WiDayRainMix } from 'react-icons/wi'
-import { BsSun } from 'react-icons/bs'
-import Loader from '../loader/Loader'
-
 
 const Home = () => {
   const [input, setInput] = useState('')
