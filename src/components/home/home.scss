@@ -74,10 +74,11 @@
                 font-size: 16px;
                 cursor: pointer;
 
-                &:hover {
+                &:focus, &:hover {
                     background-color: rgb(71, 63, 63);
                     color: white;
                 }
+
             }
 
         }
@@ -139,6 +140,19 @@
                     margin-bottom: 10px;
                     position: relative;
 
+                    & h3 {
+                        font-size: 22px;
+                        display: flex;
+                        justify-content: space-between;
+                        padding-right: 20px;
+                        align-items: center;
+
+                        .icons {
+                            font-size: 30px;
+                        }
+                    }
+
+
 
 
                     & p {
@@ -146,7 +160,7 @@
                         overflow-y: auto;
                         height: 150px;
                     }
-
+           
                     & section {
                         display: flex;
                         align-items: center;

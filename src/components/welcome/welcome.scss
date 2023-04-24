@@ -1,9 +1,66 @@
 .background {
-  background-image: url('https: //images.pexels.com/photos/12470921/pexels-photo-12470921.jpeg');
-  background-size: 100% 100%;
+  background-image: url(https://images.pexels.com/photos/12470921/pexels-photo-12470921.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  position: relative;
+  background-color: black;
+
+  & figure {
+    display: flex;
+    position: absolute;
+    gap: 20px;
+    top: 0;
+    width: 100%;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+    height: 60px;
+
+
+    & img {
+      height: 40px;
+    }
+
+    & section {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+  }
+
+  & h1 {
+    color: white;
+    font-size: 80px;
+    margin-left: 10px;
+  }
+}
+
+.btns {
+  display: flex;
   align-items: center;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  height: 40px;
+  padding: 10px;
+  background-color: #c08b61;
+
+  &:hover {
+    background-color: #864e1f;
+  }
+}
+
+@media(max-width : 860px) {
+  .background {
+
+    h1 {
+      font-size: 60px;
+    }
+  }
 }

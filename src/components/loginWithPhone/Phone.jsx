@@ -1,7 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
-
 import { BsFillTelephoneFill } from 'react-icons/bs'
 import Swal from 'sweetalert2';
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
@@ -68,11 +67,11 @@ const Phone = () => {
             <label>
                 <section>
                     <BsFillTelephoneFill className='phone' />
-                    <small>+<input type="text" placeholder='57' {...register('indicative', {
+                    <small>+<input type="text" placeholder='57' autoComplete="off" {...register('indicative', {
                         required: 'El indicativo es requerido'
                     })} /></small>
 
-                    <input type="text" placeholder='Celular' {...register('phone', {
+                    <input type="text" placeholder='Celular' autoComplete="off" {...register('phone', {
                         required :'El número es requerido'
                     })} />
 
