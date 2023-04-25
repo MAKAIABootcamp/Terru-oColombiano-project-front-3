@@ -83,10 +83,12 @@
         display: flex;
         padding: 20px;
         justify-content: space-between;
-        height: 480px;
+        height: 500px;
 
-
-
+        @media(max-width: 450px) {
+            flex-direction: column;
+            height: 550px;
+        }
 
 
         .title-description-container {
@@ -97,18 +99,33 @@
             gap: 20px;
             padding: 20px;
 
+            @media(max-width: 450px) {
+                overflow-y: auto;
+            }
         }
 
         .place-title {
             font-size: 30px;
-            // width: 85%;
             align-self: center;
+
+            @media(max-width: 450px) {
+                font-size: 20px;
+                align-self: center;
+                width: 100%;
+            }
         }
 
         & img {
             width: 40%;
             border-radius: 8px;
             object-fit: fill;
+
+            @media(max-width: 450px) {
+                width: 65%;
+                border-radius: 8px;
+                object-fit: fill;
+                align-self: center;
+            }
         }
 
         & p {
@@ -117,6 +134,10 @@
 
         .text-info {
             font-size: 25px;
+
+            @media (max-width: 450px) {
+                font-size: 20px;
+            }
         }
 
         .place-parafraph {
@@ -127,6 +148,12 @@
             overflow-y: auto;
             height: 85%;
             padding: 35px;
+
+            @media(max-width: 450px) {
+                width: 110%;
+                margin-right: 0px;
+                padding: 0px;
+            }
         }
 
         .icons-info {
@@ -138,6 +165,10 @@
             justify-content: center;
             align-items: center;
 
+            @media (max-width: 450px) {
+                padding-bottom: 140px;
+            }
+
         }
 
         .whether-icons {
@@ -147,6 +178,10 @@
             flex-direction: row-reverse;
             color: white;
             font-size: 55px;
+
+            @media (max-width: 450px) {
+                font-size: 35px;
+            }
         }
 
         .place-icons {
@@ -157,12 +192,17 @@
             .icons-tranport {
                 color: white;
                 font-size: 40px;
+
+                @media (max-width: 450px) {
+                    font-size: 20px;
+                }
             }
         }
 
         .categories-container {
             display: flex;
-            gap: 30px;
+            gap: 15px;
+            flex-wrap: wrap;
 
             & small {
                 border-radius: 25px;
