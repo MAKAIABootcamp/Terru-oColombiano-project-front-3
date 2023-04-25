@@ -12,8 +12,7 @@ import { BiWalk } from 'react-icons/bi'
 import { FaBus } from 'react-icons/fa'
 import { IoMdBicycle } from 'react-icons/io'
 import { RiShipLine } from 'react-icons/ri'
-
-
+import nextId from "react-id-generator";
 import UploadImages from '../uploadImages/UploadImages'
 import { toast } from 'react-toastify'
 import { motion } from 'framer-motion'
@@ -140,10 +139,12 @@ const AddPlace = () => {
 
 
 
+
     const onSubmit = async (data) => {
         // const imgPlace = data.imgPlace[0] ? await fileUpLoad(data.imgPlace[0]) : '';
         // const imgAct = data.imgAct[0] ? await fileUpLoad(data.imgAct[0]) : '';
         // const imgPlace2 = data.imgPlace2[0] ? await fileUpLoad(data.imgPlace2[0]) : '';
+
 
 
 
@@ -163,6 +164,7 @@ const AddPlace = () => {
             postedByImg: user.photo,
             rate: 0,
             comments: [],
+            status : 'Pendiente'
 
 
 
@@ -315,7 +317,7 @@ const AddPlace = () => {
                         />
                     </Modal> */}
                 </>
-                <UploadImages  />
+                <UploadImages />
 
                 {/* <input type="file" {...register('imgPlace', {
                     required: 'Este campo es requerido'

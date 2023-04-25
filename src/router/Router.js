@@ -15,16 +15,17 @@ import LoginWithPhone from "../components/loginWithPhone/LoginWithPhone";
 import Verification from "../components/loginWithPhone/Verification";
 import Phone from "../components/loginWithPhone/Phone";
 import UpdateInfo from "../components/login/UpdateInfo";
-import PlaceDescription from '../components/places/PlaceDescription'
+import PlaceDescription from "../components/places/PlaceDescription";
 import { auth } from "../firebase/firebaseConfig";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/actions/userActions";
 import PrivateRouter from "./PrivateRouter";
-
 import Welcome from "../components/welcome/Welcome";
-
 import AddPlace from "../components/newPlace/AddPlace";
 import MyPlaces from "../components/newPlace/MyPlaces";
+import Admin from "../components/admin/Admin";
+import AddAdmin from "../components/admin/AddAdmin";
+import ShowPost from "../components/admin/ShowPost";
 
 const Router = () => {
   const dispatch = useDispatch();
@@ -72,16 +73,19 @@ const Router = () => {
             </PrivateRouter>
           }
         >
+          <Route path="admin" element={<Admin />}>
+            <Route path="addAdmin" element={<AddAdmin />} />
+            <Route path="showPosts" element={<ShowPost />} />
+          </Route>
           <Route path="user" element={<UserInfo />} />
-          <Route path='/update-user' element={<UpdateUser />} />
+          <Route path="/update-user" element={<UpdateUser />} />
           <Route path="favorites" element={<Favorites />} />
           <Route path="foro" element={<Foro />} />
-          <Route path="newPlace" element={<NewPlace />} >
-            <Route path="addPlace" element = {<AddPlace />} />
-            <Route path="myPlaces" element = {<MyPlaces />} />
+          <Route path="newPlace" element={<NewPlace />}>
+            <Route path="addPlace" element={<AddPlace />} />
+            <Route path="myPlaces" element={<MyPlaces />} />
           </Route>
-          <Route  path="description/:place" element = {<PlaceDescription />}/>
-
+          <Route path="description/:place" element={<PlaceDescription />} />
         </Route>
       </Routes>
     </BrowserRouter>

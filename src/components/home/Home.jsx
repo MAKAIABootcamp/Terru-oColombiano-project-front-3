@@ -184,7 +184,7 @@ const Home = () => {
                 <BsFillHeartFill className='heart' />
               </figcaption>
             </motion.figure>) : <>
-            {places[0] ? places[0].map((place, index) =>
+            {places[0] ? places[0].filter(place => place.status === 'Aceptado').map((place, index) =>
               <motion.figure key={index} initial="hidden"
                 animate="visible"
                 variants={variants} >
