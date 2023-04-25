@@ -25,6 +25,12 @@ export const placesRedcuer = (state = initialValue, action) => {
                 }
 
             }
+            case placesTypes.CHANGE_STATUS_POST :
+                return {
+                    ...state,
+                    
+                }
+            
             
     
         default:

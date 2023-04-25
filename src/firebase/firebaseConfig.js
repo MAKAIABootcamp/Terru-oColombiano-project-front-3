@@ -3,7 +3,7 @@ import { FacebookAuthProvider, GoogleAuthProvider, getAuth } from "firebase/auth
 import { getFirestore } from "firebase/firestore";
 import { FacebookAuthProvider } from "firebase/auth";
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyD77vfAu1kBoFFgavfDxBjkkj9xEx24E10",
   authDomain: "terrunocolombiano-60fec.firebaseapp.com",
   projectId: "terrunocolombiano-60fec",
@@ -12,7 +12,7 @@ const firebaseConfig = {
   appId: "1:577528921707:web:dddfe1a265569fa906fb2e",
 };
 
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const dataBase = getFirestore(app);
 export const facebook = new FacebookAuthProvider();

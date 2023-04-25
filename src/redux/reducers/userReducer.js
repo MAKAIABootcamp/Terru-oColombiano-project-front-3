@@ -47,6 +47,14 @@ export const userReducer = (state = initialState, action) => {
           posts: action.payload,
         },
       };
+    case userTypes.DELETE_POST:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          posts: state.user.posts.filter((item) => item.id !== action.payload.id ),
+        },
+      };
     case userTypes.ADD_FAVORITE:
       return {
         ...state,

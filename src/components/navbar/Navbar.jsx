@@ -5,6 +5,7 @@ import { HiOutlineUserGroup } from 'react-icons/hi'
 import { AiOutlineHome } from 'react-icons/ai'
 import { CiLogout } from 'react-icons/ci'
 import { BsChevronDown } from 'react-icons/bs'
+import { RiAdminLine } from 'react-icons/ri'
 import { MdWorkspacesFilled } from 'react-icons/md'
 import logo from '../../assets/cafe.svg'
 import name from '../../assets/terruño.svg'
@@ -81,6 +82,7 @@ const Navbar = () => {
                         <NavLink to='foro' className='navlink'><HiOutlineUserGroup /> Foro</NavLink>
                         <NavLink to='favorites' className='navlink'><BsFillHeartFill className='heart' /> Favoritos</NavLink>
                         <NavLink to='user' className='navlink'><AiOutlineUser /> Cuenta</NavLink>
+                        {user?.type === "admin" ? <NavLink to='admin/showPosts' className='navlink'><RiAdminLine /> Admin</NavLink> : ''}
                         <button onClick={() => logOut()}><CiLogout /> Salir</button>
 
                     </ul>

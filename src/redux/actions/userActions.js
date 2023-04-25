@@ -16,6 +16,7 @@ import { getUsers } from "../../services/getUsers";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDocs,
   query,
@@ -63,6 +64,8 @@ const createPost = (data) => {
   };
 };
 export const createPostAsync = (post) => {
+  const newDocRef = doc(placesCollection);
+  const newId = newDocRef.id;
   return async (dispatch) => {
     const currentUser = auth.currentUser;
     let id;
@@ -76,10 +79,12 @@ export const createPostAsync = (post) => {
         array = user.data().posts;
       });
 
-      let posts = [...array, post];
+      const newPost = { ...post, id: newId };
+
+      let posts = [...array, newPost];
       const userRef = doc(dataBase, collectionName, id);
       await updateDoc(userRef, { posts: posts });
-      const placesDoc = await addDoc(placesCollection, post);
+      const placesDoc = await addDoc(placesCollection, newPost);
       dispatch(createPost(posts));
     } catch (error) {
       console.log(error);
@@ -229,6 +234,33 @@ export const createUserAsync = (data) => {
     }
   };
 };
+export const createAdmin = (data) => {
+  return async () => {
+    try {
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+      console.log(user);
+
+      const newUser = {
+        uid: user.auth.currentUser.uid,
+        name: data.name,
+        email: data.email,
+        photo: data.photo,
+        birthday: data.birthday,
+        phone: data.phone,
+        type: "admin",
+        posts: [],
+        favorites: [],
+      };
+      const userDoc = await addDoc(usersCollection, newUser);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 const logOut = () => {
   return {
     type: userTypes.LOGOUT,
@@ -335,8 +367,7 @@ export const userLoginProvider = (provider) => {
       });
       const currentUser = auth.currentUser;
 
-
-      let array = []
+      let array = [];
       const q = query(usersCollection, where("uid", "==", currentUser.uid));
       const userDoc = await getDocs(q);
       userDoc.forEach((user) => {
@@ -354,8 +385,8 @@ export const userLoginProvider = (provider) => {
           phone: "",
           location: "",
           description: "",
-          birthday : "",
-          type: "user"
+          birthday: "",
+          type: "user",
         };
         const userDoc = await addDoc(usersCollection, newUser);
 
@@ -364,6 +395,48 @@ export const userLoginProvider = (provider) => {
     } catch (error) {
       console.log(error);
       dispatch(loginUser({}, { error: error.message }));
+    }
+  };
+};
+
+const deletePost = (item) => {
+  return {
+    type: userTypes.DELETE_POST,
+    payload: item,
+  };
+};
+export const deletePostAsync = (item) => {
+  return async (dispatch) => {
+    const currentUser = auth.currentUser;
+    let id;
+    let array = [];
+    let postId = item.id;
+    console.log(postId);
+    const placesCo = await filterCollections({
+      key: "uid",
+      value: item.id,
+      collectionName: "places",
+    });
+
+    try {
+      const q = query(usersCollection, where("uid", "==", currentUser.uid));
+      const userDoc = await getDocs(q);
+      userDoc.forEach((user) => {
+        id = user.id;
+        array = user.data().posts;
+      });
+      console.log(array);
+
+      let posts = array.filter((element) => element.id !== item.id);
+      const userRef = doc(dataBase, collectionName, id);
+      await updateDoc(userRef, { posts: posts });
+
+      const placesRef = doc(placesCollection, postId);
+      await deleteDoc(placesRef);
+      dispatch(deletePost(posts));
+    } catch (error) {
+      console.log(error);
+      dispatch(deletePost(array));
     }
   };
 };
