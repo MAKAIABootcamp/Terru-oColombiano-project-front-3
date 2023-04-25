@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteFavoriteAsync, getFavorites } from '../../../redux/actions/userActions'
 import { ToastContainer, toast } from 'react-toastify'
 import { motion } from "framer-motion";
+import notFound from '../../../assets/notFound.svg'
 
 
 
@@ -79,11 +80,17 @@ const Favorites = () => {
                 </div>
               </section>
             </motion.article>
-          )) : <><h1>Aun no tienes nada agregado a favoritos</h1></>}
+          )) : <div className='notFound'>
+            <h1>Aún no tienes nada agregado a favoritos</h1>
+            <img src={notFound} alt="notFound" />
+
+
+          </div>
+          }
 
         </section>
         <ToastContainer />
-      </main>
+      </main >
     </>
   )
 }

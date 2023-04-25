@@ -140,7 +140,6 @@ const PlaceDescription = () => {
               </div>
             </figure>
           </Carousel>
-
         </motion.article>
       </motion.main>
     </>

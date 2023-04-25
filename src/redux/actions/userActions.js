@@ -1,3 +1,4 @@
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -7,6 +8,9 @@ import {
   updatePassword,
   updateProfile,
 } from "firebase/auth";
+
+
+
 import { auth, dataBase } from "../../firebase/firebaseConfig";
 import { getUsers } from "../../services/getUsers";
 import {
@@ -320,31 +324,46 @@ export const getFavorites = (favorites) => {
 // };
 
 export const userLoginProvider = (provider) => {
-  return (dispatch) => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const { displayName, accessToken, photoURL, email, uid } = result.user;
-        console.log(result.user);
-        console.log(result.user.uid);
-        dispatch(
-          loginUser(
-            {
-              email: email,
-              name: displayName,
-              accessToken,
-              photo: photoURL,
-              uid : uid,
-              posts : [],
-              favorites : [],
-            },
-            { status: false, message: "" }
-          )
-        );
-        console.log('este en provider');
-      })
-      .catch((error) => {
-        console.log(error);
-        dispatch(loginUser({}, { error: true, message: error.message }));
+  return async (dispatch) => {
+    try {
+      const { user } = await signInWithPopup(auth, provider);
+      console.log(user);
+      const userCollection = await filterCollections({
+        key: "uid",
+        value: user.uid,
+        collectionName: "users",
       });
+      const currentUser = auth.currentUser;
+
+
+      let array = []
+      const q = query(usersCollection, where("uid", "==", currentUser.uid));
+      const userDoc = await getDocs(q);
+      userDoc.forEach((user) => {
+        array = user.data().favorites;
+      });
+      console.log(array);
+      if (userCollection.length === 0) {
+        const newUser = {
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+          posts: [],
+          favorites: [],
+          phone: "",
+          location: "",
+          description: "",
+          birthday : "",
+          type: "user"
+        };
+        const userDoc = await addDoc(usersCollection, newUser);
+
+        dispatch(loginUser({ ...newUser }, { error: false }));
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch(loginUser({}, { error: error.message }));
+    }
   };
 };

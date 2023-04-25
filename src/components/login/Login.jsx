@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './login.scss'
 import logo from '../../assets/cafe.svg'
 import name from '../../assets/terruño.svg'
 import phone from '../../assets/celular.png'
 import fb from '../../assets/facebook.png'
-import google from '../../assets/google.png'
+import googleIcon from '../../assets/google.png'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { loginWithEmail, loginWithEmailAsync, userLoginProvider } from '../../redux/actions/userActions'
 import { useDispatch, useSelector } from 'react-redux'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth, facebook } from '../../firebase/firebaseConfig'
+import { auth, facebook, google } from '../../firebase/firebaseConfig'
 import Swal from 'sweetalert2'
 
 const Login = () => {
@@ -80,7 +80,7 @@ const loginWithProvider = (provider) => {
         <button onClick={() => navigate('/register')}>Regitrarse</button>
         <small>O</small>
         <figure>
-          <img src={google} alt="Facebook" />
+          <img src={googleIcon} alt="Facebook" onClick={() => loginWithProvider(google)}/>
           <img src={fb} alt="Google" onClick={() => loginWithProvider(facebook)} />
 
           <img src={phone} alt="Phone" onClick={() => navigate('/loginWithPhone/phone')} />
