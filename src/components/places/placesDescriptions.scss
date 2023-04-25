@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin-top: 50px;
+    margin-top: 80px;
 
 
 
@@ -98,28 +98,153 @@
     width: 100%;
     margin-bottom: 20px;
     z-index: 1;
+
     &:hover {
         scale: 1.01;
         transition: 0.5s;
     }
 }
-.imgCarousel{
-    background-color: rebeccapurple;
+
+.imgCarousel {
+    background-color: rgb(187, 141, 81);
     position: fixed;
 
     & figure {
+
         display: flex;
         padding: 20px;
+        justify-content: space-between;
+        height: 500px;
+
+        @media(max-width: 450px) {
+            flex-direction: column;
+            height: 550px;
+        }
+
+
+        .title-description-container {
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+
+            @media(max-width: 450px) {
+                overflow-y: auto;
+            }
+        }
+
+        .place-title {
+            font-size: 30px;
+            align-self: center;
+
+            @media(max-width: 450px) {
+                font-size: 20px;
+                align-self: center;
+                width: 100%;
+            }
+        }
 
         & img {
             width: 40%;
             border-radius: 8px;
-            object-fit: cover;
+            object-fit: fill;
+
+            @media(max-width: 450px) {
+                width: 65%;
+                border-radius: 8px;
+                object-fit: fill;
+                align-self: center;
+            }
         }
 
         & p {
             padding: 20px;
         }
+
+        .text-info {
+            font-size: 25px;
+
+            @media (max-width: 450px) {
+                font-size: 20px;
+            }
+        }
+
+        .place-parafraph {
+            align-self: center;
+            width: 90%;
+            margin-right: 50px;
+            font-size: 20px;
+            overflow-y: auto;
+            height: 85%;
+            padding: 35px;
+
+            @media(max-width: 450px) {
+                width: 110%;
+                margin-right: 0px;
+                padding: 0px;
+            }
+        }
+
+        .icons-info {
+            display: flex;
+            flex-direction: column-reverse;
+            align-self: center;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+
+            @media (max-width: 450px) {
+                padding-bottom: 140px;
+            }
+
+        }
+
+        .whether-icons {
+
+            width: 100%;
+            display: flex;
+            flex-direction: row-reverse;
+            color: white;
+            font-size: 55px;
+
+            @media (max-width: 450px) {
+                font-size: 35px;
+            }
+        }
+
+        .place-icons {
+
+            display: flex;
+            gap: 25px;
+
+            .icons-tranport {
+                color: white;
+                font-size: 40px;
+
+                @media (max-width: 450px) {
+                    font-size: 20px;
+                }
+            }
+        }
+
+        .categories-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+
+            & small {
+                border-radius: 25px;
+                height: 30px;
+                width: auto;
+                padding: 5px 5px 5px 5px;
+                background-color: #4b25f9;
+                color: white;
+            }
+        }
+
     }
 }
 
