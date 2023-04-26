@@ -6,7 +6,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Provider } from "react-redux";
 import store from "./redux/store/store";
 import 'react-toastify/dist/ReactToastify.css';
-import 'react-multi-carousel/lib/styles.css';
+import 'bootstrap/dist/js/bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
