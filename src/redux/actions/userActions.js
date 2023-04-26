@@ -276,6 +276,56 @@ export const logOutAsync = () => {
     }
   };
 };
+const editUser = (user) => {
+  return {
+    type: userTypes.EDIT_USER,
+    payload : user
+  }
+}
+export const editUserAsync = (user) => {
+  return async (dispatch) => {
+
+    try {
+      const userAuth = auth.currentUser;
+      let id;
+
+      const q = query(usersCollection, where("uid", "==", userAuth.uid));
+      const userDoc = await getDocs(q);
+      userDoc.forEach((user) => {
+        id = user.id;
+      });
+
+      const userRef = doc(dataBase, collectionName, id)
+
+      await updateProfile(userAuth, {
+        displayName : user.name,
+        photoURL : user.photo,
+        phoneNumber : user.phone
+      })
+      await updateEmail(userAuth, user.email)
+
+      const userUpdated = {
+          uid: userAuth.uid,
+          name: user.name,
+          email: user.email,
+          photo: user.photo,
+          birthday: user.birthday,
+          phone: user.phone,
+          type: "admin",
+
+      }
+      console.log(userUpdated);
+      await updateDoc(userRef, userUpdated)
+      dispatch(editUser(userUpdated))
+
+      
+    } catch (error) {
+        console.log(error);      
+    }
+    
+  }
+  
+}
 // export const loginWithEmail = (user) => {
 //   return {
 //     type: userTypes.LOGIN_WITH_EMAIL,

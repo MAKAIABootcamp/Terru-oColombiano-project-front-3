@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './register.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import iGogle from '../../assets/facebook.png'
@@ -9,8 +9,18 @@ import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { createUserAsync } from '../../redux/actions/userActions'
 import { fileUpLoad } from '../../services/fileUpLoad'
+import Loader from '../loader/Loader'
 
 const Register = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const { register, handleSubmit, formState: { errors } } = useForm()
   const dispatch = useDispatch()
@@ -21,14 +31,14 @@ const Register = () => {
     const photo = data.photo[0] ? await fileUpLoad(data.photo[0]) : '';
 
     const user = {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        photo: photo,
-        location: data.location,
-        birthday: data.birthday,
-        description : data.description,
-        phone : data.phone
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      photo: photo,
+      location: data.location,
+      birthday: data.birthday,
+      description: data.description,
+      phone: data.phone
 
 
     }
@@ -39,7 +49,7 @@ const Register = () => {
 
   return (
     <>
-      <section className='reg-container' >
+      {loading ? <Loader /> : <section className='reg-container' >
 
         <div className='form-container-div' >
 
@@ -74,7 +84,7 @@ const Register = () => {
               <h4>Direccion</h4>
 
               <input className='input' type="text" placeholder='ingresa tu direccion' {...register('location', {
-                required : 'La dirección es requerida'
+                required: 'La dirección es requerida'
               })} />
             </label>
             {errors.location ? <span className='red'>{errors.location.message}</span> : <></>}
@@ -118,7 +128,7 @@ const Register = () => {
               <h4>Descripcion</h4>
 
               <textarea className='textarea' placeholder='escribe una peque descripcion sobre ti' {...register('description', {
-                required : 'La descripción es requerida.'
+                required: 'La descripción es requerida.'
               })} />
             </label>
             {errors.description ? <span className='red'>{errors.description.message}</span> : <></>}
@@ -143,7 +153,8 @@ const Register = () => {
 
         </div>
 
-      </section>
+      </section>}
+
     </>
   )
 }
