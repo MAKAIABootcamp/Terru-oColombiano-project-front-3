@@ -6,83 +6,10 @@
     flex-direction: column;
     margin-top: 80px;
 
-
-
     .description-box {
         border-radius: 15px;
         padding: 15px;
-        height: 100%;
-
-        .card-section {
-            margin-top: 20px;
-            display: flex;
-            width: 100%;
-            gap: 10px;
-            border: 1px solid gray;
-            border-radius: 8px;
-            height: 65vh;
-            width: 90vw;
-            margin-top: 25px;
-
-            .name-title {
-
-                display: flex;
-                flex-direction: column;
-                padding: 25px;
-                gap: 40px;
-                @media(max-width: 760px ) {
-                    width: 100%;
-                    gap: 15px;
-                }
-
-                & h2 {
-                    font-size: 250%;
-
-                    @media(max-width: 760px ) {
-                        font-size: 25px;
-                    }
-
-                }
-
-                & p {
-                    font-size: 120%;
-
-                    @media(max-width: 760px ) {
-                        font-size: 15px;
-                    }
-                }
-            }
-
-            .figure-container {
-
-                height: 100%;
-                width: 100%;
-                padding: 10px;
-
-                &__img {
-                    height: 300px;
-                    object-fit: cover;
-                    border-radius: 5px;
-                }
-
-                
-            }
-        }
-
-        .position-1 {
-
-            @media(max-width: 550px) {
-                flex-direction: column;
-            }
-        }
-
-        .position-2 {
-
-            @media(max-width: 550px) {
-                flex-direction: column-reverse;
-                margin-top: 170px;
-            }
-        }
+        height: 550px;
     }
 }
 
@@ -107,7 +34,34 @@
 
 .imgCarousel {
     background-color: rgb(187, 141, 81);
-    position: fixed;
+
+    .place-dif {
+        position: relative;
+        width: 50%;
+        border-radius: 15px;
+        bottom: 490px;
+        background-color: rgba(255, 255, 255, 0.5294117647);
+        font-size: 35px;
+        padding: 10px 10px 10px 15px;
+        left: 10px;
+
+        @media(max-width: 450px) {
+            font-size: 20px;
+        }
+    }
+
+    & img {
+        width: 40%;
+        border-radius: 8px;
+        object-fit: fill;
+
+        @media(max-width: 450px) {
+            width: 65%;
+            border-radius: 8px;
+            object-fit: fill;
+            align-self: center;
+        }
+    }
 
     & figure {
 
@@ -118,7 +72,8 @@
 
         @media(max-width: 450px) {
             flex-direction: column;
-            height: 550px;
+            height: 500px;
+            padding: 0px;
         }
 
 
@@ -146,13 +101,30 @@
             }
         }
 
+        .place-parafraph {
+            align-self: center;
+            width: 90%;
+            margin-right: 50px;
+            font-size: 20px;
+            overflow-y: auto;
+            height: 85%;
+            padding: 35px;
+
+            @media(max-width: 450px) {
+                width: 110%;
+                margin-right: 0px;
+                padding: 0px;
+            }
+        }
+
         & img {
             width: 40%;
             border-radius: 8px;
             object-fit: fill;
 
             @media(max-width: 450px) {
-                width: 65%;
+                width: 100%;
+                height: 200px;
                 border-radius: 8px;
                 object-fit: fill;
                 align-self: center;
@@ -171,22 +143,6 @@
             }
         }
 
-        .place-parafraph {
-            align-self: center;
-            width: 90%;
-            margin-right: 50px;
-            font-size: 20px;
-            overflow-y: auto;
-            height: 85%;
-            padding: 35px;
-
-            @media(max-width: 450px) {
-                width: 110%;
-                margin-right: 0px;
-                padding: 0px;
-            }
-        }
-
         .icons-info {
             display: flex;
             flex-direction: column-reverse;
@@ -197,7 +153,8 @@
             align-items: center;
 
             @media (max-width: 450px) {
-                padding-bottom: 140px;
+                padding-bottom: 90px;
+                overflow-y: auto;
             }
 
         }
@@ -240,35 +197,11 @@
                 height: 30px;
                 width: auto;
                 padding: 5px 5px 5px 5px;
-                background-color: #4b25f9;
+                background-color: #1d019c;
                 color: white;
             }
         }
 
+
     }
-}
-
-@media (max-width:890px) {
-    .card-section {
-        flex-direction: column;
-        gap: 0px;
-
-        .name-title {
-            height: 50%;
-
-            & p {
-                font-size: 14px;
-            }
-        }
-
-        .figure-container {
-            height: 50%;
-
-            & img {
-                height: 200px;
-                width: 100%;
-            }
-        }
-    }
-
 }
