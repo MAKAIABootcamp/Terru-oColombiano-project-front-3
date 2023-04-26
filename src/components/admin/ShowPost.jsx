@@ -61,13 +61,13 @@ const ShowPost = () => {
                 <button style={{ backgroundColor: 'green' }} onClick={() => filterButton("accepted")}>Aceptadas</button>
                 <button style={{ backgroundColor: 'rgb(223, 146, 4)' }} onClick={() => filterButton("pendent")}>Pendientes</button>
                 <button style={{ backgroundColor: 'red' }} onClick={() => filterButton("rejected")}>Rechazadas</button>
-            </section>
+            </section> bn
             {posts ? posts.map((place, index) =>
                 <figure key={index}>
                     <img src={place.imgPlace} alt="" />
                     <h3>{place.name}</h3>
                     <strong className={place.status === 'Aceptado' ? 'accepted' : place.status === 'Pendiente' ? 'waiting' : 'rejected'}>{place.status}</strong>
-                    <section className={place.status === 'Aceptado' ? 'section hidden' : ''}>
+                    <section className={place.status === 'Aceptado' || place.status === 'Rechazada' ? 'section hidden' : ''}>
                         <button style={{ backgroundColor: 'green' }} onClick={() => changeStatus(place.id)}><BsCheck2 />Aceptar</button>
                         <button style={{ backgroundColor: 'red' }} onClick={() => rejectedStatus(place.id)}><MdOutlineCancel /> Rechazar</button>
                     </section>

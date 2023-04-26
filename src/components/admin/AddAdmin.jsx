@@ -1,31 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { fileUpLoad } from '../../services/fileUpLoad'
-import { useDispatch } from 'react-redux'
-import { createAdmin } from '../../redux/actions/userActions'
+import { useDispatch, useSelector } from 'react-redux'
+import { createAdmin, editUserAsync } from '../../redux/actions/userActions'
 import { toast } from 'react-toastify'
 
 const AddAdmin = () => {
+    const [isEdit, setIsEdit] = useState(false)
     const { reset, handleSubmit, register, formState: { errors } } = useForm()
     const dispatch = useDispatch()
 
+    const { user } = useSelector(store => store.users)
+
     const onSubmit = async (data) => {
 
-        console.log(data);
-        const photo = data.photo[0] ? await fileUpLoad(data.photo[0]) : '';
+        const updatedFields = Object.fromEntries(
+            Object.entries(data).filter(([key, value]) => value !== '')
+        );
 
-        const user = {
-            name: data.name,
-            email: data.email,
-            password: data.password,
-            photo: photo,
-            birthday: data.birthday,
-            phone: data.phone
+        if (Object.keys(updatedFields).length === 0) {
+            return; // no fields updated
+        }
 
+        const photo = updatedFields.photo ? await fileUpLoad(updatedFields.photo[0]) : '';
+
+
+        let newPhoto;
+        if (!photo.length) {
+            newPhoto = user.photo
 
         }
-        dispatch(createAdmin(user))
-        toast('✔ Se ha agregado correctamente!', {
+        else {
+            newPhoto = photo
+        }
+
+        const updatedUser = Object.assign({}, user, updatedFields, { photo : newPhoto });
+
+
+        dispatch(editUserAsync(updatedUser));
+        toast('✔ Información actualizada!', {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -35,67 +48,67 @@ const AddAdmin = () => {
             progress: undefined,
             theme: "light",
         });
-
-
+        setIsEdit(!isEdit)
     }
     return (
-        <article className='addAdmin'>
-            {/* <h1>Agregar nuevo administrador</h1> */}
-            {/* <form onSubmit={handleSubmit(onSubmit)}>
-                <section>
+        <article className='myAccount'>
+            <figure>
+                <img src={user.photo} alt="photo" />
+            </figure>
+
+            {isEdit ?
+                <form onSubmit={handleSubmit(onSubmit)}>
+
                     <label>
                         Nombre
-                        <input type="text" placeholder='Nombre completo' {...register('name', {
-                            required: 'El nombre es requerido'
-                        })} />
-                        {errors.name ? <span>{errors.name.message}</span> : <></>}
-
+                        <input type="text" placeholder='Ingrese el nombre' {...register('name')} />
                     </label>
+
                     <label>
                         Correo electrónico
-                        <input type="text" placeholder='Ingrese el email' {...register('email', {
-                            required: 'El correo es requerido'
-                        })} />
-                        {errors.email ? <span>{errors.email.message}</span> : <></>}
-                    </label>
-
-                    <label>
-                        Contraseña
-                        <input type="password" placeholder='Ingrese una contraseña' {...register('password', {
-                            required: 'La contraseña es requerida'
-                        })} />
-                        {errors.password ? <span>{errors.password.message}</span> : <></>}
+                        <input type="text" placeholder='Ingrese el correo electrónico' {...register('email')} />
                     </label>
 
                     <label>
                         Teléfono
-                        <input type="text" placeholder='Ingrese el número de teléfono' {...register('phone', {
-                            required: 'El número es requerido'
-                        })} />
-                        {errors.phone ? <span>{errors.phone.message}</span> : <></>}
-                    </label>
-
-                    <label>
-                        Foto
-                        <input type="file" {...register('photo', {
-                            required: 'La foto es requerida'
-                        })} />
-                        {errors.photo ? <span>{errors.photo.message}</span> : <></>}
+                        <input type="text" placeholder='Ingrese el número de teléfono' {...register('phone')} />
                     </label>
                     <label>
                         Fecha de nacimiento
-                        <input type="date" {...register('birthday', {
-                            required: 'La fecha es requerida'
-                        })} />
-                        {errors.birthday ? <span>{errors.birthday.message}</span> : <></>}
+                        <input type="date" {...register('birthday')} />
+                    </label>
+                    <label>
+                        Foto
+                        <input type="file" {...register('photo')} />
+                    </label>
+                    <button type='submit'>Guardar información</button>
+                    <span onClick={() => setIsEdit(!isEdit)} style={{ backgroundColor: 'red' }}>Cancelar</span>
+
+                </form> :
+                <form className='form'>
+
+                    <label>
+                        Nombre
+                        <input type="text" readOnly placeholder={user.name} />
+                    </label>
+                    <label>
+                        Correo electrónico
+                        <input type="text" readOnly placeholder={user.email} />
+                    </label>
+                    <label>
+                        Teléfono
+                        <input type="text" readOnly placeholder={user.phone ? user.phone : 'Agregar número de teléfono'} />
+                    </label>
+                    <label>
+                        Fecha de nacimiento
+                        <input type="text" readOnly placeholder={!user.birthday ? 'Agregar fecha de cumpleaños' : user.birthday} />
                     </label>
 
-                </section>
+                    <span onClick={() => setIsEdit(!isEdit)}>Editar información</span>
+
+                </form>}
 
 
-
-                <button type='submit'>Crear usuario</button>
-            </form> */}
 
         </article>
     )

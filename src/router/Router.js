@@ -73,10 +73,6 @@ const Router = () => {
             </PrivateRouter>
           }
         >
-          <Route path="admin" element={<Admin />}>
-            <Route path="addAdmin" element={<AddAdmin />} />
-            <Route path="showPosts" element={<ShowPost />} />
-          </Route>
           <Route path="user" element={<UserInfo />} />
           <Route path="/update-user" element={<UpdateUser />} />
           <Route path="favorites" element={<Favorites />} />
@@ -86,6 +82,10 @@ const Router = () => {
             <Route path="myPlaces" element={<MyPlaces />} />
           </Route>
           <Route path="description/:place" element={<PlaceDescription />} />
+        </Route>
+        <Route path="admin" element={<Admin />}>
+          <Route path="myAccount" element={<AddAdmin />} />
+          <Route path="showPosts" element={<ShowPost />} />
         </Route>
       </Routes>
     </BrowserRouter>

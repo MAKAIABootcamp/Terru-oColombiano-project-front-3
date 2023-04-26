@@ -34,9 +34,7 @@ export const userReducer = (state = initialState, action) => {
     case userTypes.EDIT_USER:
       return {
         ...state,
-        user: {
-          ...state.user,
-        },
+        user: action.payload
       };
 
     case userTypes.ADD_POST:
