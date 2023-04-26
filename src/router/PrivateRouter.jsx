@@ -33,10 +33,12 @@ const PrivateRouter = ({ children }) => {
             dispatch(loginUser({}, { status: true, message: error.message }));
             setLogged(false);
             setLoading(false);
+
           });
       } else {
         setLogged(false);
         setLoading(false);
+
       }
     });
 
@@ -44,7 +46,7 @@ const PrivateRouter = ({ children }) => {
   }, []);
 
   if (loading) {
-    return <Loader className = 'loader'  />;
+    return <Loader className='loader' />;
   }
 
 

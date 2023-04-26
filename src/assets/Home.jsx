@@ -13,7 +13,6 @@ import { BiWalk } from 'react-icons/bi'
 import { FaBus } from 'react-icons/fa'
 import { IoMdBicycle } from 'react-icons/io'
 import { RiShipLine } from 'react-icons/ri'
-import { WiDayRainMix } from 'react-icons/wi'
 import { Rate } from 'antd'
 import { BsFillHeartFill } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
@@ -70,7 +69,6 @@ const Home = () => {
     }
 
   }
-  
 
   useEffect(() => {
     dispatch(getPlacesAsync())
@@ -112,12 +110,12 @@ const Home = () => {
 
         </label>
         <section className='home__header__btns'>
-          <select onChange={(e) => valueSelect(e.target)}>
+          <select >
             <option value="">Actividades</option>
-            <option value="Deportes">Deportes</option>
-            <option value="Camping">Camping</option>
-            <option value="Mirador">Mirador</option>
-            <option value="Natación">Natación</option>
+            <option value="Deportes" onClick={(e) => valueSelect(e.target)}>Deportes</option>
+            <option value="Camping" onClick={(e) => valueSelect(e.target)}>Camping</option>
+            <option value="Mirador" onClick={(e) => valueSelect(e.target)}>Mirador</option>
+            <option value="Natación" onClick={(e) => valueSelect(e.target)}>Natación</option>
           </select>
           <select>
             <option value="">Departamentos</option>
@@ -214,52 +212,8 @@ const Home = () => {
                 <Rate disabled defaultValue={e.rate} />
                 <BsFillHeartFill className='heart' />
               </figcaption>
-            </motion.figure>) : select ? arraySelectFiltred.map((e, index) =>
-            <motion.figure key={index} initial="hidden"
-              animate="visible"
-              variants={variants}>
-              <img src={e.imgPlace2} alt="caballo" className='home__main__photo' />
-              <figcaption >
-                <h3>{e.name}{e.weather === "1" ? <BsCloudSun className='icons' /> : e.weather === "2" ? <CiSun className='icons' /> : e.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
-                <p onClick={() => navigate(`/description/${e.id}`)}>{e.description}</p>
-                <small><BiTime /> {e.schedules}</small>
-                <span> <img src={location} alt="location" />{` ${e.location} - ${e.department}`}</span>
-                <section>
-                  {e.category.map((act, index) => <small key={index}>{act}</small>)}
-                </section>
-                <section>
-                  {e.icons.map((icon, index) => {
-                    if (icon === 'car') {
-                      return <BsFillCarFrontFill key={index + 80} />
-
-                    }
-                    if (icon === 'moto') {
-                      return <RiMotorbikeFill key={index + 25} />
-
-                    }
-                    if (icon === 'walking') {
-                      return <BiWalk key={index + 38} />
-
-                    }
-                    if (icon === 'bici') {
-                      return <IoMdBicycle key={index + 18} />
-
-                    }
-                    if (icon === 'bus') {
-                      return <FaBus key={index + 10} />
-
-                    }
-                    if (icon === 'ship') {
-                      return <RiShipLine key={index + 41} />
-                    }
-                  }
-                  )}
-                </section>
-                <Rate disabled defaultValue={e.rate} />
-                <BsFillHeartFill className='heart' />
-              </figcaption>
             </motion.figure>) : <>
-            {places[0] ? places[0].filter(place => place.status === 'Aceptado').map((place, index) =>
+            {places[0] ? places[0].map((place, index) =>
               <motion.figure key={index} initial="hidden"
                 animate="visible"
                 variants={variants} >
@@ -296,9 +250,13 @@ const Home = () => {
                       }
                       if (icon === 'ship') {
                         return <RiShipLine key={index + 11} />
+
                       }
+
                     }
+
                     )}
+
 
                   </section>
                   <Rate disabled defaultValue={place.rate} />
@@ -311,9 +269,114 @@ const Home = () => {
           {input && !arrayFiltered.length ? <div className='error404'>
             <h1>Lugar no encontrado</h1>
             <p>Por favor ingresa una nueva busqueda.</p>
-          </div> : <></>}
+          </div> : select ? arraySelectFiltred.map((e, index) =>
+            <motion.figure key={index} initial="hidden"
+              animate="visible"
+              variants={variants}>
+              <img src={e.imgPlace2} alt="caballo" className='home__main__photo' />
+              <figcaption >
+                <h3>{e.name}{e.weather === "1" ? <BsCloudSun className='icons' /> : e.weather === "2" ? <CiSun className='icons' /> : e.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
+                <p onClick={() => navigate(`/description/${e.id}`)}>{e.description}</p>
+                <small><BiTime /> {e.schedules}</small>
+                <span> <img src={location} alt="location" />{` ${e.location} - ${e.department}`}</span>
+                <section>
+                  {e.category.map((act, index) => <small key={index}>{act}</small>)}
+                </section>
+                <section>
+                  {e.icons.map((icon, index) => {
+                    if (icon === 'car') {
+                      return <BsFillCarFrontFill key={index + 80} />
+
+                    }
+                    if (icon === 'moto') {
+                      return <RiMotorbikeFill key={index + 25} />
+
+                    }
+                    if (icon === 'walking') {
+                      return <BiWalk key={index + 38} />
+
+                    }
+                    if (icon === 'bici') {
+                      return <IoMdBicycle key={index + 18} />
+
+                    }
+                    if (icon === 'bus') {
+                      return <FaBus key={index + 10} />
+
+                    }
+                    if (icon === 'ship') {
+                      return <RiShipLine key={index + 41} />
+
+                    }
+                  }
+
+                  )}
+                </section>
+                <Rate disabled defaultValue={e.rate} />
+                <BsFillHeartFill className='heart' />
+              </figcaption>
+            </motion.figure>) : <>
+            {places[0] ? places[0].map((place, index) =>
+              <motion.figure key={index} initial="hidden"
+                animate="visible"
+                variants={variants} >
+                <img src={place.imgPlace2} alt="caballo" className='home__main__photo' />
+                <figcaption>
+                  <h3>{place.name} {place.weather === "1" ? <BsCloudSun className='icons' /> : place.weather === "2" ? <CiSun className='icons' /> : place.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
+                  <p onClick={() => navigate(`/description/${place.id}`)}>{place.description}</p>
+                  <small><BiTime /> {place.schedules}</small>
+                  <span> <img src={location} alt="location" />{` ${place.location} - ${place.department}`}</span>
+                  <section>
+                    {place.category.map((act, index) => <small key={index}>{act}</small>)}
+                  </section>
+                  <section>
+                    {place.icons.map((icon) => {
+                      if (icon === 'car') {
+                        return <BsFillCarFrontFill key={index + 1} />
+
+                      }
+                      if (icon === 'moto') {
+                        return <RiMotorbikeFill key={index + 2} />
+
+                      }
+                      if (icon === 'walking') {
+                        return <BiWalk key={index + 7} />
+
+                      }
+                      if (icon === 'bici') {
+                        return <IoMdBicycle key={index + 9} />
+
+                      }
+                      if (icon === 'bus') {
+                        return <FaBus key={index + 10} />
+
+                      }
+                      if (icon === 'ship') {
+                        return <RiShipLine key={index + 11} />
+
+                      }
+
+                    }
+
+                    )}
+
+
+                  </section>
+                  <Rate disabled defaultValue={place.rate} />
+                  <BsFillHeartFill onClick={() => addFavorite(place)} className={`heart ${favorites.includes(place.id) ? 'favorite' : ''}`} />
+
+                </figcaption>
+              </motion.figure>
+
+            ) : <></>}</>}
+          {input && !arrayFiltered.length ? <div className='error404'>
+            <h1>Lugar no encontrado</h1>
+            <p>Por favor ingresa una nueva busqueda.</p>
+          </div> :<></>}
 
         </div>
+
+
 
       </div>
       <ToastContainer />

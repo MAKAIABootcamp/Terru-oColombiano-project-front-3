@@ -1,6 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Modal, Upload } from 'antd';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { fileUpLoad } from '../../services/fileUpLoad'
@@ -12,8 +12,7 @@ import { BiWalk } from 'react-icons/bi'
 import { FaBus } from 'react-icons/fa'
 import { IoMdBicycle } from 'react-icons/io'
 import { RiShipLine } from 'react-icons/ri'
-
-
+import nextId from "react-id-generator";
 import UploadImages from '../uploadImages/UploadImages'
 import { toast } from 'react-toastify'
 import { motion } from 'framer-motion'
@@ -28,12 +27,9 @@ const getBase64 = (file) =>
 
 
 const AddPlace = () => {
+    const [images, setImages] = useState([]);
     const [transports, setTransports] = useState([])
-    const [urlImgs, setUrlImgs] = useState([])
     const [activity, setActivity] = useState([])
-    const [previewOpen, setPreviewOpen] = useState(false);
-    const [previewImage, setPreviewImage] = useState('');
-    const [previewTitle, setPreviewTitle] = useState('');
     const [fileList, setFileList] = useState([
         // {
         //   uid: '-1',
@@ -72,29 +68,13 @@ const AddPlace = () => {
         //   status: 'error',
         // },
     ]);
+    useEffect(() => {
+        console.log(images);
+    }, [images]);
 
-    const handleCancel = () => setPreviewOpen(false);
-    const handlePreview = async (file) => {
-        if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj);
-        }
-        setPreviewImage(file.url || file.preview);
-        setPreviewOpen(true);
-        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
+    const handleLoad = (file) => {
+        setImages([...images, file]);
     };
-    const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
-    const uploadButton = (
-        <div>
-            <PlusOutlined />
-            <div
-                style={{
-                    marginTop: 8,
-                }}
-            >
-                Upload
-            </div>
-        </div>
-    );
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
     const { user } = useSelector(store => store.users)
@@ -126,24 +106,13 @@ const AddPlace = () => {
 
 
     }
-    const appUrlImages = (url) => {
-        setUrlImgs([...urlImgs, url])
-
-    }
-
-
-
-
-
-
-
-
 
 
     const onSubmit = async (data) => {
-        // const imgPlace = data.imgPlace[0] ? await fileUpLoad(data.imgPlace[0]) : '';
-        // const imgAct = data.imgAct[0] ? await fileUpLoad(data.imgAct[0]) : '';
-        // const imgPlace2 = data.imgPlace2[0] ? await fileUpLoad(data.imgPlace2[0]) : '';
+        const imgPlace = data.imgPlace[0] ? await fileUpLoad(data.imgPlace[0]) : '';
+        const imgAct = data.imgAct[0] ? await fileUpLoad(data.imgAct[0]) : '';
+        const imgPlace2 = data.imgPlace2[0] ? await fileUpLoad(data.imgPlace2[0]) : '';
+
 
 
 
@@ -158,11 +127,15 @@ const AddPlace = () => {
             weather: data.weather,
             tranport: data.transport,
             icons: transports,
-            images: [...fileList],
+            imgPlace: imgPlace,
+            imgAct: imgAct,
+            imgPlace2: imgPlace2,
+            // images: [...fileList],
             postedBy: user.name,
             postedByImg: user.photo,
             rate: 0,
             comments: [],
+            status: 'Pendiente'
 
 
 
@@ -291,8 +264,8 @@ const AddPlace = () => {
             <label>
                 Imágenes que nos permitan ver el lugar
 
-                <>
-                    {/* <Upload
+                {/* <> */}
+                {/* <Upload
                         // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                         listType="picture-card"
                         fileList={fileList}
@@ -314,10 +287,10 @@ const AddPlace = () => {
                             src={previewImage}
                         />
                     </Modal> */}
-                </>
-                <UploadImages  />
+                {/* </> */}
+                {/* <UploadImages onLoad={handleLoad} /> */}
 
-                {/* <input type="file" {...register('imgPlace', {
+                <input type="file" {...register('imgPlace', {
                     required: 'Este campo es requerido'
                 })} />
                 {errors.imgPlace ? <span>{errors.imgPlace.message}</span> : <></>}
@@ -328,7 +301,7 @@ const AddPlace = () => {
                 <input type="file" {...register('imgPlace2', {
                     required: 'Este campo es requerido'
                 })} />
-                {errors.imgPlace2 ? <span>{errors.imgPlace2.message}</span> : <></>} */}
+                {errors.imgPlace2 ? <span>{errors.imgPlace2.message}</span> : <></>}
             </label>
 
 
