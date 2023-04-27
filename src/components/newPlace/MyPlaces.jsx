@@ -65,6 +65,8 @@ const MyPlaces = () => {
 
 
     }, [user.posts])
+
+    console.log(myPlaces);
     return (
         <article className='myPlaces' style={user.posts.length > 2 ? { height: '100%' } : { height: '100vh' }}>
             <div>
