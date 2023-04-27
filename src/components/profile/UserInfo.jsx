@@ -1,62 +1,119 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import './profile.scss'
-import generalKenobi from '../../assets/obi-wan-kenobi-2678395.webp'
-import { Link } from 'react-router-dom'
+
 import { useDispatch, useSelector } from 'react-redux'
-import { onAuthStateChanged } from 'firebase/auth'
-import { auth } from '../../firebase/firebaseConfig'
-import { getUsers } from '../../services/getUsers'
-import { loginUser } from '../../redux/actions/userActions'
+import { editUserAsync, editUserNormalAsync, loginUser } from '../../redux/actions/userActions'
+import { useForm } from 'react-hook-form'
+import { fileUpLoad } from '../../services/fileUpLoad'
+import { ToastContainer, toast } from 'react-toastify'
 
 const UserInfo = () => {
+    const [isEdit, setIsEdit] = useState(false)
+    const { reset, handleSubmit, register, formState: { errors } } = useForm()
+    const dispatch = useDispatch()
+
     const { user } = useSelector(store => store.users)
+
+    const onSubmit = async (data) => {
+
+        const updatedFields = Object.fromEntries(
+            Object.entries(data).filter(([key, value]) => value !== '')
+        );
+
+        if (Object.keys(updatedFields).length === 0) {
+            return;
+        }
+        const photo = updatedFields.photo ? await fileUpLoad(updatedFields.photo[0]) : '';
+        let newPhoto = user.photo
+
+
+        if (photo) {
+            newPhoto = photo
+
+        }
+
+        console.log(newPhoto);
+
+        const updatedUser = Object.assign({}, user, updatedFields, { photo: newPhoto });
+
+
+        dispatch(editUserNormalAsync(updatedUser));
+        toast('✔ Información actualizada!', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+        setIsEdit(!isEdit)
+    }
     return (
         <>
-            <section className='logout-section'>
-                <main className='logout-section__main' >
-                    <section className='photo-btns-section'>
-                        <figure className='profile-photo-fig'>
-                            <img src={user?.photo} alt="hello there" />
-                        </figure>
+            <article className='profile'>
+                <div>
 
-                        <div className='btns-container-div'>
-                            <Link to='/update-user' className='btns'>
-                                Actualizar perfil
-                            </Link>
+                    <figure>
+                        <img src={user.photo} alt="userPhoto" />
+                    </figure>
+                    {isEdit ?
+                        <form onSubmit={handleSubmit(onSubmit)}>
 
-                        </div>
-                    </section>
+                            <label>
+                                Nombre
+                                <input type="text" placeholder='Ingrese el nombre' {...register('name')} />
+                            </label>
 
-                    <section className='info-container-section'>
+                            <label>
+                                Correo electrónico
+                                <input type="text" placeholder='Ingrese el correo electrónico' {...register('email')} />
+                            </label>
 
-                        <label className='info-container-section__label'>
-                            <h4>Nombre de usuario</h4>
-                            <h3 className='h3s' type="text" >{user?.name}</h3>
-                        </label>
+                            <label>
+                                Teléfono
+                                <input type="text" placeholder='Ingrese el número de teléfono' {...register('phone')} />
+                            </label>
+                            <label>
+                                Fecha de nacimiento
+                                <input type="date" {...register('birthday')} />
+                            </label>
+                            <label>
+                                Foto
+                                <input type="file" {...register('photo')} />
+                            </label>
+                            <button type='submit'>Guardar información</button>
+                            <span onClick={() => setIsEdit(!isEdit)} style={{ backgroundColor: 'red' }}>Cancelar</span>
 
-                        <label className='info-container-section__label'>
-                            <h4>Correo electronico</h4>
-                            <h3 className='h3s' type="text" >{user?.email}</h3>
-                        </label>
+                        </form> :
+                        <form className='form'>
 
-                        <label className='info-container-section__label'>
-                            <h4>Numero de telefono</h4>
-                            <h3 className='h3s' type="text" >{user?.phone ? user.phone : 'Aun no tienes número agregado'}</h3>
-                        </label>
+                            <label>
+                                Nombre
+                                <input type="text" readOnly placeholder={user.name} />
+                            </label>
+                            <label>
+                                Correo electrónico
+                                <input type="text" readOnly placeholder={user.email} />
+                            </label>
+                            <label>
+                                Teléfono
+                                <input type="text" readOnly placeholder={user.phone ? user.phone : 'Agregar número de teléfono'} />
+                            </label>
+                            <label>
+                                Fecha de nacimiento
+                                <input type="text" readOnly placeholder={!user.birthday ? 'Agregar fecha de cumpleaños' : user.birthday} />
+                            </label>
 
-                        <label className='info-container-section__label'>
-                            <h4>Dirección</h4>
-                            <h3 className='h3s' type="text" >{user?.location}</h3>
-                        </label>
+                            <span onClick={() => setIsEdit(!isEdit)}>Editar información</span>
 
-                        <label className='info-container-section__label'>
-                            <h4>Descripción</h4>
-                            <h3 className='h3-area' >{user?.description}</h3>
-                        </label>
-                    </section>
+                        </form>}
+                </div>
 
-                </main>
-            </section>
+            </article>
+            <ToastContainer />
+
         </>
     )
 }

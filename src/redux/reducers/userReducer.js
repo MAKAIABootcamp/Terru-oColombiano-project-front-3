@@ -50,7 +50,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         user: {
           ...state.user,
-          posts: state.user.posts.filter((item) => item.id !== action.payload.id ),
+          posts: action.payload,
         },
       };
     case userTypes.ADD_FAVORITE:
@@ -66,9 +66,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         user: {
           ...state.user,
-          favorites: state.user.favorites.filter(
-            (item) => item.id !== action.payload.id
-          ),
+          favorites: action.payload
         },
       };
     case userTypes.GET_FAVORITES:
