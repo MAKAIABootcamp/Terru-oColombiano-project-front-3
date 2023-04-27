@@ -30,7 +30,6 @@ const Home = () => {
   const [select, setSelect] = useState('')
   const [department, setDepartment] = useState('')
   const [weather, setWeather] = useState('')
-  const [rate, setRate] = useState('')
   const [favorites, setFavorites] = useState([])
   const [isFavorite, setIsFavorite] = useState('')
   const dispatch = useDispatch()
@@ -49,10 +48,6 @@ const Home = () => {
 
   const valueWheather = ({ value }) => {
     setWeather(value)
-  }
-
-  const valueRate = ({ value }) => {
-    setRate(value)
   }
 
   const { user } = useSelector(store => store.users)
@@ -98,8 +93,6 @@ const Home = () => {
   const arraySelectFiltred = places[0]?.filter(place => place.category.includes(select))
   const arrayDepartmentFiltred = places[0]?.filter(place => place.department.includes(department))
   const arrayWeatherFiltred = places[0]?.filter(place => place.weather.includes(weather))
-  
-
   const variants = {
     hidden: {
       opacity: 0,
@@ -186,7 +179,7 @@ const Home = () => {
             <option value="4">Seco</option>
           </select>
 
-          <button>Mas votados</button>
+          <button>Más votados</button>
 
         </section>
       </div>
