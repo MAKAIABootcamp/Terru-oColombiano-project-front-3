@@ -1,5 +1,5 @@
 import { Rate } from 'antd';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BiTime } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux'
 import { BsFillCarFrontFill } from 'react-icons/bs'
@@ -19,6 +19,7 @@ import { toast } from 'react-toastify';
 
 
 const MyPlaces = () => {
+    const [myPlaces, setMyPlaces] = useState([])
     const { user } = useSelector(store => store.users)
     const dispatch = useDispatch()
 
@@ -46,8 +47,8 @@ const MyPlaces = () => {
                     draggable: true,
                     progress: undefined,
                     theme: "light",
-                  });
-                
+                });
+
 
             }
             else {
@@ -55,15 +56,23 @@ const MyPlaces = () => {
             }
         }).catch((error) => console.log('No se borró nada'))
 
+
+
+
     }
+    useEffect(() => {
+        setMyPlaces(user.posts)
+
+
+    }, [user.posts])
     return (
         <article className='myPlaces' style={user.posts.length > 2 ? { height: '100%' } : { height: '100vh' }}>
             <div>
-                {user.posts.length ? user.posts.map((post, index) =>
+                {myPlaces.length ? myPlaces.map((post, index) =>
                     <motion.figure initial={{ x: "100%" }}
                         animate={{ x: 0 }}
                         transition={{ duration: 1 }} key={index}>
-                        <img src={post.imgPlace} alt="image" />
+                        <img src={post.images[0]} alt="image" />
 
                         <figcaption>
                             <h3>{post.name} <MdCancel className='delete' onClick={() => deletePost(post)} /></h3>

@@ -18,12 +18,13 @@ const Favorites = () => {
   const navigate = useNavigate()
 
   const { user } = useSelector(store => store.users)
+  
 
   const deleteFav = (item) => {
 
     dispatch(deleteFavoriteAsync(item))
-    const updatedFavorites = favorites.filter(fav => fav.id !== item.id)
-    setFavorites(updatedFavorites)
+    // const updatedFavorites = favorites.filter(fav => fav.id !== item.id)
+    // setFavorites(updatedFavorites)
     toast('✔ Se ha eliminado correctamente!', {
       position: "top-right",
       autoClose: 3000,
@@ -40,15 +41,11 @@ const Favorites = () => {
 
   useEffect(() => {
 
-    const { payload } = dispatch(getFavorites(user.favorites))
-    setFavorites(payload)
+    // const { payload } = dispatch(getFavorites(user.favorites))
+    // setFavorites(payload)
+    setFavorites(user.favorites)
 
-  }, [])
-
-
-
-
-
+  }, [user.favorites]);
 
 
 
@@ -69,7 +66,7 @@ const Favorites = () => {
 
                 <div className='div-container' onClick={() => navigate(`/description/${item.id}`)}>
                   <figure className='img-link-fig'>
-                    <img className='img' src={item.imgPlace} alt={item.name} />
+                    <img className='img' src={item.images[0]} alt={item.name} />
                     <p className='details'>{item.description}</p>
 
                   </figure>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './foro.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { createCommentAsync, getPlacesAsync } from '../../redux/actions/placesActions'
@@ -8,29 +8,31 @@ import Loader from '../loader/Loader'
 
 
 const Foro = () => {
+  const [allPlaces, setAllPlaces] = useState([])
+  const { user } = useSelector(store => store.users)
   const dispatch = useDispatch()
+  const { places } = useSelector(store => store.places)
   useEffect(() => {
+    setAllPlaces(places)
 
-    dispatch(getPlacesAsync())
-
-
-
-  }, [])
+  }, [allPlaces])
   const variants = {
     hidden: { y: "100%" },
     visible: { y: 0 }
   };
 
+  console.log(places);
+  console.log(allPlaces);
 
-  const { places } = useSelector(store => store.places)
-  const { user } = useSelector(store => store.users)
+
+
   return (
     <article className='foro'>
       <h1>Bienvenido al foro</h1>
       <div className='foro__container'>
-      {!places.length ? <Loader /> : <></>}
+        {!allPlaces.length ? <Loader /> : <></>}
 
-        {places.length ? places[0].map((post, index) =>
+        {allPlaces.length ? allPlaces[0].map((post, index) =>
           <motion.section className='foro__container__main' key={index} variants={variants}
             initial="hidden"
             animate="visible"
@@ -43,7 +45,7 @@ const Foro = () => {
               </section>
             </div>
             <figure>
-              <img src={post.imgPlace} alt="post" onClick={() => dispatch(createCommentAsync('zMyNEtn4WLhYEIU5WBV2'))} />
+              <img src={post.images[0]} alt="post" />
 
               <figcaption>
                 <h4>{post.name}</h4>

@@ -42,20 +42,46 @@ const addComment = (data) => {
     payload: data,
   };
 };
-export const createCommentAsync = (documentId) => {
+export const createCommentAsync = (id, user, info) => {
   return async (dispatch) => {
+    let idPlace;
+    let array = [];
     try {
-      const docRef = collection(collectionName);
-      console.log(docRef);
-      await docRef.update([...docRef]);
-      dispatch({ type: "UPDATE_DOCUMENT_SUCCESS" });
+      const q = query(placesCollection, where("id", "==", id));
+      const placeDoc = await getDocs(q);
+      console.log(placeDoc);
+      placeDoc.forEach((place) => {
+        console.log(place);
+        
+        idPlace = place.id;
+        array = place.data().comments;
+      });
+
+      const newComment = {
+        idUser: user.id,
+        nameUser : user.name,
+        imgUser: user.photo,
+        comment: info.comment,
+      };
+      const docRef = doc(dataBase, collectionName, idPlace);
+
+      const comments = [...array, newComment];
+      await updateDoc(docRef, { comments: comments });
+
+      const data = await filterCollections({
+        key: "",
+        collectionName,
+        value: null,
+      });
+      dispatch(getPlaces(data));
     } catch (error) {
-      dispatch({ type: "UPDATE_DOCUMENT_ERROR", error });
+      console.log(error);
+      dispatch(addComment(array));
     }
   };
 };
 export const changeStatusAsync = (id, status) => {
-  return async () => {
+  return async (dispatch) => {
     let idPlace;
     try {
       const q = query(placesCollection, where("id", "==", id));
@@ -69,6 +95,12 @@ export const changeStatusAsync = (id, status) => {
       } else {
         await updateDoc(docRef, { status: "Rechazada" });
       }
+      const data = await filterCollections({
+        key: "",
+        collectionName,
+        value: null,
+      });
+      dispatch(getPlaces(data));
     } catch (error) {
       console.log(error);
     }
