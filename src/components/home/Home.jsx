@@ -29,6 +29,9 @@ import { useNavigate } from 'react-router-dom'
 const Home = () => {
   const [input, setInput] = useState('')
   const [select, setSelect] = useState('')
+  const [department, setDepartment] = useState('')
+  const [weather, setWeather] = useState('')
+  const [rate, setRate] = useState('')
   const [favorites, setFavorites] = useState([])
   const [allPlaces, setAllPlaces] = useState([])
   const dispatch = useDispatch()
@@ -39,6 +42,18 @@ const Home = () => {
   }
   const valueSelect = ({ value }) => {
     setSelect(value)
+  }
+
+  const valueDepartment = ({ value }) => {
+    setDepartment(value)
+  }
+
+  const valueWheather = ({ value }) => {
+    setWeather(value)
+  }
+
+  const valueRate = ({ value }) => {
+    setRate(value)
   }
 
   const { user } = useSelector(store => store.users)
@@ -79,12 +94,13 @@ const Home = () => {
 
   }, [])
 
-  console.log(allPlaces);
-  console.log(places);
 
-  const arrayFiltered = allPlaces[0]?.filter(place => place.location.toLowerCase().includes(input.toLowerCase()) || place.department.toLowerCase().includes(input.toLowerCase()))
+  const arrayFiltered = places[0]?.filter(place => place.location.toLowerCase().includes(input.toLowerCase()) || place.department.toLowerCase().includes(input.toLowerCase()))
+  const arraySelectFiltred = places[0]?.filter(place => place.category.includes(select))
+  const arrayDepartmentFiltred = places[0]?.filter(place => place.department.includes(department))
+  const arrayWeatherFiltred = places[0]?.filter(place => place.weather.includes(weather))
+  
 
-  const arraySelectFiltred = allPlaces[0]?.filter(place => place.category.includes(select))
   const variants = {
     hidden: {
       opacity: 0,
@@ -120,49 +136,58 @@ const Home = () => {
             <option value="Camping">Camping</option>
             <option value="Mirador">Mirador</option>
             <option value="Natación">Natación</option>
+            <option value="Ciclismo">Ciclismo</option>
+            <option value="Senderismo">Senderismo</option>
+            <option value="Atracciones">Atracciones</option>
+            <option value="Cultura">Cultura</option>
+            <option value="Restaurantes">Restaurantes</option>
           </select>
-          <select>
+          <select onChange={(e) => valueDepartment(e.target)}>
             <option value="">Departamentos</option>
-            <option value="1">Amazonas</option>
-            <option value="2">Antioquia</option>
-            <option value="3">Arauca</option>
-            <option value="4">Atlántico</option>
-            <option value="5">Bogotá</option>
-            <option value="6">Bolívar</option>
-            <option value="7">Boyacá</option>
-            <option value="8">Caldas</option>
-            <option value="9">Caquetá</option>
-            <option value="10">Casanare</option>
-            <option value="11">Cauca</option>
-            <option value="12">Cesar</option>
-            <option value="13">Chocó</option>
-            <option value="14">Córdoba</option>
-            <option value="15">Cundinamarca</option>
-            <option value="16">Guainía</option>
-            <option value="17">Guaviare</option>
-            <option value="18">Huila</option>
-            <option value="19">La Guajira</option>
-            <option value="20">Magdalena</option>
-            <option value="21">Meta</option>
-            <option value="22">Nariño</option>
-            <option value="23">Norte de Santander</option>
-            <option value="24">Putumayo</option>
-            <option value="25">Quindío</option>
-            <option value="26">Risaralda</option>
-            <option value="27">San Andrés y Providencia</option>
-            <option value="28">Santander</option>
-            <option value="29">Sucre</option>
-            <option value="30">Tolima</option>
-            <option value="31">Valle</option>
-            <option value="32">Vaupés</option>
-            <option value="33">Vichada</option>
+            <option value="Amazonas">Amazonas</option>
+            <option value="Antioquia">Antioquia</option>
+            <option value="Arauca">Arauca</option>
+            <option value="Atlántico">Atlántico</option>
+            <option value="Bogotá">Bogotá</option>
+            <option value="Bolívar">Bolívar</option>
+            <option value="Boyacá">Boyacá</option>
+            <option value="Caldas">Caldas</option>
+            <option value="Caquetá">Caquetá</option>
+            <option value="Casanare">Casanare</option>
+            <option value="Cauca">Cauca</option>
+            <option value="Cesar">Cesar</option>
+            <option value="Chocó">Chocó</option>
+            <option value="Córdoba">Córdoba</option>
+            <option value="Cundinamarca">Cundinamarca</option>
+            <option value="Guainía">Guainía</option>
+            <option value="Guaviare">Guaviare</option>
+            <option value="Huila">Huila</option>
+            <option value="La Guajira">La Guajira</option>
+            <option value="Magdalena">Magdalena</option>
+            <option value="Meta">Meta</option>
+            <option value="Nariño">Nariño</option>
+            <option value="Norte de Santander">Norte de Santander</option>
+            <option value="Putumayo">Putumayo</option>
+            <option value="Quindío">Quindío</option>
+            <option value="Risaralda">Risaralda</option>
+            <option value="San Andrés y Providencia">San Andrés y Providencia</option>
+            <option value="Santander">Santander</option>
+            <option value="Sucre">Sucre</option>
+            <option value="Tolima">Tolima</option>
+            <option value="Valle">Valle</option>
+            <option value="Vaupés">Vaupés</option>
+            <option value="Vichada">Vichada</option>
 
           </select>
-          <select>
+          <select  onChange={(e) => valueWheather(e.target)}>
             <option value="">Clima</option>
             <option value="1">Calido</option>
+            <option value="2">Montaña</option>
+            <option value="3">Tropical humedo</option>
+            <option value="4">Seco</option>
           </select>
-          <button>Más votados</button>
+
+          <button>Mas votados</button>
 
         </section>
       </div>
@@ -255,13 +280,107 @@ const Home = () => {
                         return <RiShipLine key={index + 41} />
                       }
                     }
-                    )}
-                  </section>
-                  <Rate disabled defaultValue={e.rate} />
-                  <BsFillHeartFill className='heart' />
-                </figcaption>
-              </motion.figure>) : <>
-            {allPlaces[0] ? allPlaces[0].filter(place => place.status === 'Aceptado').map((place, index) =>
+
+                    if (icon === 'ship') {
+                      return <RiShipLine key={index + 41} />
+                    }
+                  }
+                  )}
+                </section>
+                <Rate disabled defaultValue={e.rate} />
+                <BsFillHeartFill className='heart' />
+              </figcaption>
+            </motion.figure>) : department ? arrayDepartmentFiltred.map((e, index) =>
+            <motion.figure key={index} initial="hidden"
+              animate="visible"
+              variants={variants}>
+              <img src={e.imgPlace2} alt="caballo" className='home__main__photo' />
+              <figcaption >
+                <h3>{e.name}{e.weather === "1" ? <BsCloudSun className='icons' /> : e.weather === "2" ? <CiSun className='icons' /> : e.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
+                <p onClick={() => navigate(`/description/${e.id}`)}>{e.description}</p>
+                <small><BiTime /> {e.schedules}</small>
+                <span> <img src={location} alt="location" />{` ${e.location} - ${e.department}`}</span>
+                <section>
+                  {e.category.map((act, index) => <small key={index}>{act}</small>)}
+                </section>
+                <section>
+                  {e.icons.map((icon, index) => {
+                    if (icon === 'car') {
+                      return <BsFillCarFrontFill key={index + 80} />
+
+                    }
+                    if (icon === 'moto') {
+                      return <RiMotorbikeFill key={index + 25} />
+
+                    }
+                    if (icon === 'walking') {
+                      return <BiWalk key={index + 38} />
+
+                    }
+                    if (icon === 'bici') {
+                      return <IoMdBicycle key={index + 18} />
+
+                    }
+                    if (icon === 'bus') {
+                      return <FaBus key={index + 10} />
+
+                    }
+                    if (icon === 'ship') {
+                      return <RiShipLine key={index + 41} />
+                    }
+                  }
+                  )}
+                </section>
+                <Rate disabled defaultValue={e.rate} />
+                <BsFillHeartFill className='heart' />
+              </figcaption>
+            </motion.figure>): weather ? arrayWeatherFiltred.map((e, index) =>
+            <motion.figure key={index} initial="hidden"
+              animate="visible"
+              variants={variants}>
+              <img src={e.imgPlace2} alt="caballo" className='home__main__photo' />
+              <figcaption >
+                <h3>{e.name}{e.weather === "1" ? <BsCloudSun className='icons' /> : e.weather === "2" ? <CiSun className='icons' /> : e.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
+                <p onClick={() => navigate(`/description/${e.id}`)}>{e.description}</p>
+                <small><BiTime /> {e.schedules}</small>
+                <span> <img src={location} alt="location" />{` ${e.location} - ${e.department}`}</span>
+                <section>
+                  {e.category.map((act, index) => <small key={index}>{act}</small>)}
+                </section>
+                <section>
+                  {e.icons.map((icon, index) => {
+                    if (icon === 'car') {
+                      return <BsFillCarFrontFill key={index + 80} />
+
+                    }
+                    if (icon === 'moto') {
+                      return <RiMotorbikeFill key={index + 25} />
+
+                    }
+                    if (icon === 'walking') {
+                      return <BiWalk key={index + 38} />
+
+                    }
+                    if (icon === 'bici') {
+                      return <IoMdBicycle key={index + 18} />
+
+                    }
+                    if (icon === 'bus') {
+                      return <FaBus key={index + 10} />
+
+                    }
+                    if (icon === 'ship') {
+                      return <RiShipLine key={index + 41} />
+                    }
+                  }
+                  )}
+                </section>
+                <Rate disabled defaultValue={e.rate} />
+                <BsFillHeartFill className='heart' />
+              </figcaption>
+            </motion.figure>) :<>
+            {places[0] ? places[0].filter(place => place.status === 'Aceptado').map((place, index) =>
+
               <motion.figure key={index} initial="hidden"
                 animate="visible"
                 variants={variants} >

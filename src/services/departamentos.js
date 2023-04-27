@@ -133,8 +133,8 @@ export const departamentos = [
     },
 ];
 
-
-// select ? arraySelectFiltred.map((e, index) =>
+//const arrayRateFiltred = places[0]?.filter(place => place.rate.includes(rate))
+// Rate ? arrayRateFiltred.map((e, index) =>
 //             <motion.figure key={index} initial="hidden"
 //               animate="visible"
 //               variants={variants}>
@@ -171,13 +171,21 @@ export const departamentos = [
 //                     }
 //                     if (icon === 'ship') {
 //                       return <RiShipLine key={index + 41} />
-
 //                     }
 //                   }
-
 //                   )}
 //                 </section>
 //                 <Rate disabled defaultValue={e.rate} />
 //                 <BsFillHeartFill className='heart' />
 //               </figcaption>
-//             </motion.figure>) :
+//             </motion.figure>)
+
+{/* <select onChange={(e) => valueRate(e.target)}>
+            <option value="">Estrellas</option>
+            <option value="5">5 Estrellas</option>
+            <option value="4">4 Estrellas</option>
+            <option value="3">3 Estrellas</option>
+            <option value="2">2 Estrellas</option>
+            <option value="1">1 Estrellas</option>
+            <option value="0">sin/menos de 1</option>
+          </select> */}
