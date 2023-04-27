@@ -15,6 +15,7 @@ import nextId from "react-id-generator";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import UploadImages from "../uploadImages/UploadImages";
+import Swal from "sweetalert2";
 
 const AddPlace = () => {
   const [images, setImages] = useState([]);
@@ -59,7 +60,10 @@ const AddPlace = () => {
     const arrayUrlImages = [];
 
     if (arrayImages.length < 3) {
-      alert("Faltan fotos");
+      Swal.fire({
+        icon: 'info',
+        text : 'Por favor agregar mínimo 3 fotos'
+      })
       return [];
     }
 
@@ -77,8 +81,8 @@ const AddPlace = () => {
     // const imgAct = data.imgAct[0] ? await fileUpLoad(data.imgAct[0]) : '';
     // const imgPlace2 = data.imgPlace2[0] ? await fileUpLoad(data.imgPlace2[0]) : '';
 
-      const urlImages = await uploadImagesToClaoudinary(images);
-      
+    const urlImages = await uploadImagesToClaoudinary(images);
+
     if (urlImages.length) {
       const newPlace = {
         name: data.name,
@@ -115,14 +119,19 @@ const AddPlace = () => {
   };
 
   return (
-    <>
+    <article className="addPlace">
+      <h1>Agregar nuevo lugar</h1>
+      <div className="addPlace__photos">
+        <small><strong>Imágenes del lugar</strong>(Min. 3)</small>
+        <UploadImages onLoad={handleLoad} />
+
+      </div>
       <motion.form
         onSubmit={handleSubmit(onSubmit)}
         initial={{ x: "100%" }}
         animate={{ x: 0 }}
         transition={{ duration: 1 }}
       >
-        <h1>Agregar nuevo lugar</h1>
 
         <label>
           Nombre
@@ -336,8 +345,7 @@ const AddPlace = () => {
 
         <button type="submit">Agregar lugar</button>
       </motion.form>
-      <UploadImages onLoad={handleLoad} />
-    </>
+    </article>
   );
 };
 
