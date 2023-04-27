@@ -1,129 +1,115 @@
-.logout-section {
-
-    background-image: url(https://images.pexels.com/photos/13545531/pexels-photo-13545531.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
+.profile {
+    width: 100%;
     height: 100vh;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    &__main {
-
-        background-color: rgba(2, 2, 2, 0.5803921569);
-        color: white;
-        width: 95%;
-        height: 90%;
-        padding: 20px;
-        border: none;
-        border-radius: 25px;
+    & div {
+        width: 100%;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 30px;
-        margin-top: 50px;
-        overflow-x: auto;
+        height: 80%;
+        border: 1px solid gray;
+        border-radius: 8px;
+
+        & figure {
+            background-image: url(https://images.pexels.com/photos/3989718/pexels-photo-3989718.jpeg?auto=compress&cs=tinysrgb&w=400);
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
 
 
-        @media(max-width: 750px) {
-            flex-direction: column;
+            & img {
+                width: 180px;
+                height: 180px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
         }
 
-        // @media(max-width: 500px) {
-        //     width: 75%;
-        // }
-
-        .photo-btns-section {
-
-            padding: 15px;
+        & form {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 25px;
-
-            @media(max-width: 750px) {
-                flex-direction: row;
-            }
-
-            .profile-photo-fig {
-
-                height: auto;
-                width: auto;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                & img {
-                    height: 260px;
-                    width: 260px;
-                    margin-bottom: 45px;
-                    border-radius: 130px;
-                    object-fit: cover;
-
-                    @media(max-width: 500px) {
-                        height: 150px;
-                        width: 150px;
-                    }
-
-                }
-            }
-
-            .btns-container-div {
-
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-
-                .btns {
-                    text-decoration: none;
-                    color: white !important;
-                    border-radius: 25px;
-                    height: 40px;
-                    width: 200px;
-                    background-color: black;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-
-                    @media(max-width: 430px) {
-                        flex-direction: row;
-                        width: 150px;
-                        font-size: 12px;
-                        padding: 10px 15px 10px 25px;
-                    }
-
-                }
-            }
-
-
-        }
-
-        .info-container-section {
-
-            display: flex;
-            flex-direction: column;
+            padding: 20px;
+            width: 70%;
             gap: 20px;
-            overflow-x: auto;
-            height: 95%;
-            width: 100%;
 
-            &__label {
-
+            & label {
                 display: flex;
                 flex-direction: column;
+                font-size: 14px;
                 gap: 10px;
-                /* border: 1px solid; */
-                padding: 5px 15px 5px 15px;
-                background-color: #000000a3;
-                border-radius: 10px;
-                width: 90%;
+                font-weight: bold;
+                font-size: 18px;
 
-                @media(max-width: 430px) {
-                    width: 100%;
-                    
+
+                & input {
+                    height: 40px;
+                    outline: none;
+                    padding: 5px;
+                    border-radius: 8px;
+                    border: 1px solid gray;
                 }
+            }
+
+            & span {
+                border: 1px solid gray;
+                width: 200px;
+                height: 40px;
+                border-radius: 8px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                align-self: center;
+                cursor: pointer;
+                background-color: #c08b61;
+                color: white;
+
+                &:hover {
+                    background-color: #7e4a1f;
+                }
+            }
+
+            & button {
+                height: 40px;
+                background-color: green;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                width: 200px;
+                align-self: center;
+
+            }
+        }
+
+    }
+
+
+
+}
+@media(max-width : 700px){
+    .profile {
+        height: 100%;
+        & div {
+            flex-direction: column;
+            height: 100%;
+
+            & figure {
+                width: 100%;
+            }
+
+            & form {
+                width: 100%;
+                height: 100%;
             }
         }
     }
+
 }

@@ -41,13 +41,9 @@
     & form {
         display: flex;
         flex-direction: column;
-        width: 500px;
         height: 100%;
         gap: 20px;
-        padding: 10px;
         background-color: white;
-        border: 1px solid gray;
-        border-radius: 8px;
         overflow-y: auto;
 
         & label {
@@ -103,6 +99,9 @@
             background-color: #c08b61;
             color: white;
             font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
             &:hover {
                 background-color: #775d4a;
@@ -117,6 +116,32 @@
     }
 }
 
+.addPlace {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    padding: 10px;
+    width: 500px;
+    border-radius: 8px;
+    gap: 20px;
+
+    &__photos {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        & small {
+            font-size: 18px;
+
+        }
+
+
+    }
+
+
+
+}
+
 .selected {
     background-color: #c08b61;
     color: white;
@@ -126,6 +151,7 @@
 .myPlaces {
     width: 100%;
     height: 100%;
+
 
     & div {
         display: flex;
@@ -168,6 +194,7 @@
                     flex-wrap: wrap;
 
                 }
+
                 & h3 {
                     display: flex;
                     align-items: center;
@@ -183,6 +210,7 @@
         font-size: 30px;
     }
 }
+
 .delete {
     font-size: 30px;
     color: red;
@@ -196,10 +224,11 @@
 @media (max-width:600px) {
     .newPlace {
 
-        form {
-            width: 90%;
-        }
+      
 
+    }
+    .addPlace {
+        width: 90%;
     }
 
     .myPlaces {

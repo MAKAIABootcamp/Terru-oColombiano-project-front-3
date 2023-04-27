@@ -15,7 +15,6 @@ import { IoMdBicycle } from 'react-icons/io'
 import { RiShipLine } from 'react-icons/ri'
 import { Rate } from 'antd'
 import { BsFillHeartFill } from 'react-icons/bs'
-import { useNavigate } from 'react-router-dom'
 import { addFavoriteAsync } from '../../redux/actions/userActions'
 import { toast } from 'react-toastify'
 import { ToastContainer } from 'react-toastify'
@@ -32,6 +31,8 @@ const Home = () => {
   const [isFavorite, setIsFavorite] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+
 
   const valueInput = ({ value }) => {
     setInput(value)

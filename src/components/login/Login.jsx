@@ -61,7 +61,7 @@ const Login = () => {
           .then((response) => {
             console.log(response);
             if (response.type === "admin") {
-              navigate('/admin')
+              navigate('/admin/myAccount')
 
             }
             else {

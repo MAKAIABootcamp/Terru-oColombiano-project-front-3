@@ -19,6 +19,7 @@
             border: 1px solid gray;
             border-radius: 8px;
             padding: 10px;
+            position: relative;
 
             & div {
                 display: flex;
@@ -54,6 +55,7 @@
                     padding: 0px 20px;
                     position: relative;
 
+
                     & small {
                         position: absolute;
                         bottom: 0;
@@ -63,8 +65,15 @@
 
                     }
 
+                    & p {
+                        height: 180px;
+                        overflow-y: auto;
+                        font-size: 14px;
+                    }
+
                 }
             }
+
             &:hover {
                 cursor: pointer;
                 // scale: 0.95;
@@ -75,28 +84,34 @@
 
     }
 }
-.btnModal{
+
+.btnModal {
     border: none;
     display: flex;
     gap: 5px;
     align-items: center;
+    position: absolute;
+    bottom: 0;
 }
+
 .mainModal {
     position: relative;
 
     & figure {
-      
+
         & img {
             width: 100%;
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 20px;
         }
-       
+
     }
+
     & p {
         margin-bottom: 10px;
     }
+
     & section {
         display: flex;
         gap: 20px;
@@ -111,13 +126,15 @@
             align-items: center;
             gap: 5px;
             cursor: pointer;
-            
+
 
         }
-       
+
 
     }
-    &__comments, &__add {
+
+    &__comments,
+    &__add {
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -131,12 +148,15 @@
                 object-fit: cover;
                 height: 40px;
             }
+
             & figcaption {
                 display: flex;
                 flex-direction: column;
 
-               
+
+
             }
+
             & input {
                 border: none;
                 height: 40px;
@@ -145,12 +165,55 @@
         }
 
     }
+
     &__add {
         position: absolute;
 
     }
+
     &__comments {
         overflow-y: auto;
         height: 200px;
+    }
+}
+
+@media(max-width :990px) {
+    .foro__container__main {
+        & figure figcaption p {
+            height: 140px;
+        }
+    }
+}
+
+@media(max-width:890px) {
+    .foro {
+
+        &__container {
+
+            &__main {
+                width: 100%;
+
+                & figure {
+                    flex-direction: column;
+                    gap: 10px;
+
+                    & img {
+                        width: 100%;
+                        height: 300px;
+                        object-fit: cover;
+                    }
+
+                    & figcaption {
+                        padding: 0;
+                        gap: 10px;
+                        padding-bottom: 50px;
+
+
+
+                    }
+                }
+
+            }
+        }
     }
 }
