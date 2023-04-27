@@ -6,12 +6,19 @@ import { getUsers } from '../services/getUsers';
 import { loginUser } from '../redux/actions/userActions';
 import { auth } from '../firebase/firebaseConfig';
 import Loader from '../components/loader/Loader';
+import { getPlacesAsync } from '../redux/actions/placesActions';
 
 const PrivateRouter = ({ children }) => {
   const [logged, setLogged] = useState(undefined);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getPlacesAsync())
+
+  }, [])
+
 
 
   useEffect(() => {

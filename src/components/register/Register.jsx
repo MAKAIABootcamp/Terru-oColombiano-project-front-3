@@ -67,23 +67,23 @@ const Register = () => {
             <label className='input-container colum-1 ' >
               <h4>Nombre completo</h4>
 
-              <input className='input' type="text" placeholder='ingresa tu nombre '  {...register('name', { required: 'El nombre es requerido' })} />
+              <input className='input' type="text" placeholder='Ingresa tu nombre '  {...register('name', { required: 'El nombre es requerido' })} />
 
             </label>
             {errors.name ? <span className='red'>{errors.name.message}</span> : <></>}
 
             <label className='input-container colum-2 ' >
-              <h4>Correo electronico</h4>
+              <h4>Correo electrónico</h4>
 
-              <input className='input' type="text" placeholder='ingresa tu correo electronico' {...register('email', { required: 'El email es requerido' })} />
+              <input className='input' type="text" placeholder='Ingresa tu correo electrónico' {...register('email', { required: 'El email es requerido' })} />
 
             </label>
             {errors.email ? <span className='red'>{errors.email.message}</span> : <></>}
 
             <label className='input-container colum-1' >
-              <h4>Direccion</h4>
+              <h4>Lugar de residencia</h4>
 
-              <input className='input' type="text" placeholder='ingresa tu direccion' {...register('location', {
+              <input className='input' type="text" placeholder='Ingresa tu dirección' {...register('location', {
                 required: 'La dirección es requerida'
               })} />
             </label>
@@ -92,7 +92,7 @@ const Register = () => {
             <label className='input-container colum-2 ' >
               <h4>Contraseña</h4>
 
-              <input className='input' type="password" placeholder='ingresa tu contraseña' {...register('password', { required: 'La contraseña es requerida' })} />
+              <input className='input' type="password" placeholder='Ingresa tu contraseña' {...register('password', { required: 'La contraseña es requerida' })} />
 
             </label>
             {errors.password ? <span className='red'>{errors.password.message}</span> : <></>}
@@ -100,7 +100,7 @@ const Register = () => {
             <label className='input-container colum-1' >
               <h4>Celular</h4>
 
-              <input className='input' type="text" placeholder='ingresa tu numero de celular' {...register('phone', { required: 'El numero telefonico es requerido' })} />
+              <input className='input' type="text" placeholder='Ingresa tu número de celular' {...register('phone', { required: 'El numero telefonico es requerido' })} />
 
             </label>
             {errors.phone ? <span className='red'>{errors.phone.message}</span> : <></>}
@@ -113,21 +113,17 @@ const Register = () => {
             {errors.phone ? <span className='red'>{errors.phone.message}</span> : <></>}
 
             <label className='input-container colum-2 ' >
-              <h4>Foto de perfil</h4>
+              Foto de perfil
+              <input type="file" className='file-input'  {...register('photo', { required: 'La foto de perfil es requerida' })} />
 
-
-              <div className='input div-file'>
-                <p > Selecciona tu foto de perfil</p>
-                <input type="file" className='file-input'  {...register('photo', { required: 'La foto de perfil es requerida' })} />
-              </div>
 
             </label>
             {errors.photo ? <span className='red'>{errors.photo.message}</span> : <></>}
 
             <label className='input-container colum-1' >
-              <h4>Descripcion</h4>
+              <h4>Descripción</h4>
 
-              <textarea className='textarea' placeholder='escribe una peque descripcion sobre ti' {...register('description', {
+              <textarea className='textarea' placeholder='Escribe una pequeña descripción sobre ti' {...register('description', {
                 required: 'La descripción es requerida.'
               })} />
             </label>
@@ -136,17 +132,10 @@ const Register = () => {
             <section className='form__btns-container'>
 
               <div className='login_register'>
-                <button type='submit' className='login_register__btns' >Register</button>
-                <button className='login_register__btns' ><Link className='color' style={{ textDecoration: "none" }}>Iniciar sesión</Link></button>
+                <button type='submit' className='login_register__btns' >Registrarse</button>
+                <button onClick={() => navigate('/login')} className='login_register__btns' ><Link className='color' style={{ textDecoration: "none" }}>Iniciar sesión</Link></button>
               </div>
 
-              <h4>O</h4>
-
-              <div className='goggle-facebook'>
-                <figure><img className='g-icon' src={iGogle} alt="" /></figure>
-
-                <figure> <img className='f-icon' src={iFacebook} alt="" /></figure>
-              </div>
 
             </section>
           </form>

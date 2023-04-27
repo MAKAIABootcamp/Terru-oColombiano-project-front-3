@@ -19,22 +19,20 @@ const AddAdmin = () => {
         );
 
         if (Object.keys(updatedFields).length === 0) {
-            return; // no fields updated
+            return; 
         }
-
         const photo = updatedFields.photo ? await fileUpLoad(updatedFields.photo[0]) : '';
+        let newPhoto = user.photo
 
 
-        let newPhoto;
-        if (!photo.length) {
-            newPhoto = user.photo
-
-        }
-        else {
+        if (photo) {
             newPhoto = photo
+
         }
 
-        const updatedUser = Object.assign({}, user, updatedFields, { photo : newPhoto });
+        console.log(newPhoto);
+
+        const updatedUser = Object.assign({}, user, updatedFields, { photo: newPhoto });
 
 
         dispatch(editUserAsync(updatedUser));
