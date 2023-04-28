@@ -16,11 +16,21 @@ import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import UploadImages from "../uploadImages/UploadImages";
 import Swal from "sweetalert2";
+import MapContainer from "../Map/MapContainer";
 
 const AddPlace = () => {
   const [images, setImages] = useState([]);
   const [transports, setTransports] = useState([]);
   const [activity, setActivity] = useState([]);
+  const [location, setLocation] = useState(null);
+
+  const handleLocationSelected = (location) => {
+    setLocation(location);
+  }
+  console.log(location);
+
+
+  console.log('location', location);
 
   useEffect(() => {
     console.log(images);
@@ -62,7 +72,7 @@ const AddPlace = () => {
     if (arrayImages.length < 3) {
       Swal.fire({
         icon: 'info',
-        text : 'Por favor agregar mínimo 3 fotos'
+        text: 'Por favor agregar mínimo 3 fotos'
       })
       return [];
     }
@@ -87,8 +97,8 @@ const AddPlace = () => {
       const newPlace = {
         name: data.name,
         description: data.description,
-        location: data.location,
-        department: data.department,
+        location: location,
+        // department: data.department,
         activities: data.activities,
         category: activity,
         schedules: data.schedules,
@@ -119,14 +129,14 @@ const AddPlace = () => {
   };
 
   return (
-    <article className="addPlace">
+    <motion.article className="addPlace">
       <h1>Agregar nuevo lugar</h1>
       <div className="addPlace__photos">
         <small><strong>Imágenes del lugar</strong>(Min. 3)</small>
         <UploadImages onLoad={handleLoad} />
 
       </div>
-      <motion.form
+      <form
         onSubmit={handleSubmit(onSubmit)}
         initial={{ x: "100%" }}
         animate={{ x: 0 }}
@@ -156,7 +166,7 @@ const AddPlace = () => {
           ></textarea>
         </label>
         {errors.description ? <span>{errors.description.message}</span> : <></>}
-        <label>
+        {/* <label>
           Ciudad o Pueblo
           <input
             type="text"
@@ -176,8 +186,9 @@ const AddPlace = () => {
               required: "Este campo es requerido",
             })}
           />
-        </label>
+        </label> */}
         {errors.department ? <span>{errors.department.message}</span> : <></>}
+        <MapContainer apiKey='AIzaSyD77vfAu1kBoFFgavfDxBjkkj9xEx24E10' onLocationSelected={handleLocationSelected} />
         <label>
           Actividades
           <textarea
@@ -344,8 +355,8 @@ const AddPlace = () => {
                 </label> */}
 
         <button type="submit">Agregar lugar</button>
-      </motion.form>
-    </article>
+      </form>
+    </motion.article>
   );
 };
 

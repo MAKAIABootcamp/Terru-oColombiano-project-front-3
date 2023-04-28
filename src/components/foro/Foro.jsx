@@ -32,7 +32,7 @@ const Foro = () => {
       <div className='foro__container'>
         {!allPlaces.length ? <Loader /> : <></>}
 
-        {allPlaces.length ? allPlaces[0].map((post, index) =>
+        {allPlaces.length ? allPlaces.map((post, index) =>
           <motion.section className='foro__container__main' key={index} variants={variants}
             initial="hidden"
             animate="visible"
@@ -41,7 +41,7 @@ const Foro = () => {
               <img src={post.postedByImg} alt="user" />
               <section>
                 <strong>{post.postedBy}</strong>
-                <small>Hace 10 min</small>
+                {/* <small>Hace 10 min</small> */}
               </section>
             </div>
             <figure>

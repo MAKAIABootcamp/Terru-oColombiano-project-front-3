@@ -58,6 +58,8 @@ const Home = () => {
 
   const { user } = useSelector(store => store.users)
   const { places } = useSelector(store => store.places);
+  console.log(places);
+
 
   const addFavorite = (data) => {
     const isFavorite = user.favorites.filter(fav => fav.id === data.id)
@@ -95,10 +97,10 @@ const Home = () => {
   }, [])
 
 
-  const arrayFiltered = places[0]?.filter(place => place.location.toLowerCase().includes(input.toLowerCase()) || place.department.toLowerCase().includes(input.toLowerCase()))
-  const arraySelectFiltred = places[0]?.filter(place => place.category.includes(select))
-  const arrayDepartmentFiltred = places[0]?.filter(place => place.department.includes(department))
-  const arrayWeatherFiltred = places[0]?.filter(place => place.weather.includes(weather))
+  const arrayFiltered = places?.filter(place => place.location.toLowerCase().includes(input.toLowerCase()) || place.department.toLowerCase().includes(input.toLowerCase()))
+  const arraySelectFiltred = places?.filter(place => place.category.includes(select))
+  const arrayDepartmentFiltred = places?.filter(place => place.department.includes(department))
+  const arrayWeatherFiltred = places?.filter(place => place.weather.includes(weather))
 
 
   const variants = {
@@ -376,7 +378,7 @@ const Home = () => {
                       <BsFillHeartFill className='heart' />
                     </figcaption>
                   </motion.figure>) : <>
-            {places[0] ? places[0].filter(place => place.status === 'Aceptado').map((place, index) =>
+            {places ? places.filter(place => place.status === 'Aceptado').map((place, index) =>
 
               <motion.figure key={index} initial="hidden"
                 animate="visible"

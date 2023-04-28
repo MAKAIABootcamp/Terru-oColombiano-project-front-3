@@ -33,7 +33,7 @@ function Welcome() {
           <section>
             <h2>Explora</h2>
             <p>Descubre Colombia como nunca antes lo habías hecho. Explora la riqueza de su cultura, la diversidad de su naturaleza y la historia detrás de sus ciudades y pueblos. Con nuestra plataforma, puedes disfrutar de tours virtuales, contenido multimedia y mucho más, todo diseñado para llevarte a un viaje único por Colombia</p>
-            <button>Ver más</button>
+            {/* <button>Ver más</button> */}
           </section>
           <figure>
             <img src={alegre} alt="explora" />

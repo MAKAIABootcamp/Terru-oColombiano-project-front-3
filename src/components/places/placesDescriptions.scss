@@ -23,6 +23,12 @@
         padding: 15px;
         height: 100%;
 
+        @media(max-width:700px){
+            width: 100%;
+            height: 400px;
+        }
+     
+
         .card-section {
             margin-top: 20px;
             display: flex;
@@ -121,6 +127,7 @@
 }
 
 .imgCarousel {
+    height: 400px;
 
 
 
