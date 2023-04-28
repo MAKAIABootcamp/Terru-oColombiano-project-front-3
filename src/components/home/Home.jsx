@@ -97,9 +97,9 @@ const Home = () => {
   }, [])
 
 
-  const arrayFiltered = places?.filter(place => place.location.toLowerCase().includes(input.toLowerCase()) || place.department.toLowerCase().includes(input.toLowerCase()))
+  const arrayFiltered = places?.filter(place => place.location.place.formatted_address.toLowerCase().includes(input.toLowerCase()))
   const arraySelectFiltred = places?.filter(place => place.category.includes(select))
-  const arrayDepartmentFiltred = places?.filter(place => place.department.includes(department))
+  const arrayDepartmentFiltred = places?.filter(place => place.location.place.formatted_address.includes(department))
   const arrayWeatherFiltred = places?.filter(place => place.weather.includes(weather))
 
 
@@ -204,7 +204,7 @@ const Home = () => {
                 <h3>{e.name}{e.weather === "1" ? <BsCloudSun className='icons' /> : e.weather === "2" ? <CiSun className='icons' /> : e.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
                 <p onClick={() => navigate(`/description/${e.id}`)}>{e.description}</p>
                 <small><BiTime /> {e.schedules}</small>
-                <span> <img src={location} alt="location" />{` ${e.location} - ${e.department}`}</span>
+                <span> <img src={location} alt="location" />{e.location.place.formatted_address}</span>
                 <section>
                   {e.category.map((act, index) => <small key={index}>{act}</small>)}
                 </section>
@@ -250,7 +250,7 @@ const Home = () => {
                   <h3>{e.name}{e.weather === "1" ? <BsCloudSun className='icons' /> : e.weather === "2" ? <CiSun className='icons' /> : e.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
                   <p onClick={() => navigate(`/description/${e.id}`)}>{e.description}</p>
                   <small><BiTime /> {e.schedules}</small>
-                  <span> <img src={location} alt="location" />{` ${e.location} - ${e.department}`}</span>
+                  <span> <img src={location} alt="location" />{e.location.place.formatted_address}</span>
                   <section>
                     {e.category.map((act, index) => <small key={index}>{act}</small>)}
                   </section>
@@ -298,7 +298,7 @@ const Home = () => {
                     <h3>{e.name}{e.weather === "1" ? <BsCloudSun className='icons' /> : e.weather === "2" ? <CiSun className='icons' /> : e.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
                     <p onClick={() => navigate(`/description/${e.id}`)}>{e.description}</p>
                     <small><BiTime /> {e.schedules}</small>
-                    <span> <img src={location} alt="location" />{` ${e.location} - ${e.department}`}</span>
+                    <span> <img src={location} alt="location" />{e.location.place.formatted_address}</span>
                     <section>
                       {e.category.map((act, index) => <small key={index}>{act}</small>)}
                     </section>
@@ -388,7 +388,7 @@ const Home = () => {
                   <h3>{place.name} {place.weather === "1" ? <BsCloudSun className='icons' /> : place.weather === "2" ? <CiSun className='icons' /> : place.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
                   <p onClick={() => navigate(`/description/${place.id}`)}>{place.description}</p>
                   <small><BiTime /> {place.schedules}</small>
-                  <span> <img src={location} alt="location" />{` ${place.location} - ${place.department}`}</span>
+                  <span> <img src={location} alt="location" />{place.location.place.formatted_address}</span>
                   <section>
                     {place.category.map((act, index) => <small key={index}>{act}</small>)}
                   </section>
