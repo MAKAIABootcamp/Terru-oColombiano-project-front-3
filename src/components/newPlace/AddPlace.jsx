@@ -76,6 +76,14 @@ const AddPlace = () => {
       })
       return [];
     }
+    if (!location) {
+      Swal.fire({
+        icon: 'info',
+        text: 'Por favor agrega un ubicación'
+      })
+      return [];
+
+    }
 
     for (const file of arrayImages) {
       console.log(file);
@@ -166,28 +174,6 @@ const AddPlace = () => {
           ></textarea>
         </label>
         {errors.description ? <span>{errors.description.message}</span> : <></>}
-        {/* <label>
-          Ciudad o Pueblo
-          <input
-            type="text"
-            placeholder="Ubicación del lugar"
-            {...register("location", {
-              required: "Este campo es requerido",
-            })}
-          />
-        </label>
-        {errors.location ? <span>{errors.location.message}</span> : <></>}
-        <label>
-          Departamento
-          <input
-            type="text"
-            placeholder="Departamento en el que se encuentra"
-            {...register("department", {
-              required: "Este campo es requerido",
-            })}
-          />
-        </label> */}
-        {errors.department ? <span>{errors.department.message}</span> : <></>}
         <MapContainer apiKey='AIzaSyD77vfAu1kBoFFgavfDxBjkkj9xEx24E10' onLocationSelected={handleLocationSelected} />
         <label>
           Actividades

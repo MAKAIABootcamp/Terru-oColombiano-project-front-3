@@ -124,6 +124,7 @@
     width: 500px;
     border-radius: 8px;
     gap: 20px;
+    position: relative;
 
     &__photos {
         display: flex;
@@ -131,7 +132,7 @@
         gap: 10px;
 
         & small {
-            font-size: 18px;
+            font-size: 16px;
 
         }
 
@@ -211,6 +212,45 @@
     }
 }
 
+.map {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+
+    & input {
+        border: 1px solid gray;
+        border-radius: 8px;
+        height: 40px;
+        padding-left: 5px;
+        outline: none;
+    }
+    & div {
+        width: 95%;
+    }
+
+
+
+    & small {
+        height: 40px;
+        padding: 5px;
+        background-color: #c08b61;
+        border-radius: 8px;
+        color: white;
+        width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        gap: 5px;
+
+        &:hover {
+            background-color: #775d4a;
+            cursor: pointer;
+        }
+    }
+}
+
 .delete {
     font-size: 30px;
     color: red;
@@ -222,11 +262,8 @@
 }
 
 @media (max-width:600px) {
-    .newPlace {
+    .newPlace {}
 
-      
-
-    }
     .addPlace {
         width: 90%;
     }
