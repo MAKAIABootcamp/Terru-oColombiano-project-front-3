@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import { getPlaceDetails } from '../../redux/actions/placesActions';
-import {CiLocationOn} from 'react-icons/ci'
+import { CiLocationOn } from 'react-icons/ci'
 
 
 const mapStyles = {

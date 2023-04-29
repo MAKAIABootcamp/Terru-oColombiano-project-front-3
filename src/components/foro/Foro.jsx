@@ -30,9 +30,9 @@ const Foro = () => {
     <article className='foro'>
       <h1>Bienvenido al foro</h1>
       <div className='foro__container'>
-        {!allPlaces.length ? <Loader /> : <></>}
+        {!places.length ? <Loader /> : <></>}
 
-        {allPlaces.length ? allPlaces.map((post, index) =>
+        {places.length ? places.map((post, index) =>
           <motion.section className='foro__container__main' key={index} variants={variants}
             initial="hidden"
             animate="visible"

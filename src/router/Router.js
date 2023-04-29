@@ -26,6 +26,7 @@ import MyPlaces from "../components/newPlace/MyPlaces";
 import Admin from "../components/admin/Admin";
 import AddAdmin from "../components/admin/AddAdmin";
 import ShowPost from "../components/admin/ShowPost";
+import Status from "../components/admin/Status";
 
 const Router = () => {
   const dispatch = useDispatch();
@@ -85,7 +86,9 @@ const Router = () => {
         </Route>
         <Route path="admin" element={<Admin />}>
           <Route path="myAccount" element={<AddAdmin />} />
-          <Route path="showPosts" element={<ShowPost />} />
+          <Route path="showPosts" element={<ShowPost />}>
+            <Route path=":status" element={<Status />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

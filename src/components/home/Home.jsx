@@ -24,8 +24,7 @@ import { motion } from "framer-motion";
 import { CiSun } from 'react-icons/ci'
 import { WiDayRainMix } from 'react-icons/wi'
 import { useNavigate } from 'react-router-dom'
-import MapContainer from '../Map/MapContainer'
-
+import notPLace from '../../assets/notPlace.svg'
 
 const Home = () => {
   const [input, setInput] = useState('')
@@ -51,6 +50,7 @@ const Home = () => {
 
   }
   console.log(filters);
+
 
 
 
@@ -116,7 +116,7 @@ const Home = () => {
       return true;
     }
   });
-  console.log(allFilters);
+  console.log(allFilters.slice(0, 6));
 
 
 
@@ -356,8 +356,9 @@ const Home = () => {
               </motion.figure>) : <></>}
 
           {input && !arrayFiltered.length ? <div className='error404'>
-            <h1>Lugar no encontrado</h1>
+            <h2>Lugar no encontrado</h2>
             <p>Por favor ingresa una nueva busqueda.</p>
+            <img src={notPLace} alt="notPlace" />
           </div> : <></>}
 
         </div>
