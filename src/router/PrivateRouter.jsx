@@ -25,15 +25,11 @@ const PrivateRouter = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setLoading(true);
       if (user) {
-        console.log('user1', user);
         getUsers(user.uid)
           .then((response) => {
-            console.log(response);
             dispatch(loginUser(response, { status: false, message: "" }));
             setLogged(true);
             setLoading(false);
-            console.log('se private');
-            console.log(user);
           })
           .catch((error) => {
             console.log(error);
