@@ -24,6 +24,7 @@ import { motion } from "framer-motion";
 import { CiSun } from 'react-icons/ci'
 import { WiDayRainMix } from 'react-icons/wi'
 import { useNavigate } from 'react-router-dom'
+import MapContainer from '../Map/MapContainer'
 
 
 const Home = () => {
@@ -134,7 +135,6 @@ const Home = () => {
         <section className='home__header__btns'>
           <select onChange={(e) => valueSelect(e.target)}>
             <option value="">Actividades</option>
-            <option value="Deportes">Deportes</option>
             <option value="Camping">Camping</option>
             <option value="Mirador">Mirador</option>
             <option value="Natación">Natación</option>
@@ -342,7 +342,7 @@ const Home = () => {
                       <h3>{e.name}{e.weather === "1" ? <BsCloudSun className='icons' /> : e.weather === "2" ? <CiSun className='icons' /> : e.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
                       <p onClick={() => navigate(`/description/${e.id}`)}>{e.description}</p>
                       <small><BiTime /> {e.schedules}</small>
-                      <span> <img src={location} alt="location" />{` ${e.location} - ${e.department}`}</span>
+                      <span> <img src={location} alt="location" />{e.location.place.formatted_address}</span>
                       <section>
                         {e.category.map((act, index) => <small key={index}>{act}</small>)}
                       </section>

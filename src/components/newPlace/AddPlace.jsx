@@ -76,6 +76,14 @@ const AddPlace = () => {
       })
       return [];
     }
+    if (!location) {
+      Swal.fire({
+        icon: 'info',
+        text: 'Por favor agrega un ubicación'
+      })
+      return [];
+
+    }
 
     for (const file of arrayImages) {
       console.log(file);
