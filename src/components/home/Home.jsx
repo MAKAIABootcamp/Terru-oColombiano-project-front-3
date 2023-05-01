@@ -305,7 +305,11 @@ const Home = () => {
                   <BsFillHeartFill onClick={() => addFavorite(e)} className={`heart ${favorites.includes(e.id) ? 'favorite' : ''}`} />
                 </figcaption>
               </motion.figure>) : filters && !allFilters.length ?
-            <h2>Lugar no encontrado, por favor ingrese nuevos filtros.</h2>
+            <div className='error404'>
+              <h2>Lugar no encontrado, por favor ingrese nuevos filtros.</h2>
+              <img src={notPLace} alt="notPlace" />
+
+            </div>
             :
             places ? places.filter(place => place.status === 'Aceptado').map((e, index) =>
               <motion.figure key={index} initial="hidden"

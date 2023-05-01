@@ -84,7 +84,14 @@ const Router = () => {
           </Route>
           <Route path="description/:place" element={<PlaceDescription />} />
         </Route>
-        <Route path="admin" element={<Admin />}>
+        <Route
+          path="admin"
+          element={
+            <PrivateRouter>
+              <Admin />
+            </PrivateRouter>
+          }
+        >
           <Route path="myAccount" element={<AddAdmin />} />
           <Route path="showPosts" element={<ShowPost />}>
             <Route path=":status" element={<Status />} />

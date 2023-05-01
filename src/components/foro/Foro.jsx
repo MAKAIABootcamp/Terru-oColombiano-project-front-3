@@ -8,21 +8,18 @@ import Loader from '../loader/Loader'
 
 
 const Foro = () => {
-  const [allPlaces, setAllPlaces] = useState([])
-  const { user } = useSelector(store => store.users)
   const dispatch = useDispatch()
   const { places } = useSelector(store => store.places)
   useEffect(() => {
-    setAllPlaces(places)
+    dispatch(getPlacesAsync())
 
-  }, [allPlaces])
+  }, [])
   const variants = {
     hidden: { y: "100%" },
     visible: { y: 0 }
   };
 
   console.log(places);
-  console.log(allPlaces);
 
 
 

@@ -56,7 +56,7 @@ const Status = () => {
 
 
     return (
-        <div>
+        <div className='showPosts__status'>
             {arrayFiltered.length ? arrayFiltered.map((place, index) =>
                 <figure key={index}>
                     <img src={place.images[0]} alt="" />
