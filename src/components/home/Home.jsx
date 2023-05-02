@@ -94,11 +94,7 @@ const Home = () => {
   const arraySelectFiltred = places[0]?.filter(place => place.category.includes(select))
   const arrayDepartmentFiltred = places[0]?.filter(place => place.department.includes(department))
   const arrayWeatherFiltred = places[0]?.filter(place => place.weather.includes(weather))
-<<<<<<< HEAD
-=======
 
-
->>>>>>> b737a4e55bf28d689d2c2aba823fe7755f35a193
   const variants = {
     hidden: {
       opacity: 0,
@@ -185,11 +181,6 @@ const Home = () => {
             <option value="4">Seco</option>
           </select>
 
-<<<<<<< HEAD
-          <button>Más votados</button>
-
-=======
->>>>>>> b737a4e55bf28d689d2c2aba823fe7755f35a193
         </section>
       </div>
       <div className='home__main'>
