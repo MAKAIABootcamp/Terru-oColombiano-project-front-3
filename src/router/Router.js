@@ -27,6 +27,7 @@ import Admin from "../components/admin/Admin";
 import AddAdmin from "../components/admin/AddAdmin";
 import ShowPost from "../components/admin/ShowPost";
 import Status from "../components/admin/Status";
+import EditPlace from "../components/newPlace/EditPlace";
 
 const Router = () => {
   const dispatch = useDispatch();
@@ -83,6 +84,8 @@ const Router = () => {
             <Route path="myPlaces" element={<MyPlaces />} />
           </Route>
           <Route path="description/:place" element={<PlaceDescription />} />
+          <Route path="/newPlace/myPlaces/:idPlace" element={<EditPlace />} />
+
         </Route>
         <Route
           path="admin"

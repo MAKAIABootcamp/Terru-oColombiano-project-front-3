@@ -258,7 +258,7 @@ const Home = () => {
                 <Rate disabled defaultValue={e.rate} />
                 <BsFillHeartFill onClick={() => addFavorite(e)} className={`heart ${favorites.includes(e.id) ? 'favorite' : ''}`} />
               </figcaption>
-            </motion.figure>) : allFilters.length ? allFilters.filter(place => place.status === 'Aceptado').map((e, index) =>
+            </motion.figure>) : allFilters.length ? allFilters.filter(place => place.status === 'Aceptado').slice(0, 8).map((e, index) =>
               <motion.figure key={index} initial="hidden"
                 animate="visible"
                 variants={variants}>
@@ -311,7 +311,7 @@ const Home = () => {
 
             </div>
             :
-            places ? places.filter(place => place.status === 'Aceptado').map((e, index) =>
+            places ? places.filter(place => place.status === 'Aceptado').slice(0, 8).map((e, index) =>
               <motion.figure key={index} initial="hidden"
                 animate="visible"
                 variants={variants}>

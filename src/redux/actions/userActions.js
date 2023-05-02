@@ -308,6 +308,8 @@ export const editUserAsync = (user) => {
         birthday: user.birthday,
         phone: user.phone,
         type: "admin",
+        posts : user.posts,
+        favorites : user.favorites
       };
       console.log(userUpdated);
       await updateDoc(userRef, userUpdated);
