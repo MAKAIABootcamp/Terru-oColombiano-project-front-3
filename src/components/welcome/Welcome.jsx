@@ -8,6 +8,8 @@ import niño from '../../assets/niño.jpeg'
 import alegre from '../../assets/aleegre.jpeg'
 import porton from '../../assets/int.jpg'
 import { FaEnvelope, FaFacebookSquare, FaInstagram, FaTwitter } from 'react-icons/fa';
+import { AiFillGithub } from 'react-icons/ai'
+
 
 function Welcome() {
   return (
@@ -18,7 +20,7 @@ function Welcome() {
 
             <img src={granos} alt="" />
             <img src={logo} alt="" />
-         
+
           </section>
           <section>
 
@@ -62,16 +64,27 @@ function Welcome() {
           <figure>
             <img src={logo} alt="logo" />
             <section>
-              <FaEnvelope className='footer__icon'/> 
-              <FaFacebookSquare className='footer__icon' /> 
-              <FaInstagram className='footer__icon' /> 
-              <FaTwitter className='footer__icon' /> 
+              <a href="mailto:terrunocontact@gmail.com">
+                <FaEnvelope className='footer__icon' />
+              </a>
+              <a href="https://twitter.com/TerrunoColombia">
+                <FaTwitter className='footer__icon' />
+
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=100092514423342">
+                <FaFacebookSquare className='footer__icon' />
+              </a>
+
+
+              <FaInstagram className='footer__icon' />
             </section>
           </figure>
-          <section>
-            <small><strong>Creador por : </strong>Wilinton Ascanio, Alejandro Soto, Daniel Salazar</small>
-            
-          </section>
+          <div>
+            <a href="https://github.com/WilintonAscanio"><AiFillGithub /> Wilinton Ascanio</a>
+            <a href="https://github.com/asoto001"><AiFillGithub />Alejandro Soto</a>
+            <a href="https://github.com/Daniel-S23"><AiFillGithub />Daniel Salazar</a>
+
+          </div>
         </footer>
 
       </div >

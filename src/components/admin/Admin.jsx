@@ -18,6 +18,7 @@ const Admin = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+
     useEffect(() => {
 
         if (user) {
@@ -70,7 +71,7 @@ const Admin = () => {
                             <img src={user.photo} alt="photo" />
                             <h4>{user.name}</h4>
                         </figure>
-                        <small onClick={() => navigate('showPosts')}><BsPostcard />Ver publicaciones</small>
+                        <small onClick={() => navigate('showPosts/all')}><BsPostcard />Ver publicaciones</small>
                         <small onClick={() => navigate('myAccount')}><AiOutlineUser />Mi cuenta</small>
                         <small onClick={() => navigate('/')}><CiCoffeeBean />Terruño Colombiano</small>
                         <small onClick={() => logOut()}><CiLogout />Cerrar sesión</small>

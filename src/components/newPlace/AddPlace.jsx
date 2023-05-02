@@ -27,10 +27,8 @@ const AddPlace = () => {
   const handleLocationSelected = (location) => {
     setLocation(location);
   }
-  console.log(location);
 
 
-  console.log('location', location);
 
   useEffect(() => {
     console.log(images);
@@ -95,9 +93,6 @@ const AddPlace = () => {
   };
 
   const onSubmit = async (data) => {
-    // const imgPlace = data.imgPlace[0] ? await fileUpLoad(data.imgPlace[0]) : '';
-    // const imgAct = data.imgAct[0] ? await fileUpLoad(data.imgAct[0]) : '';
-    // const imgPlace2 = data.imgPlace2[0] ? await fileUpLoad(data.imgPlace2[0]) : '';
 
     const urlImages = await uploadImagesToClaoudinary(images);
 
@@ -133,6 +128,7 @@ const AddPlace = () => {
         progress: undefined,
         theme: "light",
       });
+      reset()
     }
   };
 

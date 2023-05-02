@@ -38,6 +38,34 @@
         }
     }
 
+
+}
+
+.addPlace,
+.editPlace {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    padding: 10px;
+    width: 500px;
+    border-radius: 8px;
+    gap: 20px;
+    position: relative;
+
+
+    &__photos {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        & small {
+            font-size: 16px;
+
+        }
+
+
+    }
+
     & form {
         display: flex;
         flex-direction: column;
@@ -114,30 +142,6 @@
             font-weight: 400;
         }
     }
-}
-
-.addPlace {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid gray;
-    padding: 10px;
-    width: 500px;
-    border-radius: 8px;
-    gap: 20px;
-    position: relative;
-
-    &__photos {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-
-        & small {
-            font-size: 16px;
-
-        }
-
-
-    }
 
 
 
@@ -152,6 +156,7 @@
 .myPlaces {
     width: 100%;
     height: 100%;
+    position: relative;
 
 
     & div {
@@ -204,6 +209,17 @@
             }
 
         }
+
+        & button {
+            width: 200px;
+            border: 1px solid gray;
+            border-radius: 5px;
+
+            &:hover {
+                background-color: #c08b61;
+                color: white;
+            }
+        }
     }
 
     & h1 {
@@ -225,6 +241,7 @@
         padding-left: 5px;
         outline: none;
     }
+
     & div {
         width: 95%;
     }
@@ -260,6 +277,19 @@
         scale: 1.05;
     }
 }
+
+// .modalEdit {
+//     display: block;
+//     background-color: rebeccapurple;
+//     position: absolute;
+//     height: 100vh;
+//     width: 100%;
+// }
+
+// .hidden {
+//     display: none;
+// }
+
 
 @media (max-width:600px) {
     .newPlace {}

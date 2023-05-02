@@ -41,6 +41,8 @@ const PrivateRouter = ({ children }) => {
       } else {
         setLogged(false);
         setLoading(false);
+        navigate('/welcome')
+
 
       }
     });

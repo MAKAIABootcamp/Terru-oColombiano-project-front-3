@@ -24,8 +24,7 @@ import { motion } from "framer-motion";
 import { CiSun } from 'react-icons/ci'
 import { WiDayRainMix } from 'react-icons/wi'
 import { useNavigate } from 'react-router-dom'
-import MapContainer from '../Map/MapContainer'
-
+import notPLace from '../../assets/notPlace.svg'
 
 const Home = () => {
   const [input, setInput] = useState('')
@@ -51,6 +50,7 @@ const Home = () => {
 
   }
   console.log(filters);
+
 
 
 
@@ -116,7 +116,7 @@ const Home = () => {
       return true;
     }
   });
-  console.log(allFilters);
+  console.log(allFilters.slice(0, 6));
 
 
 
@@ -258,7 +258,7 @@ const Home = () => {
                 <Rate disabled defaultValue={e.rate} />
                 <BsFillHeartFill onClick={() => addFavorite(e)} className={`heart ${favorites.includes(e.id) ? 'favorite' : ''}`} />
               </figcaption>
-            </motion.figure>) : allFilters.length ? allFilters.filter(place => place.status === 'Aceptado').map((e, index) =>
+            </motion.figure>) : allFilters.length ? allFilters.filter(place => place.status === 'Aceptado').slice(0, 8).map((e, index) =>
               <motion.figure key={index} initial="hidden"
                 animate="visible"
                 variants={variants}>
@@ -305,9 +305,13 @@ const Home = () => {
                   <BsFillHeartFill onClick={() => addFavorite(e)} className={`heart ${favorites.includes(e.id) ? 'favorite' : ''}`} />
                 </figcaption>
               </motion.figure>) : filters && !allFilters.length ?
-            <h2>Lugar no encontrado, por favor ingrese nuevos filtros.</h2>
+            <div className='error404'>
+              <h2>Lugar no encontrado, por favor ingrese nuevos filtros.</h2>
+              <img src={notPLace} alt="notPlace" />
+
+            </div>
             :
-            places ? places.filter(place => place.status === 'Aceptado').map((e, index) =>
+            places ? places.filter(place => place.status === 'Aceptado').slice(0, 8).map((e, index) =>
               <motion.figure key={index} initial="hidden"
                 animate="visible"
                 variants={variants}>
@@ -356,8 +360,9 @@ const Home = () => {
               </motion.figure>) : <></>}
 
           {input && !arrayFiltered.length ? <div className='error404'>
-            <h1>Lugar no encontrado</h1>
+            <h2>Lugar no encontrado</h2>
             <p>Por favor ingresa una nueva busqueda.</p>
+            <img src={notPLace} alt="notPlace" />
           </div> : <></>}
 
         </div>

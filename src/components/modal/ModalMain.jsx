@@ -17,7 +17,6 @@ const ModalMain = ({ place }) => {
     const showModal = () => {
         setIsModalOpen(true);
     };
-    console.log(place);
     const handleOk = () => {
         setIsModalOpen(false);
     };
@@ -27,7 +26,6 @@ const ModalMain = ({ place }) => {
 
     };
     const onSubmit = (data) => {
-        console.log(data);
         dispatch(createCommentAsync(place.id, user, data))
 
         reset()
@@ -56,10 +54,10 @@ const ModalMain = ({ place }) => {
                     <img src={place.images[0]} alt="postImg" />
                 </figure>
                 <p>{place.description}</p>
-                <section>
+                {/* <section>
                     <button><BsFillHeartFill /> Agregar a favoritos</button>
                     <button><FaRegCommentAlt />Comentar</button>
-                </section>
+                </section> */}
                 <div className='mainModal__comments'>
                     {comments.length ? comments.map((comment, index) =>
                         <figure key={index}>
