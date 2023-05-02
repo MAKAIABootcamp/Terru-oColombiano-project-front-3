@@ -494,7 +494,6 @@ export const deletePostAsync = (item) => {
     let id;
     let array = [];
     let postId;
-
     try {
       const q = query(usersCollection, where("uid", "==", currentUser.uid));
       const userDoc = await getDocs(q);

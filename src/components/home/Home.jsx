@@ -24,7 +24,6 @@ import { motion } from "framer-motion";
 import { CiSun } from 'react-icons/ci'
 import { WiDayRainMix } from 'react-icons/wi'
 import { useNavigate } from 'react-router-dom'
-import notPLace from '../../assets/notPlace.svg'
 
 const Home = () => {
   const [input, setInput] = useState('')
@@ -33,7 +32,6 @@ const Home = () => {
   const [weather, setWeather] = useState('')
   const [favorites, setFavorites] = useState([])
   const [allPlaces, setAllPlaces] = useState([])
-  const [dataFiltered, setDataFiltered] = useState([])
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [filters, setFilters] = useState({})
@@ -50,9 +48,6 @@ const Home = () => {
 
   }
   console.log(filters);
-
-
-
 
   const { user } = useSelector(store => store.users)
   const { places } = useSelector(store => store.places);
@@ -93,7 +88,6 @@ const Home = () => {
 
   }, [])
 
-
   const arrayFiltered = places?.filter(place => place.location.place.formatted_address.toLowerCase().includes(input.toLowerCase()))
 
 
@@ -117,8 +111,6 @@ const Home = () => {
     }
   });
   console.log(allFilters.slice(0, 6));
-
-
 
 
   const variants = {
@@ -198,6 +190,7 @@ const Home = () => {
             <option value="Vichada">Vichada</option>
 
           </select>
+
           <select name='weather' onChange={filtersSelected}>
             <option value="">Clima</option>
             <option value="1">Seco</option>
@@ -275,7 +268,6 @@ const Home = () => {
                     {e.icons.map((icon, index) => {
                       if (icon === 'car') {
                         return <BsFillCarFrontFill key={index + 80} />
-
                       }
                       if (icon === 'moto') {
                         return <RiMotorbikeFill key={index + 25} />

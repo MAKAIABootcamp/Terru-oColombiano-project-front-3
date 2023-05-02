@@ -17,7 +17,6 @@ import { motion } from "framer-motion";
 import UploadImages from "../uploadImages/UploadImages";
 import Swal from "sweetalert2";
 import MapContainer from "../Map/MapContainer";
-
 const AddPlace = () => {
   const [images, setImages] = useState([]);
   const [transports, setTransports] = useState([]);
@@ -27,8 +26,6 @@ const AddPlace = () => {
   const handleLocationSelected = (location) => {
     setLocation(location);
   }
-
-
 
   useEffect(() => {
     console.log(images);
@@ -80,9 +77,7 @@ const AddPlace = () => {
         text: 'Por favor agrega un ubicación'
       })
       return [];
-
     }
-
     for (const file of arrayImages) {
       console.log(file);
       const urlImages = await fileUpLoad(file);
@@ -93,7 +88,6 @@ const AddPlace = () => {
   };
 
   const onSubmit = async (data) => {
-
     const urlImages = await uploadImagesToClaoudinary(images);
 
     if (urlImages.length) {

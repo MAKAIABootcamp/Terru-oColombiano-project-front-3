@@ -8,6 +8,8 @@ import Loader from '../loader/Loader'
 
 
 const Foro = () => {
+  const [allPlaces, setAllPlaces] = useState([])
+  const { user } = useSelector(store => store.users)
   const dispatch = useDispatch()
   const { places } = useSelector(store => store.places)
   useEffect(() => {
@@ -23,12 +25,13 @@ const Foro = () => {
 
 
 
+
+
   return (
     <article className='foro'>
       <h1>Bienvenido al foro</h1>
       <div className='foro__container'>
         {!places.length ? <Loader /> : <></>}
-
         {places.length ? places.map((post, index) =>
           <motion.section className='foro__container__main' key={index} variants={variants}
             initial="hidden"

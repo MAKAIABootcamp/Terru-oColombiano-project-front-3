@@ -17,6 +17,7 @@ const ModalMain = ({ place }) => {
     const showModal = () => {
         setIsModalOpen(true);
     };
+    console.log(place);
     const handleOk = () => {
         setIsModalOpen(false);
     };
@@ -26,6 +27,7 @@ const ModalMain = ({ place }) => {
 
     };
     const onSubmit = (data) => {
+
         dispatch(createCommentAsync(place.id, user, data))
 
         reset()
