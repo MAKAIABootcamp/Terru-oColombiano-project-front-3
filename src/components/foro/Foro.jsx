@@ -13,16 +13,17 @@ const Foro = () => {
   const dispatch = useDispatch()
   const { places } = useSelector(store => store.places)
   useEffect(() => {
-    setAllPlaces(places)
+    dispatch(getPlacesAsync())
 
-  }, [allPlaces])
+  }, [])
   const variants = {
     hidden: { y: "100%" },
     visible: { y: 0 }
   };
 
   console.log(places);
-  console.log(allPlaces);
+
+
 
 
 
@@ -30,9 +31,8 @@ const Foro = () => {
     <article className='foro'>
       <h1>Bienvenido al foro</h1>
       <div className='foro__container'>
-        {!allPlaces.length ? <Loader /> : <></>}
-
-        {allPlaces.length ? allPlaces.map((post, index) =>
+        {!places.length ? <Loader /> : <></>}
+        {places.length ? places.map((post, index) =>
           <motion.section className='foro__container__main' key={index} variants={variants}
             initial="hidden"
             animate="visible"

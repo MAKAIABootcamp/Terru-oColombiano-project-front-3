@@ -82,8 +82,7 @@ const Navbar = () => {
                         <NavLink to='foro' className='navlink'><HiOutlineUserGroup /> Foro</NavLink>
                         <NavLink to='favorites' className='navlink'><BsFillHeartFill className='heart' /> Favoritos</NavLink>
                         {user?.type === "user" ? <NavLink to='user' className='navlink'><AiOutlineUser /> Cuenta</NavLink> : ''}
-
-                        {user?.type === "admin" ? <NavLink to='admin/showPosts' className='navlink'><RiAdminLine /> Admin</NavLink> : ''}
+                        {user?.type === "admin" ? <NavLink to='admin/showPosts/all' className='navlink'><RiAdminLine /> Admin</NavLink> : ''}
                         <button onClick={() => logOut()}><CiLogout /> Salir</button>
 
                     </ul>

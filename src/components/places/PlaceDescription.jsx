@@ -15,13 +15,10 @@ const PlaceDescription = () => {
   const navigate = useNavigate()
   const { places } = useSelector(store => store.places)
   const { place } = useParams()
-
   useEffect(() => {
     dispatch(getPlacesAsync())
 
   }, [])
-
-
 
   const placeDetails = places?.find(item => item.id === place)
   console.log(placeDetails);

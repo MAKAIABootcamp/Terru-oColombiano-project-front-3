@@ -25,40 +25,32 @@ import { CiSun } from 'react-icons/ci'
 import { WiDayRainMix } from 'react-icons/wi'
 import { useNavigate } from 'react-router-dom'
 
-
 const Home = () => {
   const [input, setInput] = useState('')
   const [select, setSelect] = useState('')
   const [department, setDepartment] = useState('')
   const [weather, setWeather] = useState('')
-  const [rate, setRate] = useState('')
   const [favorites, setFavorites] = useState([])
   const [allPlaces, setAllPlaces] = useState([])
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [filters, setFilters] = useState({})
 
   const valueInput = ({ value }) => {
     setInput(value)
+    console.log(input);
   }
-  const valueSelect = ({ value }) => {
-    setSelect(value)
-  }
+  const filtersSelected = (event) => {
+    setFilters({
+      ...filters,
+      [event.target.name]: event.target.value
+    })
 
-  const valueDepartment = ({ value }) => {
-    setDepartment(value)
   }
-
-  const valueWheather = ({ value }) => {
-    setWeather(value)
-  }
-
-  const valueRate = ({ value }) => {
-    setRate(value)
-  }
+  console.log(filters);
 
   const { user } = useSelector(store => store.users)
   const { places } = useSelector(store => store.places);
-  console.log(places);
 
 
   const addFavorite = (data) => {
@@ -96,11 +88,29 @@ const Home = () => {
 
   }, [])
 
-
   const arrayFiltered = places?.filter(place => place.location.place.formatted_address.toLowerCase().includes(input.toLowerCase()))
-  const arraySelectFiltred = places?.filter(place => place.category.includes(select))
-  const arrayDepartmentFiltred = places?.filter(place => place.location.place.formatted_address.includes(department))
-  const arrayWeatherFiltred = places?.filter(place => place.weather.includes(weather))
+
+
+  const allFilters = places?.filter(place => {
+    if (filters.activities && filters.departments && filters.weather) {
+      return place.category.includes(filters.activities) && place.location.place.formatted_address.toLowerCase().includes(filters.departments.toLowerCase()) && place.weather.includes(filters.weather);
+    } else if (filters.activities && filters.weather) {
+      return place.category.includes(filters.activities) && place.weather.includes(filters.weather);
+    } else if (filters.departments && filters.weather) {
+      return place.location.place.formatted_address.toLowerCase().includes(filters.departments.toLowerCase()) && place.weather.includes(filters.weather);
+    } else if (filters.activities && filters.departments) {
+      return place.category.includes(filters.activities) && place.location.place.formatted_address.toLowerCase().includes(filters.departments.toLowerCase());
+    } else if (filters.activities) {
+      return place.category.includes(filters.activities);
+    } else if (filters.departments) {
+      return place.location.place.formatted_address.toLowerCase().includes(filters.departments.toLowerCase());
+    } else if (filters.weather) {
+      return place.weather.includes(filters.weather);
+    } else {
+      return true;
+    }
+  });
+  console.log(allFilters.slice(0, 6));
 
 
   const variants = {
@@ -132,9 +142,8 @@ const Home = () => {
 
         </label>
         <section className='home__header__btns'>
-          <select onChange={(e) => valueSelect(e.target)}>
+          <select name='activities' onChange={filtersSelected}>
             <option value="">Actividades</option>
-            <option value="Deportes">Deportes</option>
             <option value="Camping">Camping</option>
             <option value="Mirador">Mirador</option>
             <option value="Natación">Natación</option>
@@ -144,7 +153,7 @@ const Home = () => {
             <option value="Cultura">Cultura</option>
             <option value="Restaurantes">Restaurantes</option>
           </select>
-          <select onChange={(e) => valueDepartment(e.target)}>
+          <select name='departments' onChange={filtersSelected}>
             <option value="">Departamentos</option>
             <option value="Amazonas">Amazonas</option>
             <option value="Antioquia">Antioquia</option>
@@ -181,12 +190,13 @@ const Home = () => {
             <option value="Vichada">Vichada</option>
 
           </select>
-          <select onChange={(e) => valueWheather(e.target)}>
+
+          <select name='weather' onChange={filtersSelected}>
             <option value="">Clima</option>
-            <option value="1">Calido</option>
-            <option value="2">Montaña</option>
-            <option value="3">Tropical humedo</option>
-            <option value="4">Seco</option>
+            <option value="1">Seco</option>
+            <option value="2">Templado</option>
+            <option value="3">De montaña</option>
+            <option value="4">Tropical humedo</option>
           </select>
 
         </section>
@@ -195,7 +205,7 @@ const Home = () => {
         <h1>Destinos populares</h1>
         {!places.length ? <Loader /> : <></>}
         <div>
-          {input ? arrayFiltered.map((e, index) =>
+          {input ? arrayFiltered.filter(place => place.status === 'Aceptado').map((e, index) =>
             <motion.figure key={index} initial="hidden"
               animate="visible"
               variants={variants}>
@@ -239,9 +249,61 @@ const Home = () => {
                   )}
                 </section>
                 <Rate disabled defaultValue={e.rate} />
-                <BsFillHeartFill className='heart' />
+                <BsFillHeartFill onClick={() => addFavorite(e)} className={`heart ${favorites.includes(e.id) ? 'favorite' : ''}`} />
               </figcaption>
-            </motion.figure>) : select ? arraySelectFiltred.map((e, index) =>
+            </motion.figure>) : allFilters.length ? allFilters.filter(place => place.status === 'Aceptado').slice(0, 8).map((e, index) =>
+              <motion.figure key={index} initial="hidden"
+                animate="visible"
+                variants={variants}>
+                <img src={e.images[0]} alt="caballo" className='home__main__photo' />
+                <figcaption >
+                  <h3>{e.name}{e.weather === "1" ? <BsCloudSun className='icons' /> : e.weather === "2" ? <CiSun className='icons' /> : e.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
+                  <p onClick={() => navigate(`/description/${e.id}`)}>{e.description}</p>
+                  <small><BiTime /> {e.schedules}</small>
+                  <span> <img src={location} alt="location" />{e.location.place.formatted_address}</span>
+                  <section>
+                    {e.category.map((act, index) => <small key={index}>{act}</small>)}
+                  </section>
+                  <section>
+                    {e.icons.map((icon, index) => {
+                      if (icon === 'car') {
+                        return <BsFillCarFrontFill key={index + 80} />
+                      }
+                      if (icon === 'moto') {
+                        return <RiMotorbikeFill key={index + 25} />
+
+                      }
+                      if (icon === 'walking') {
+                        return <BiWalk key={index + 38} />
+
+                      }
+                      if (icon === 'bici') {
+                        return <IoMdBicycle key={index + 18} />
+
+                      }
+                      if (icon === 'bus') {
+                        return <FaBus key={index + 10} />
+
+                      }
+                      if (icon === 'ship') {
+                        return <RiShipLine key={index + 41} />
+
+                      }
+                    }
+
+                    )}
+                  </section>
+                  <Rate disabled defaultValue={e.rate} />
+                  <BsFillHeartFill onClick={() => addFavorite(e)} className={`heart ${favorites.includes(e.id) ? 'favorite' : ''}`} />
+                </figcaption>
+              </motion.figure>) : filters && !allFilters.length ?
+            <div className='error404'>
+              <h2>Lugar no encontrado, por favor ingrese nuevos filtros.</h2>
+              <img src={notPLace} alt="notPlace" />
+
+            </div>
+            :
+            places ? places.filter(place => place.status === 'Aceptado').slice(0, 8).map((e, index) =>
               <motion.figure key={index} initial="hidden"
                 animate="visible"
                 variants={variants}>
@@ -278,159 +340,21 @@ const Home = () => {
                       }
                       if (icon === 'ship') {
                         return <RiShipLine key={index + 41} />
-                      }
 
-                      if (icon === 'ship') {
-                        return <RiShipLine key={index + 41} />
                       }
                     }
+
                     )}
                   </section>
                   <Rate disabled defaultValue={e.rate} />
-                  <BsFillHeartFill className='heart' />
+                  <BsFillHeartFill onClick={() => addFavorite(e)} className={`heart ${favorites.includes(e.id) ? 'favorite' : ''}`} />
                 </figcaption>
-              </motion.figure>) : department ? arrayDepartmentFiltred.map((e, index) =>
-                <motion.figure key={index} initial="hidden"
-                  animate="visible"
-                  variants={variants}>
-                  <img src={e.images[0]} alt="caballo" className='home__main__photo' />
-                  <figcaption >
-                    <h3>{e.name}{e.weather === "1" ? <BsCloudSun className='icons' /> : e.weather === "2" ? <CiSun className='icons' /> : e.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
-                    <p onClick={() => navigate(`/description/${e.id}`)}>{e.description}</p>
-                    <small><BiTime /> {e.schedules}</small>
-                    <span> <img src={location} alt="location" />{e.location.place.formatted_address}</span>
-                    <section>
-                      {e.category.map((act, index) => <small key={index}>{act}</small>)}
-                    </section>
-                    <section>
-                      {e.icons.map((icon, index) => {
-                        if (icon === 'car') {
-                          return <BsFillCarFrontFill key={index + 80} />
+              </motion.figure>) : <></>}
 
-                        }
-                        if (icon === 'moto') {
-                          return <RiMotorbikeFill key={index + 25} />
-
-                        }
-                        if (icon === 'walking') {
-                          return <BiWalk key={index + 38} />
-
-                        }
-                        if (icon === 'bici') {
-                          return <IoMdBicycle key={index + 18} />
-
-                        }
-                        if (icon === 'bus') {
-                          return <FaBus key={index + 10} />
-
-                        }
-                        if (icon === 'ship') {
-                          return <RiShipLine key={index + 41} />
-                        }
-                      }
-                      )}
-                    </section>
-                    <Rate disabled defaultValue={e.rate} />
-                    <BsFillHeartFill className='heart' />
-                  </figcaption>
-                </motion.figure>) : weather ? arrayWeatherFiltred.map((e, index) =>
-                  <motion.figure key={index} initial="hidden"
-                    animate="visible"
-                    variants={variants}>
-                    <img src={e.images[0]} alt="caballo" className='home__main__photo' />
-                    <figcaption >
-                      <h3>{e.name}{e.weather === "1" ? <BsCloudSun className='icons' /> : e.weather === "2" ? <CiSun className='icons' /> : e.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
-                      <p onClick={() => navigate(`/description/${e.id}`)}>{e.description}</p>
-                      <small><BiTime /> {e.schedules}</small>
-                      <span> <img src={location} alt="location" />{` ${e.location} - ${e.department}`}</span>
-                      <section>
-                        {e.category.map((act, index) => <small key={index}>{act}</small>)}
-                      </section>
-                      <section>
-                        {e.icons.map((icon, index) => {
-                          if (icon === 'car') {
-                            return <BsFillCarFrontFill key={index + 80} />
-
-                          }
-                          if (icon === 'moto') {
-                            return <RiMotorbikeFill key={index + 25} />
-
-                          }
-                          if (icon === 'walking') {
-                            return <BiWalk key={index + 38} />
-
-                          }
-                          if (icon === 'bici') {
-                            return <IoMdBicycle key={index + 18} />
-
-                          }
-                          if (icon === 'bus') {
-                            return <FaBus key={index + 10} />
-
-                          }
-                          if (icon === 'ship') {
-                            return <RiShipLine key={index + 41} />
-                          }
-                        }
-                        )}
-                      </section>
-                      <Rate disabled defaultValue={e.rate} />
-                      <BsFillHeartFill className='heart' />
-                    </figcaption>
-                  </motion.figure>) : <>
-            {places ? places.filter(place => place.status === 'Aceptado').map((place, index) =>
-
-              <motion.figure key={index} initial="hidden"
-                animate="visible"
-                variants={variants} >
-                <img src={place.images[0]} alt="caballo" className='home__main__photo' />
-                <figcaption>
-                  <h3>{place.name} {place.weather === "1" ? <BsCloudSun className='icons' /> : place.weather === "2" ? <CiSun className='icons' /> : place.weather === "3" ? <WiDayRainMix className='icons' /> : <BsSun className='icons' />}</h3>
-                  <p onClick={() => navigate(`/description/${place.id}`)}>{place.description}</p>
-                  <small><BiTime /> {place.schedules}</small>
-                  <span> <img src={location} alt="location" />{place.location.place.formatted_address}</span>
-                  <section>
-                    {place.category.map((act, index) => <small key={index}>{act}</small>)}
-                  </section>
-                  <section>
-                    {place.icons.map((icon) => {
-                      if (icon === 'car') {
-                        return <BsFillCarFrontFill key={index + 1} />
-
-                      }
-                      if (icon === 'moto') {
-                        return <RiMotorbikeFill key={index + 2} />
-
-                      }
-                      if (icon === 'walking') {
-                        return <BiWalk key={index + 7} />
-
-                      }
-                      if (icon === 'bici') {
-                        return <IoMdBicycle key={index + 9} />
-
-                      }
-                      if (icon === 'bus') {
-                        return <FaBus key={index + 10} />
-
-                      }
-                      if (icon === 'ship') {
-                        return <RiShipLine key={index + 11} />
-                      }
-                    }
-                    )}
-
-                  </section>
-                  <Rate disabled defaultValue={place.rate} />
-                  <BsFillHeartFill onClick={() => addFavorite(place)} className={`heart ${favorites.includes(place.id) ? 'favorite' : ''}`} />
-
-                </figcaption>
-              </motion.figure>
-
-            ) : <></>}</>}
           {input && !arrayFiltered.length ? <div className='error404'>
-            <h1>Lugar no encontrado</h1>
+            <h2>Lugar no encontrado</h2>
             <p>Por favor ingresa una nueva busqueda.</p>
+            <img src={notPLace} alt="notPlace" />
           </div> : <></>}
 
         </div>

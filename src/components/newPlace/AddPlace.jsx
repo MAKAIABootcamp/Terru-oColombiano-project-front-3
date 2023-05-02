@@ -17,7 +17,6 @@ import { motion } from "framer-motion";
 import UploadImages from "../uploadImages/UploadImages";
 import Swal from "sweetalert2";
 import MapContainer from "../Map/MapContainer";
-
 const AddPlace = () => {
   const [images, setImages] = useState([]);
   const [transports, setTransports] = useState([]);
@@ -27,10 +26,6 @@ const AddPlace = () => {
   const handleLocationSelected = (location) => {
     setLocation(location);
   }
-  console.log(location);
-
-
-  console.log('location', location);
 
   useEffect(() => {
     console.log(images);
@@ -76,7 +71,13 @@ const AddPlace = () => {
       })
       return [];
     }
-
+    if (!location) {
+      Swal.fire({
+        icon: 'info',
+        text: 'Por favor agrega un ubicación'
+      })
+      return [];
+    }
     for (const file of arrayImages) {
       console.log(file);
       const urlImages = await fileUpLoad(file);
@@ -87,10 +88,6 @@ const AddPlace = () => {
   };
 
   const onSubmit = async (data) => {
-    // const imgPlace = data.imgPlace[0] ? await fileUpLoad(data.imgPlace[0]) : '';
-    // const imgAct = data.imgAct[0] ? await fileUpLoad(data.imgAct[0]) : '';
-    // const imgPlace2 = data.imgPlace2[0] ? await fileUpLoad(data.imgPlace2[0]) : '';
-
     const urlImages = await uploadImagesToClaoudinary(images);
 
     if (urlImages.length) {
@@ -125,6 +122,7 @@ const AddPlace = () => {
         progress: undefined,
         theme: "light",
       });
+      reset()
     }
   };
 
@@ -166,28 +164,6 @@ const AddPlace = () => {
           ></textarea>
         </label>
         {errors.description ? <span>{errors.description.message}</span> : <></>}
-        {/* <label>
-          Ciudad o Pueblo
-          <input
-            type="text"
-            placeholder="Ubicación del lugar"
-            {...register("location", {
-              required: "Este campo es requerido",
-            })}
-          />
-        </label>
-        {errors.location ? <span>{errors.location.message}</span> : <></>}
-        <label>
-          Departamento
-          <input
-            type="text"
-            placeholder="Departamento en el que se encuentra"
-            {...register("department", {
-              required: "Este campo es requerido",
-            })}
-          />
-        </label> */}
-        {errors.department ? <span>{errors.department.message}</span> : <></>}
         <MapContainer apiKey='AIzaSyD77vfAu1kBoFFgavfDxBjkkj9xEx24E10' onLocationSelected={handleLocationSelected} />
         <label>
           Actividades

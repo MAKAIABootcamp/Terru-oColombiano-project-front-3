@@ -1,4 +1,3 @@
-
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -8,8 +7,6 @@ import {
   updatePassword,
   updateProfile,
 } from "firebase/auth";
-
-
 
 import { auth, dataBase } from "../../firebase/firebaseConfig";
 import { getUsers } from "../../services/getUsers";
@@ -279,12 +276,11 @@ export const logOutAsync = () => {
 const editUser = (user) => {
   return {
     type: userTypes.EDIT_USER,
-    payload : user
-  }
-}
+    payload: user,
+  };
+};
 export const editUserAsync = (user) => {
   return async (dispatch) => {
-
     try {
       const userAuth = auth.currentUser;
       let id;
@@ -295,40 +291,36 @@ export const editUserAsync = (user) => {
         id = user.id;
       });
 
-      const userRef = doc(dataBase, collectionName, id)
+      const userRef = doc(dataBase, collectionName, id);
 
       await updateProfile(userAuth, {
-        displayName : user.name,
-        photoURL : user.photo,
-        phoneNumber : user.phone
-      })
-      await updateEmail(userAuth, user.email)
+        displayName: user.name,
+        photoURL: user.photo,
+        phoneNumber: user.phone,
+      });
+      await updateEmail(userAuth, user.email);
 
       const userUpdated = {
-          uid: userAuth.uid,
-          name: user.name,
-          email: user.email,
-          photo: user.photo,
-          birthday: user.birthday,
-          phone: user.phone,
-          type: "admin",
-
-      }
+        uid: userAuth.uid,
+        name: user.name,
+        email: user.email,
+        photo: user.photo,
+        birthday: user.birthday,
+        phone: user.phone,
+        type: "admin",
+        posts : user.posts,
+        favorites : user.favorites
+      };
       console.log(userUpdated);
-      await updateDoc(userRef, userUpdated)
-      dispatch(editUser(userUpdated))
-
-      
+      await updateDoc(userRef, userUpdated);
+      dispatch(editUser(userUpdated));
     } catch (error) {
-        console.log(error);      
+      console.log(error);
     }
-    
-  }
-  
-}
+  };
+};
 export const editUserNormalAsync = (user) => {
   return async (dispatch) => {
-
     try {
       const userAuth = auth.currentUser;
       let id;
@@ -339,39 +331,34 @@ export const editUserNormalAsync = (user) => {
         id = user.id;
       });
 
-      const userRef = doc(dataBase, collectionName, id)
+      const userRef = doc(dataBase, collectionName, id);
 
       await updateProfile(userAuth, {
-        displayName : user.name,
-        photoURL : user.photo,
-        phoneNumber : user.phone
-      })
-      await updateEmail(userAuth, user.email)
+        displayName: user.name,
+        photoURL: user.photo,
+        phoneNumber: user.phone,
+      });
+      await updateEmail(userAuth, user.email);
 
       const userUpdated = {
-          uid: userAuth.uid,
-          name: user.name,
-          email: user.email,
-          photo: user.photo,
-          birthday: user.birthday,
-          phone: user.phone,
-          type: "user",
-          posts :user.posts,
-          favorites : user.favorites
-
-      }
+        uid: userAuth.uid,
+        name: user.name,
+        email: user.email,
+        photo: user.photo,
+        birthday: user.birthday,
+        phone: user.phone,
+        type: "user",
+        posts: user.posts,
+        favorites: user.favorites,
+      };
       console.log(userUpdated);
-      await updateDoc(userRef, userUpdated)
-      dispatch(editUser(userUpdated))
-
-      
+      await updateDoc(userRef, userUpdated);
+      dispatch(editUser(userUpdated));
     } catch (error) {
-        console.log(error);      
+      console.log(error);
     }
-    
-  }
-  
-}
+  };
+};
 // export const loginWithEmail = (user) => {
 //   return {
 //     type: userTypes.LOGIN_WITH_EMAIL,
@@ -506,8 +493,7 @@ export const deletePostAsync = (item) => {
     const currentUser = auth.currentUser;
     let id;
     let array = [];
-    let postId = item.id;
-
+    let postId;
     try {
       const q = query(usersCollection, where("uid", "==", currentUser.uid));
       const userDoc = await getDocs(q);
@@ -516,12 +502,19 @@ export const deletePostAsync = (item) => {
         array = user.data().posts;
       });
       console.log(array);
+      console.log(userDoc);
+      const consult = query(placesCollection, where("id", "==", item.id));
+      const placeDoc = await getDocs(consult);
+      placeDoc.forEach((place) => {
+        postId = place.id;
+      });
+      console.log(placeDoc);
 
       let posts = array.filter((element) => element.id !== item.id);
       const userRef = doc(dataBase, collectionName, id);
       await updateDoc(userRef, { posts: posts });
 
-      const placesRef = doc(placesCollection, postId);
+      const placesRef = doc(dataBase, placesCollectionName, postId);
       await deleteDoc(placesRef);
       dispatch(deletePost(posts));
     } catch (error) {

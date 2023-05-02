@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import { getPlaceDetails } from '../../redux/actions/placesActions';
+import { CiLocationOn } from 'react-icons/ci'
+
 
 const mapStyles = {
-    width: '400px',
+    // width: '400px',
     height: '400px',
     margin: 0,
     padding: 0,
@@ -21,7 +23,6 @@ const MapContainer = (props) => {
         const location = { lat, lng };
         const place = await getPlaceDetails(lat, lng, props.apiKey);
         setLocation({ ...location, place });
-        console.log(place);
         props.onLocationSelected({ ...location, place });
         setShowMap(false);
     };
@@ -29,12 +30,15 @@ const MapContainer = (props) => {
     const handleSelectLocation = () => {
         setShowMap(true);
     };
-    console.log(location);
+
 
     return (
-        <div>
+        <div className='map'>
+            <h4>Ubicación</h4>
+            <input type="text" readOnly placeholder={location.place ? location.place.formatted_address : 'Aún no seleccionada'} />
+
             {showButton && (
-                <small onClick={handleSelectLocation}>Seleccionar ubicación</small>
+                <small onClick={handleSelectLocation} className='mapButton'><CiLocationOn /> Seleccionar ubicación</small>
             )}
             {showMap && (
                 <div>
@@ -50,7 +54,6 @@ const MapContainer = (props) => {
 
                 </div>
             )}
-            {location.place ? location.place.formatted_address : ''}
 
 
         </div>
