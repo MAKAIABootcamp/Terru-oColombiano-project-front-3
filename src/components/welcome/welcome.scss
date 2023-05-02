@@ -1,26 +1,24 @@
 .background {
-  background-image: url(https://images.pexels.com/photos/12470921/pexels-photo-12470921.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 20px;
   position: relative;
-  background-color: black;
+  background-color: white;
 
-  & figure {
+  .granos {
     display: flex;
     position: absolute;
     gap: 20px;
     top: 0;
     width: 100%;
     justify-content: space-between;
-    padding: 20px;
+    padding: 40px;
     align-items: center;
     height: 60px;
+    background-color: black;
+    opacity: 0.8;
 
 
     & img {
@@ -34,10 +32,71 @@
     }
   }
 
-  & h1 {
+  .tittle {
+    background-image: url(https://images.pexels.com/photos/12470921/pexels-photo-12470921.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    height: 100vh;
     color: white;
     font-size: 80px;
-    margin-left: 10px;
+    padding: 10px;
+  }
+
+  &__explore {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    & section {
+      // height: 400px;
+      width: 45%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 20px;
+
+      & h2 {
+        font-size: 45px;
+        color: black;
+      }
+      & p {
+        font-size: 18px;
+      }
+
+      & button {
+        width: 100px;
+        height: 40px;
+        background-color: transparent;
+        border: 1px solid black;
+        border-radius: 8px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: black;
+          color: white;
+        }
+      }
+
+    }
+
+    & figure {
+      height: 600px;
+      width: 45%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      & img {
+        height: 80%;
+        width: 90%;
+        object-fit: cover;
+      }
+    }
   }
 }
 
@@ -55,12 +114,132 @@
     background-color: #864e1f;
   }
 }
+.footer {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px;
 
-@media(max-width : 860px) {
+  & figure {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    font-size: 30px;
+    align-items: center;
+
+    & img {
+      height: 50px;
+    }
+
+    & section {
+      display: flex;
+      gap: 10px;
+
+    }
+  }
+  & section {
+    color: white;
+    display: flex;
+
+    & a {
+      text-decoration: none;
+      color: white;
+    }
+
+  }
+  &__icon {
+    cursor: pointer;
+
+    &:hover {
+      scale: 1.05;
+    }
+  }
+  & div {
+    display: flex;
+    gap: 10px;
+
+
+    & strong {
+      color: white;
+    }
+    & a {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      font-size: 16px;
+      text-decoration: none;
+      color: white;
+
+      &:hover{
+        scale: 1.05;
+        transition: scale 0.5s;
+      }
+    }
+  }
+}
+
+@media(max-width : 660px) {
   .background {
 
-    h1 {
-      font-size: 60px;
+    .granos {
+      gap: 10px;
+      padding: 5px;
+
+      & section {
+        gap: 5px;
+      }
+
+      & img {
+        height: 25px;
+      }
+
     }
+
+    .tittle {
+      font-size: 40px;
+    }
+    .btns {
+      font-size: 10px;
+      width: 90px;
+      height: 30px;
+      padding: 0px;
+      justify-content: center;
+    }
+    &__explore {
+      flex-direction: column;
+
+      & section {
+        width: 100%;
+        padding: 0px 20px;
+
+        & h2 {
+          font-size: 30px;
+        }
+        & p {
+          font-size: 14px;
+        }
+      }
+      & figure {
+        width: 100%;
+        height: 300px;
+
+        & img {
+          height: 100%;
+        }
+      }
+    }
+  }
+  .footer {
+    & figure {
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+    & div {
+      flex-direction: column;
+      align-items: center;
+    }
+    
   }
 }

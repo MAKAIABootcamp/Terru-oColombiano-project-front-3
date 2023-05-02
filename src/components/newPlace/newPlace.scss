@@ -1,13 +1,13 @@
 .newPlace {
     margin-top: 50px;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 10px;
-    background-image: url(https://images.pexels.com/photos/2884864/pexels-photo-2884864.jpeg?cs=srgb&dl=pexels-chris-rodriguez-2884864.jpg&fm=jpg);
+    // background-image: url(https://images.pexels.com/photos/2884864/pexels-photo-2884864.jpeg?cs=srgb&dl=pexels-chris-rodriguez-2884864.jpg&fm=jpg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -38,17 +38,40 @@
         }
     }
 
+
+}
+
+.addPlace,
+.editPlace {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    padding: 10px;
+    width: 500px;
+    border-radius: 8px;
+    gap: 20px;
+    position: relative;
+
+
+    &__photos {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        & small {
+            font-size: 16px;
+
+        }
+
+
+    }
+
     & form {
         display: flex;
         flex-direction: column;
-        width: 500px;
-        height: 80%;
+        height: 100%;
         gap: 20px;
-        padding: 10px;
-        border-radius: 8px;
         background-color: white;
-        border: 1px solid gray;
-        border-radius: 8px;
         overflow-y: auto;
 
         & label {
@@ -104,6 +127,9 @@
             background-color: #c08b61;
             color: white;
             font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
             &:hover {
                 background-color: #775d4a;
@@ -113,9 +139,12 @@
         & span {
             color: red;
             font-size: 14px;
-            font-weight: 100;
+            font-weight: 400;
         }
     }
+
+
+
 }
 
 .selected {
@@ -127,6 +156,8 @@
 .myPlaces {
     width: 100%;
     height: 100%;
+    position: relative;
+
 
     & div {
         display: flex;
@@ -168,11 +199,26 @@
                     gap: 20px;
                     flex-wrap: wrap;
 
+                }
 
-
+                & h3 {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
                 }
             }
 
+        }
+
+        & button {
+            width: 200px;
+            border: 1px solid gray;
+            border-radius: 5px;
+
+            &:hover {
+                background-color: #c08b61;
+                color: white;
+            }
         }
     }
 
@@ -182,13 +228,74 @@
     }
 }
 
-@media (max-width:600px) {
-    .newPlace {
+.map {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
 
-        form {
-            width: 90%;
+    & input {
+        border: 1px solid gray;
+        border-radius: 8px;
+        height: 40px;
+        padding-left: 5px;
+        outline: none;
+    }
+
+    & div {
+        width: 95%;
+    }
+
+
+
+    & small {
+        height: 40px;
+        padding: 5px;
+        background-color: #c08b61;
+        border-radius: 8px;
+        color: white;
+        width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        gap: 5px;
+
+        &:hover {
+            background-color: #775d4a;
+            cursor: pointer;
         }
+    }
+}
 
+.delete {
+    font-size: 30px;
+    color: red;
+    cursor: pointer;
+
+    &:hover {
+        scale: 1.05;
+    }
+}
+
+// .modalEdit {
+//     display: block;
+//     background-color: rebeccapurple;
+//     position: absolute;
+//     height: 100vh;
+//     width: 100%;
+// }
+
+// .hidden {
+//     display: none;
+// }
+
+
+@media (max-width:600px) {
+    .newPlace {}
+
+    .addPlace {
+        width: 90%;
     }
 
     .myPlaces {

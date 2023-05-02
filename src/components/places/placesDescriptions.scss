@@ -6,12 +6,28 @@
     flex-direction: column;
     margin-top: 50px;
 
+    .carousel {
+        text-align: center;
+    }
 
+    .carousel .slider-wrapper {
+        width: 50%;
+    }
+
+    .slide .selected {
+        width: 50%;
+    }
 
     .description-box {
         border-radius: 15px;
         padding: 15px;
         height: 100%;
+
+        @media(max-width:700px){
+            width: 100%;
+            height: 400px;
+        }
+     
 
         .card-section {
             margin-top: 20px;
@@ -30,7 +46,8 @@
                 flex-direction: column;
                 padding: 25px;
                 gap: 40px;
-                @media(max-width: 760px ) {
+
+                @media(max-width: 760px) {
                     width: 100%;
                     gap: 15px;
                 }
@@ -38,7 +55,7 @@
                 & h2 {
                     font-size: 250%;
 
-                    @media(max-width: 760px ) {
+                    @media(max-width: 760px) {
                         font-size: 25px;
                     }
 
@@ -47,7 +64,7 @@
                 & p {
                     font-size: 120%;
 
-                    @media(max-width: 760px ) {
+                    @media(max-width: 760px) {
                         font-size: 15px;
                     }
                 }
@@ -65,7 +82,7 @@
                     border-radius: 5px;
                 }
 
-                
+
             }
         }
 
@@ -98,18 +115,27 @@
     width: 100%;
     margin-bottom: 20px;
     z-index: 1;
+
     &:hover {
         scale: 1.01;
         transition: 0.5s;
     }
 }
-.imgCarousel{
-    background-color: rebeccapurple;
-    position: fixed;
+.selected {
+    border-radius: 8px;
+    opacity: 0.9;
+}
+
+.imgCarousel {
+    height: 400px;
+
+
 
     & figure {
+        padding: 25px;
         display: flex;
-        padding: 20px;
+        flex-direction: column;
+        gap: 20px;
 
         & img {
             width: 40%;

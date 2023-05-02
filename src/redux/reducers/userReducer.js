@@ -34,12 +34,18 @@ export const userReducer = (state = initialState, action) => {
     case userTypes.EDIT_USER:
       return {
         ...state,
-        user: {
-          ...state.user,
-        },
+        user: action.payload
       };
 
     case userTypes.ADD_POST:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          posts: action.payload,
+        },
+      };
+    case userTypes.DELETE_POST:
       return {
         ...state,
         user: {
@@ -60,9 +66,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         user: {
           ...state.user,
-          favorites: state.user.favorites.filter(
-            (item) => item.id !== action.payload.id
-          ),
+          favorites: action.payload
         },
       };
     case userTypes.GET_FAVORITES:

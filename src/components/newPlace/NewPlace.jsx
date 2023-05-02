@@ -9,6 +9,7 @@ import { BsImage } from 'react-icons/bs'
 
 
 
+
 const NewPlace = () => {
     const navigate = useNavigate()
     

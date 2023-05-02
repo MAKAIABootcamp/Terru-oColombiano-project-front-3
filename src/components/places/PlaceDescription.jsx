@@ -7,15 +7,14 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPlacesAsync } from '../../redux/actions/placesActions'
 import { motion } from "framer-motion";
-import Carousel from 'react-multi-carousel'
-import "react-multi-carousel/lib/styles.css";
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const PlaceDescription = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { places } = useSelector(store => store.places)
   const { place } = useParams()
-  console.log(places[0]);
 
   useEffect(() => {
     dispatch(getPlacesAsync())
@@ -24,7 +23,7 @@ const PlaceDescription = () => {
 
 
 
-  const placeDetails = places[0]?.find(item => item.id === place)
+  const placeDetails = places?.find(item => item.id === place)
   console.log(placeDetails);
 
   const responsive = {
@@ -59,16 +58,16 @@ const PlaceDescription = () => {
             responsive={responsive} className='imgCarousel'
             >
             <figure>
-              <img src={placeDetails?.imgAct} alt="" />
-              <p>{placeDetails?.name}</p>
+              <img src={placeDetails?.images[0]} alt="" />
+              <h1>{placeDetails?.name}</h1>
             </figure>
             <figure>
-              <img src={placeDetails?.imgPlace} alt="" />
+              <img src={placeDetails?.images[1]} alt="" />
               <p>{placeDetails?.description}</p>
 
             </figure>
             <figure>
-              <img src={placeDetails?.imgPlace2} alt="" />
+              <img src={placeDetails?.images[2]} alt="" />
               <p>{placeDetails?.activities}</p>
 
 

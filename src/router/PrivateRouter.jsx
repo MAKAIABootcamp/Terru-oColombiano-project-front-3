@@ -6,6 +6,7 @@ import { getUsers } from '../services/getUsers';
 import { loginUser } from '../redux/actions/userActions';
 import { auth } from '../firebase/firebaseConfig';
 import Loader from '../components/loader/Loader';
+import { getPlacesAsync } from '../redux/actions/placesActions';
 
 const PrivateRouter = ({ children }) => {
   const [logged, setLogged] = useState(undefined);
@@ -13,30 +14,36 @@ const PrivateRouter = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    dispatch(getPlacesAsync())
+
+  }, [])
+
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setLoading(true);
       if (user) {
-        console.log('user1', user);
         getUsers(user.uid)
           .then((response) => {
-            console.log(response);
             dispatch(loginUser(response, { status: false, message: "" }));
             setLogged(true);
             setLoading(false);
-            console.log('se private');
-            console.log(user);
           })
           .catch((error) => {
             console.log(error);
             dispatch(loginUser({}, { status: true, message: error.message }));
             setLogged(false);
             setLoading(false);
+
           });
       } else {
         setLogged(false);
         setLoading(false);
+        navigate('/welcome')
+
+
       }
     });
 
@@ -44,7 +51,7 @@ const PrivateRouter = ({ children }) => {
   }, []);
 
   if (loading) {
-    return <Loader className = 'loader'  />;
+    return <Loader className='loader' />;
   }
 
 
