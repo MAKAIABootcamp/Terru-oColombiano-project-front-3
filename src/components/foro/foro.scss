@@ -47,6 +47,8 @@
                 & img {
                     width: 40%;
                     border-radius: 8px;
+                    height: 300px;
+                    object-fit: cover;
                 }
 
                 & figcaption {
@@ -54,6 +56,8 @@
                     flex-direction: column;
                     padding: 0px 20px;
                     position: relative;
+                    width: 60%;
+
 
 
                     & small {
@@ -104,6 +108,8 @@
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 20px;
+                border: 1px solid gray;
+
         }
 
     }
@@ -142,6 +148,7 @@
         & figure {
             display: flex;
             gap: 10px;
+
 
             & img {
                 width: 40px;
@@ -207,6 +214,8 @@
                         padding: 0;
                         gap: 10px;
                         padding-bottom: 50px;
+                        width: 100%;
+
 
 
 

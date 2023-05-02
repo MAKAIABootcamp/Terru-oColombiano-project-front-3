@@ -14,14 +14,17 @@ import { MdCancel } from 'react-icons/md'
 import Swal from 'sweetalert2';
 import { deletePostAsync } from '../../redux/actions/userActions';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
 
 
 const MyPlaces = () => {
     const [myPlaces, setMyPlaces] = useState([])
+    const [showModal, setShowModal] = useState(false)
     const { user } = useSelector(store => store.users)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
 
     const deletePost = (post) => {
@@ -66,7 +69,9 @@ const MyPlaces = () => {
 
     }, [user.posts])
 
-    console.log(myPlaces);
+    const handleShowModal = () => {
+        setShowModal(!showModal)
+    }
     return (
         <article className='myPlaces' style={user.posts.length > 2 ? { height: '100%' } : { height: '100vh' }}>
             <div>
@@ -114,7 +119,8 @@ const MyPlaces = () => {
 
                                 )}
                             </section>
-                            <Rate disabled defaultValue={post.rate} />
+                            {/* <Rate disabled defaultValue={post.rate} /> */}
+                            <button onClick={() => navigate(`/newPlace/myPlaces/${post.id}`)}>Editar publicación</button>
 
                         </figcaption>
 

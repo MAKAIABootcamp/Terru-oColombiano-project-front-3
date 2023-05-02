@@ -15,16 +15,12 @@ const PlaceDescription = () => {
   const navigate = useNavigate()
   const { places } = useSelector(store => store.places)
   const { place } = useParams()
-  console.log(places[0]);
-
   useEffect(() => {
     dispatch(getPlacesAsync())
 
   }, [])
 
-
-
-  const placeDetails = places[0]?.find(item => item.id === place)
+  const placeDetails = places?.find(item => item.id === place)
   console.log(placeDetails);
 
   const responsive = {

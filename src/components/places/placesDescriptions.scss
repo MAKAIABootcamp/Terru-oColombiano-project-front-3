@@ -22,14 +22,11 @@
         border-radius: 15px;
         padding: 15px;
         height: 100%;
-
         @media(max-width:700px) {
             width: 160%;
             height: 400px;
             margin-top: 25px;
         }
-
-
         .card-section {
             margin-top: 20px;
             display: flex;
@@ -122,6 +119,10 @@
         transition: 0.5s;
     }
 }
+.selected {
+    border-radius: 8px;
+    opacity: 0.9;
+}
 
 .selected {
     border-radius: 8px;
@@ -130,6 +131,7 @@
 
 .imgCarousel {
     height: 400px;
+
 
 
 
@@ -143,16 +145,16 @@
             
             border-radius: 8px;
             object-fit: cover;
-
             @media (max-width: 500px) {
                 width: 235px !important;
                 height: 170px !important;
             }
+
+
         }
 
         & p {
             padding: 20px;
-
             @media (max-width: 500px) {
                 padding: 0px;
                 max-height: 190px;

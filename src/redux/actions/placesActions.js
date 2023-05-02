@@ -10,6 +10,7 @@ import {
 import { filterCollections } from "../../services/filterCollections";
 import { placesTypes } from "../types/placesTypes";
 import { dataBase } from "../../firebase/firebaseConfig";
+import axios from "axios";
 
 const collectionName = "places";
 const placesCollection = collection(dataBase, collectionName);
@@ -106,3 +107,17 @@ export const changeStatusAsync = (id, status) => {
     }
   };
 };
+export const getPlaceDetails = async (lat, lng, apiKey) => {
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
+  try {
+    const response = await axios.get(url);
+    if (response.data.status === 'OK') {
+      return response.data.results[0];
+    } else {
+      throw new Error('No se pudo obtener la información del lugar');
+    }
+  } catch (error) {
+    throw new Error('No se pudo obtener la información del lugar');
+  }
+}
+

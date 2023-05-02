@@ -38,6 +38,34 @@
         }
     }
 
+
+}
+
+.addPlace,
+.editPlace {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    padding: 10px;
+    width: 500px;
+    border-radius: 8px;
+    gap: 20px;
+    position: relative;
+
+
+    &__photos {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        & small {
+            font-size: 16px;
+
+        }
+
+
+    }
+
     & form {
         display: flex;
         flex-direction: column;
@@ -114,6 +142,9 @@
             font-weight: 400;
         }
     }
+
+
+
 }
 
 .addPlace {
@@ -151,6 +182,8 @@
 .myPlaces {
     width: 100%;
     height: 100%;
+    position: relative;
+
 
 
     & div {
@@ -203,11 +236,62 @@
             }
 
         }
+
+        & button {
+            width: 200px;
+            border: 1px solid gray;
+            border-radius: 5px;
+
+            &:hover {
+                background-color: #c08b61;
+                color: white;
+            }
+        }
     }
 
     & h1 {
         text-align: center;
         font-size: 30px;
+    }
+}
+
+.map {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+
+    & input {
+        border: 1px solid gray;
+        border-radius: 8px;
+        height: 40px;
+        padding-left: 5px;
+        outline: none;
+    }
+
+    & div {
+        width: 95%;
+    }
+
+
+
+    & small {
+        height: 40px;
+        padding: 5px;
+        background-color: #c08b61;
+        border-radius: 8px;
+        color: white;
+        width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        gap: 5px;
+
+        &:hover {
+            background-color: #775d4a;
+            cursor: pointer;
+        }
     }
 }
 
@@ -221,11 +305,23 @@
     }
 }
 
+// .modalEdit {
+//     display: block;
+//     background-color: rebeccapurple;
+//     position: absolute;
+//     height: 100vh;
+//     width: 100%;
+// }
+// .hidden {
+//     display: none;
+// }
+
+
 @media (max-width:600px) {
-    .newPlace {
+    .newPlace {}
 
-      
-
+    .addPlace {
+        width: 90%;
     }
     .addPlace {
         width: 90%;

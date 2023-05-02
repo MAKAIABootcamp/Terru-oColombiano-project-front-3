@@ -16,11 +16,16 @@ import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import UploadImages from "../uploadImages/UploadImages";
 import Swal from "sweetalert2";
-
+import MapContainer from "../Map/MapContainer";
 const AddPlace = () => {
   const [images, setImages] = useState([]);
   const [transports, setTransports] = useState([]);
   const [activity, setActivity] = useState([]);
+  const [location, setLocation] = useState(null);
+
+  const handleLocationSelected = (location) => {
+    setLocation(location);
+  }
 
   useEffect(() => {
     console.log(images);
@@ -62,11 +67,17 @@ const AddPlace = () => {
     if (arrayImages.length < 3) {
       Swal.fire({
         icon: 'info',
-        text : 'Por favor agregar mínimo 3 fotos'
+        text: 'Por favor agregar mínimo 3 fotos'
       })
       return [];
     }
-
+    if (!location) {
+      Swal.fire({
+        icon: 'info',
+        text: 'Por favor agrega un ubicación'
+      })
+      return [];
+    }
     for (const file of arrayImages) {
       console.log(file);
       const urlImages = await fileUpLoad(file);
@@ -77,18 +88,14 @@ const AddPlace = () => {
   };
 
   const onSubmit = async (data) => {
-    // const imgPlace = data.imgPlace[0] ? await fileUpLoad(data.imgPlace[0]) : '';
-    // const imgAct = data.imgAct[0] ? await fileUpLoad(data.imgAct[0]) : '';
-    // const imgPlace2 = data.imgPlace2[0] ? await fileUpLoad(data.imgPlace2[0]) : '';
-
     const urlImages = await uploadImagesToClaoudinary(images);
 
     if (urlImages.length) {
       const newPlace = {
         name: data.name,
         description: data.description,
-        location: data.location,
-        department: data.department,
+        location: location,
+        // department: data.department,
         activities: data.activities,
         category: activity,
         schedules: data.schedules,
@@ -115,18 +122,19 @@ const AddPlace = () => {
         progress: undefined,
         theme: "light",
       });
+      reset()
     }
   };
 
   return (
-    <article className="addPlace">
+    <motion.article className="addPlace">
       <h1>Agregar nuevo lugar</h1>
       <div className="addPlace__photos">
         <small><strong>Imágenes del lugar</strong>(Min. 3)</small>
         <UploadImages onLoad={handleLoad} />
 
       </div>
-      <motion.form
+      <form
         onSubmit={handleSubmit(onSubmit)}
         initial={{ x: "100%" }}
         animate={{ x: 0 }}
@@ -156,28 +164,7 @@ const AddPlace = () => {
           ></textarea>
         </label>
         {errors.description ? <span>{errors.description.message}</span> : <></>}
-        <label>
-          Ciudad o Pueblo
-          <input
-            type="text"
-            placeholder="Ubicación del lugar"
-            {...register("location", {
-              required: "Este campo es requerido",
-            })}
-          />
-        </label>
-        {errors.location ? <span>{errors.location.message}</span> : <></>}
-        <label>
-          Departamento
-          <input
-            type="text"
-            placeholder="Departamento en el que se encuentra"
-            {...register("department", {
-              required: "Este campo es requerido",
-            })}
-          />
-        </label>
-        {errors.department ? <span>{errors.department.message}</span> : <></>}
+        <MapContainer apiKey='AIzaSyD77vfAu1kBoFFgavfDxBjkkj9xEx24E10' onLocationSelected={handleLocationSelected} />
         <label>
           Actividades
           <textarea
@@ -344,8 +331,8 @@ const AddPlace = () => {
                 </label> */}
 
         <button type="submit">Agregar lugar</button>
-      </motion.form>
-    </article>
+      </form>
+    </motion.article>
   );
 };
 
