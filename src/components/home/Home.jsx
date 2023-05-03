@@ -24,6 +24,8 @@ import { motion } from "framer-motion";
 import { CiSun } from 'react-icons/ci'
 import { WiDayRainMix } from 'react-icons/wi'
 import { useNavigate } from 'react-router-dom'
+import notPLace from '../../assets/notPlace.svg'
+import PlaceSearch from './PlaceSearch'
 
 const Home = () => {
   const [input, setInput] = useState('')
@@ -35,6 +37,10 @@ const Home = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [filters, setFilters] = useState({})
+
+  const handlePlaceChanged = (place) => {
+    console.log('Selected place:', place);
+  };
 
   const valueInput = ({ value }) => {
     setInput(value)
@@ -126,6 +132,13 @@ const Home = () => {
       }
     }
   };
+  const calcularPromedio = (calificaciones) => {
+    let total = 0;
+    calificaciones.forEach((calificacion) => {
+      total += calificacion.calification;
+    });
+    return total / calificaciones.length;
+  }
 
 
   return (
@@ -248,10 +261,10 @@ const Home = () => {
 
                   )}
                 </section>
-                <Rate disabled defaultValue={e.rate} />
+                <Rate disabled defaultValue={calcularPromedio(e.rate)} />
                 <BsFillHeartFill onClick={() => addFavorite(e)} className={`heart ${favorites.includes(e.id) ? 'favorite' : ''}`} />
               </figcaption>
-            </motion.figure>) : allFilters.length ? allFilters.filter(place => place.status === 'Aceptado').slice(0, 8).map((e, index) =>
+            </motion.figure>) : allFilters.length ? allFilters.filter(place => place.status === 'Aceptado').map((e, index) =>
               <motion.figure key={index} initial="hidden"
                 animate="visible"
                 variants={variants}>
@@ -293,7 +306,8 @@ const Home = () => {
 
                     )}
                   </section>
-                  <Rate disabled defaultValue={e.rate} />
+                  <Rate disabled defaultValue={calcularPromedio(e.rate)} />
+
                   <BsFillHeartFill onClick={() => addFavorite(e)} className={`heart ${favorites.includes(e.id) ? 'favorite' : ''}`} />
                 </figcaption>
               </motion.figure>) : filters && !allFilters.length ?
@@ -346,7 +360,7 @@ const Home = () => {
 
                     )}
                   </section>
-                  <Rate disabled defaultValue={e.rate} />
+                  <Rate disabled defaultValue={calcularPromedio(e.rate)} />
                   <BsFillHeartFill onClick={() => addFavorite(e)} className={`heart ${favorites.includes(e.id) ? 'favorite' : ''}`} />
                 </figcaption>
               </motion.figure>) : <></>}

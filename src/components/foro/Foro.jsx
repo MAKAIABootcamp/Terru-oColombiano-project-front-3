@@ -5,6 +5,7 @@ import { createCommentAsync, getPlacesAsync } from '../../redux/actions/placesAc
 import ModalMain from '../modal/ModalMain'
 import { motion } from 'framer-motion'
 import Loader from '../loader/Loader'
+import { Carousel } from 'react-responsive-carousel'
 
 
 const Foro = () => {
@@ -45,7 +46,22 @@ const Foro = () => {
               </section>
             </div>
             <figure>
-              <img src={post.images[0]} alt="post" />
+              <Carousel
+                emulateTouch={true}
+                showArrows={true}
+                showStatus={false}
+                showIndicators={true}
+                showThumbs={false}
+                width={"100%"}
+                infiniteLoop={true}
+                className='carousel'>
+
+                {post.images.map((e, index) =>
+                  <img src={e} alt="images" key={index} />
+
+                )}
+
+              </Carousel>
 
               <figcaption>
                 <h4>{post.name}</h4>

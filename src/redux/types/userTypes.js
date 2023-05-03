@@ -9,6 +9,8 @@ export const userTypes = {
   DELETE_FAVORITE : "DELETE_FAVORITE",
   GET_FAVORITES : "GET_FAVORITES",
   LOGIN_WITH_EMAIL : "LOGIN_WITH_EMAIL",
+  EDIT_POST : "EDIT_POST",
+ 
   
 };
 

@@ -14,6 +14,7 @@ import { auth, facebook, google } from '../../firebase/firebaseConfig'
 import Swal from 'sweetalert2'
 import Loader from '../loader/Loader'
 import { getUsers } from '../../services/getUsers'
+import { AiOutlineArrowLeft } from 'react-icons/ai'
 
 const Login = () => {
   const [loading, setLoading] = useState(true);
@@ -83,6 +84,8 @@ const Login = () => {
     <>
       {loading ? <Loader /> : <article className='login'>
         <div className='login__info'>
+          <AiOutlineArrowLeft className='back' onClick={() => navigate(-1)} />
+
           <figure>
             <img src={logo} alt="icon" />
             <img src={name} alt="terruño" />

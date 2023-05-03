@@ -81,6 +81,50 @@ export const createCommentAsync = (id, user, info) => {
     }
   };
 };
+const ratePost = (data) => {
+  return {
+    type: placesTypes.RATE_POST,
+    payload: data,
+  };
+};
+export const ratePostAsync = (id, user, value) => {
+  return async (dispatch) => {
+    let idPlace;
+    let array = [];
+    try {
+      const q = query(placesCollection, where("id", "==", id));
+      const placeDoc = await getDocs(q);
+      console.log(placeDoc);
+      placeDoc.forEach((place) => {
+        console.log(place);
+        
+        idPlace = place.id;
+        array = place.data().rate;
+      });
+
+      const newRate = {
+        idUser: user.id,
+        nameUser : user.name,
+        imgUser: user.photo,
+        calification: value,
+      };
+      const docRef = doc(dataBase, collectionName, idPlace);
+
+      const rate = [...array, newRate];
+      await updateDoc(docRef, { rate: rate });
+
+      const data = await filterCollections({
+        key: "",
+        collectionName,
+        value: null,
+      });
+      dispatch(getPlaces(data));
+    } catch (error) {
+      console.log(error);
+      dispatch(addComment(array));
+    }
+  };
+};
 export const changeStatusAsync = (id, status) => {
   return async (dispatch) => {
     let idPlace;
