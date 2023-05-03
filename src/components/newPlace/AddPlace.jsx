@@ -105,7 +105,7 @@ const AddPlace = () => {
         images: [...urlImages],
         postedBy: user.name,
         postedByImg: user.photo,
-        rate: 0,
+        rate: [],
         comments: [],
         status: "Pendiente",
       };
