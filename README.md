@@ -1,11 +1,12 @@
 # Terru-oColombiano-project-front-3
 
-![image](https://user-images.githubusercontent.com/120389000/232874379-203b93f1-a1d4-4b80-b282-629a2894b1c8.png)
+![image](https://user-images.githubusercontent.com/120389000/235690560-4f362b0f-68cf-4d52-8f52-3db7c48e913f.png)
+
 
 
 # Descripción:
 
-Terruño Colombiano es un proyecto que consiste en una Red Social que tiene el objetivo de crear conexiones,difundir, publicar y descubrir la esencia de Colombia en cada rincón de nuestro terruño.
+En TERRUÑO COLOMBIANO, puedes encontrar una variedad de actividades, foros de discusión, información útil sobre diferentes lugares y la opción de armar salidas con tus amigos o familiares.
 
  * Inicie sesión con autenticación de correo electrónico y contraseña (Implementado con Firebase)
 * Inicie sesión con la autenticación de Google y Facebook (Implementado con Firebase)

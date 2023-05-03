@@ -41,7 +41,9 @@ export const verifyCodeAsync = (code) => {
     window.confirmationResult
       .confirm(code)
       .then(async (result) => {
+        console.log(result);
         const user = result.user.auth.currentUser;
+        console.log(user);
         const userCollection = await getUsers(user.uid);
         console.log(userCollection);
         dispatch(
@@ -511,6 +513,47 @@ export const deletePostAsync = (item) => {
       console.log(placeDoc);
 
       let posts = array.filter((element) => element.id !== item.id);
+      const userRef = doc(dataBase, collectionName, id);
+      await updateDoc(userRef, { posts: posts });
+
+      const placesRef = doc(dataBase, placesCollectionName, postId);
+      await deleteDoc(placesRef);
+      dispatch(deletePost(posts));
+    } catch (error) {
+      console.log(error);
+      dispatch(deletePost(array));
+    }
+  };
+};
+const editPost = (item) => {
+  return {
+    type: userTypes.EDIT_POST,
+    payload: item,
+  };
+};
+export const editPostAsync = (item) => {
+  return async (dispatch) => {
+    const currentUser = auth.currentUser;
+    let id;
+    let array = [];
+    let postId;
+    try {
+      const q = query(usersCollection, where("uid", "==", currentUser.uid));
+      const userDoc = await getDocs(q);
+      userDoc.forEach((user) => {
+        id = user.id;
+        array = user.data().posts;
+      });
+      console.log(array);
+      console.log(userDoc);
+      const consult = query(placesCollection, where("id", "==", item.id));
+      const placeDoc = await getDocs(consult);
+      placeDoc.forEach((place) => {
+        postId = place.id;
+      });
+      console.log(placeDoc);
+
+      let posts = array.find((element) => element.id === item.id);
       const userRef = doc(dataBase, collectionName, id);
       await updateDoc(userRef, { posts: posts });
 
