@@ -5,9 +5,12 @@ import { createCommentAsync, getPlacesAsync } from '../../redux/actions/placesAc
 import ModalMain from '../modal/ModalMain'
 import { motion } from 'framer-motion'
 import Loader from '../loader/Loader'
+import { Carousel } from 'react-responsive-carousel'
 
 
 const Foro = () => {
+  const [allPlaces, setAllPlaces] = useState([])
+  const { user } = useSelector(store => store.users)
   const dispatch = useDispatch()
   const { places } = useSelector(store => store.places)
   useEffect(() => {
@@ -23,12 +26,13 @@ const Foro = () => {
 
 
 
+
+
   return (
     <article className='foro'>
       <h1>Bienvenido al foro</h1>
       <div className='foro__container'>
         {!places.length ? <Loader /> : <></>}
-
         {places.length ? places.map((post, index) =>
           <motion.section className='foro__container__main' key={index} variants={variants}
             initial="hidden"
@@ -42,7 +46,22 @@ const Foro = () => {
               </section>
             </div>
             <figure>
-              <img src={post.images[0]} alt="post" />
+              <Carousel
+                emulateTouch={true}
+                showArrows={true}
+                showStatus={false}
+                showIndicators={true}
+                showThumbs={false}
+                width={"100%"}
+                infiniteLoop={true}
+                className='carousel'>
+
+                {post.images.map((e, index) =>
+                  <img src={e} alt="images" key={index} />
+
+                )}
+
+              </Carousel>
 
               <figcaption>
                 <h4>{post.name}</h4>

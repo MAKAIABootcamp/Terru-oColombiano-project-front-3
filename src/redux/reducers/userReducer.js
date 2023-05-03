@@ -34,7 +34,7 @@ export const userReducer = (state = initialState, action) => {
     case userTypes.EDIT_USER:
       return {
         ...state,
-        user: action.payload
+        user: action.payload,
       };
 
     case userTypes.ADD_POST:
@@ -66,7 +66,15 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         user: {
           ...state.user,
-          favorites: action.payload
+          favorites: action.payload,
+        },
+      };
+    case userTypes.EDIT_POST:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          posts: action.payload,
         },
       };
     case userTypes.GET_FAVORITES:
@@ -94,7 +102,7 @@ export const userReducer = (state = initialState, action) => {
           uid: action.payload.uid,
           location: action.payload.location,
         },
-        isLogged : true,
+        isLogged: true,
       };
 
     case userTypes.LOGOUT:

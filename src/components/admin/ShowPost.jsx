@@ -7,6 +7,7 @@ import ModalMain from '../modal/ModalMain';
 import { toast } from 'react-toastify';
 import { Outlet, useNavigate } from 'react-router-dom';
 
+
 const ShowPost = () => {
     const [isDispatched, setIsDispatched] = useState(false)
     const { places } = useSelector(store => store.places)
@@ -20,13 +21,13 @@ const ShowPost = () => {
     useEffect(() => {
         dispatch(getPlacesAsync())
 
-
     }, [isDispatched])
     useEffect(() => {
       
-    
+  
     }, [])
     
+
 
 
 
@@ -42,7 +43,6 @@ const ShowPost = () => {
             </section> 
             <Outlet />
       
-
 
         </article>
     )

@@ -28,6 +28,12 @@ export const placesRedcuer = (state = initialValue, action) => {
                     places : action.payload
                     
                 }
+            case placesTypes.RATE_POST :
+                return {
+                    ...state,
+                    places : action.payload
+                    
+                }
             
             
     

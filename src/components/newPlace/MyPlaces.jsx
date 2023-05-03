@@ -72,7 +72,6 @@ const MyPlaces = () => {
     const handleShowModal = () => {
         setShowModal(!showModal)
     }
-
     return (
         <article className='myPlaces' style={user.posts.length > 2 ? { height: '100%' } : { height: '100vh' }}>
             <div>

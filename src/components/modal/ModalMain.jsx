@@ -1,22 +1,28 @@
-import { Button, Modal } from 'antd';
+import { Button, Modal, Rate } from 'antd';
 import { useEffect, useState } from 'react';
 import { FaRegCommentAlt } from 'react-icons/fa';
 import { BsFillHeartFill } from 'react-icons/bs'
 import '../foro/foro.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { createCommentAsync } from '../../redux/actions/placesActions';
+import { createCommentAsync, ratePostAsync } from '../../redux/actions/placesActions';
+import { Carousel } from 'react-responsive-carousel';
+import Swal from 'sweetalert2';
 const ModalMain = ({ place }) => {
     const [comments, setComments] = useState([])
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [rateShow, setRateShow] = useState('')
+    const [rateValue, setRateValue] = useState(0);
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
     const dispatch = useDispatch()
     const { user } = useSelector(store => store.users)
-    const { places} = useSelector(store => store.places)
+    console.log(user);
+    const { places } = useSelector(store => store.places)
     const showModal = () => {
         setIsModalOpen(true);
     };
+    console.log(place);
     const handleOk = () => {
         setIsModalOpen(false);
     };
@@ -25,21 +31,36 @@ const ModalMain = ({ place }) => {
 
 
     };
+
+    const handleRateChange = (value) => {
+        setRateValue(value);
+        dispatch(ratePostAsync(place.id, user, value))
+        Swal.fire({
+            icon: 'success',
+            title: 'Gracias por calificar este lugar'
+        })
+        setRateShow('hidden')
+    };
     const onSubmit = (data) => {
+
         dispatch(createCommentAsync(place.id, user, data))
 
         reset()
-        setComments([...comments, {imgUser: user.photo, comment : data.comment, nameUser : user.name}])
+        setComments([...comments, { imgUser: user.photo, comment: data.comment, nameUser: user.name }])
     }
     useEffect(() => {
         setComments(place.comments)
-        
+
 
 
     }, [place])
 
 
-    
+    const isRated = place.rate.find(e => e.idUser === user.id)
+
+
+
+
 
 
     return (
@@ -48,16 +69,29 @@ const ModalMain = ({ place }) => {
                 <FaRegCommentAlt /> Comentar
 
             </Button>
-            <Modal title={`Publicación de ${place.postedBy}`} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} className='mainModal'>
+            <Modal title={`Publicación de ${place.postedBy}`} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} cancelButtonProps={{ style: { display: 'none' } }} okButtonProps={{ style: { display: 'none' } }} className='mainModal'>
                 <h3>{place.name}</h3>
-                <figure>
-                    <img src={place.images[0]} alt="postImg" />
-                </figure>
+                <Carousel
+                    emulateTouch={true}
+                    showArrows={true}
+                    showStatus={false}
+                    showIndicators={true}
+                    showThumbs={false}
+                    width={"100%"}
+                    infiniteLoop={true}
+                    className='carousel'>
+
+                    {place.images.map((e, index) =>
+                        <img src={e} alt="images" key={index} />
+
+                    )}
+
+                </Carousel>
                 <p>{place.description}</p>
-                {/* <section>
-                    <button><BsFillHeartFill /> Agregar a favoritos</button>
-                    <button><FaRegCommentAlt />Comentar</button>
-                </section> */}
+                <section className={`${rateShow} ${isRated ? 'hidden' : 'calification'} `}>
+                    <h3>Califica este lugar</h3>
+                    <Rate value={rateValue} onChange={handleRateChange} disabled={false} defaultValue={5} className='star' />
+                </section>
                 <div className='mainModal__comments'>
                     {comments.length ? comments.map((comment, index) =>
                         <figure key={index}>
@@ -67,7 +101,7 @@ const ModalMain = ({ place }) => {
                                 <small>{comment.comment}</small>
 
                             </figcaption>
-                        </figure>) : <h1>Aún no hay comentarios</h1>}
+                        </figure>) : <h3>Aún no hay comentarios</h3>}
                 </div>
                 <form className='mainModal__add' onSubmit={handleSubmit(onSubmit)} >
                     <figure>

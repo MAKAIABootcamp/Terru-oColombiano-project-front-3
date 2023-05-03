@@ -147,6 +147,32 @@
 
 }
 
+.addPlace {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    padding: 10px;
+    width: 500px;
+    border-radius: 8px;
+    gap: 20px;
+
+    &__photos {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        & small {
+            font-size: 18px;
+
+        }
+
+
+    }
+
+
+
+}
+
 .selected {
     background-color: #c08b61;
     color: white;
@@ -158,7 +184,7 @@
     height: 100%;
     position: relative;
 
-
+    
     & div {
         display: flex;
         flex-direction: column;
@@ -285,7 +311,6 @@
 //     height: 100vh;
 //     width: 100%;
 // }
-
 // .hidden {
 //     display: none;
 // }
@@ -294,6 +319,9 @@
 @media (max-width:600px) {
     .newPlace {}
 
+    .addPlace {
+        width: 90%;
+    }
     .addPlace {
         width: 90%;
     }
