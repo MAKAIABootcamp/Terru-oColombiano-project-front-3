@@ -24,6 +24,7 @@ import { motion } from "framer-motion";
 import { CiSun } from 'react-icons/ci'
 import { WiDayRainMix } from 'react-icons/wi'
 import { useNavigate } from 'react-router-dom'
+import notPLace from '../../assets/notPlace.svg'
 
 const Home = () => {
   const [input, setInput] = useState('')
