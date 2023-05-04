@@ -181,49 +181,49 @@ const AddPlace = () => {
           Por favor seleccione la categoría de cada actividad
           <section>
             <small
-              className={activity.includes("Natación") ? "selected" : ""}
+              className={activity.includes("Natación") ? "selectedNPlace" : ""}
               onClick={() => addActivity("Natación")}
             >
               Natación
             </small>
             <small
-              className={activity.includes("Mirador") ? "selected" : ""}
+              className={activity.includes("Mirador") ? "selectedNPlace" : ""}
               onClick={() => addActivity("Mirador")}
             >
               Mirador
             </small>
             <small
-              className={activity.includes("Ciclismo") ? "selected" : ""}
+              className={activity.includes("Ciclismo") ? "selectedNPlace" : ""}
               onClick={() => addActivity("Ciclismo")}
             >
               Ciclismo
             </small>
             <small
-              className={activity.includes("Camping") ? "selected" : ""}
+              className={activity.includes("Camping") ? "selectedNPlace" : ""}
               onClick={() => addActivity("Camping")}
             >
               Camping
             </small>
             <small
-              className={activity.includes("Restaurantes") ? "selected" : ""}
+              className={activity.includes("Restaurantes") ? "selectedNPlace" : ""}
               onClick={() => addActivity("Restaurantes")}
             >
               Restaurantes
             </small>
             <small
-              className={activity.includes("Senderismo") ? "selected" : ""}
+              className={activity.includes("Senderismo") ? "selectedNPlace" : ""}
               onClick={() => addActivity("Senderismo")}
             >
               Senderismo
             </small>
             <small
-              className={activity.includes("Cultura") ? "selected" : ""}
+              className={activity.includes("Cultura") ? "selectedNPlace" : ""}
               onClick={() => addActivity("Cultura")}
             >
               Cultura
             </small>
             <small
-              className={activity.includes("Atracciones") ? "selected" : ""}
+              className={activity.includes("Atracciones") ? "selectedNPlace" : ""}
               onClick={() => addActivity("Atracciones")}
             >
               Atracciones
@@ -273,37 +273,37 @@ const AddPlace = () => {
           Medios de transporte para llegar
           <section>
             <small
-              className={transports.includes("car") ? "selected" : ""}
+              className={transports.includes("car") ? "selectedNPlace" : ""}
               onClick={() => addTransport("car")}
             >
               <BsFillCarFrontFill /> Carro
             </small>
             <small
-              className={transports.includes("bus") ? "selected" : ""}
+              className={transports.includes("bus") ? "selectedNPlace" : ""}
               onClick={() => addTransport("bus")}
             >
               <FaBus /> Bus
             </small>
             <small
-              className={transports.includes("moto") ? "selected" : ""}
+              className={transports.includes("moto") ? "selectedNPlace" : ""}
               onClick={() => addTransport("moto")}
             >
               <RiMotorbikeFill /> Motocicleta
             </small>
             <small
-              className={transports.includes("bici") ? "selected" : ""}
+              className={transports.includes("bici") ? "selectedNPlace" : ""}
               onClick={() => addTransport("bici")}
             >
               <IoMdBicycle /> Bicicleta
             </small>
             <small
-              className={transports.includes("walking") ? "selected" : ""}
+              className={transports.includes("walking") ? "selectedNPlace" : ""}
               onClick={() => addTransport("walking")}
             >
               <BiWalk /> Caminando
             </small>
             <small
-              className={transports.includes("ship") ? "selected" : ""}
+              className={transports.includes("ship") ? "selectedNPlace" : ""}
               onClick={() => addTransport("ship")}
             >
               {" "}
